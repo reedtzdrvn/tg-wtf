@@ -1,0 +1,8 @@
+node_modules/
+venv/
+.pylintrc
+pycache/
+
+.vscode
+
+db.sqlite3

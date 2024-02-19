@@ -1,0 +1,62 @@
+.header {
+    margin-top: 15px;
+    position: relative;
+}
+
+.header::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 25px; 
+    padding: 1px; 
+    background:linear-gradient(180deg, #B049E1 0%, #612EF7 100%);; 
+    -webkit-mask: 
+       linear-gradient(#fff 0 0) content-box, 
+       linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude; 
+  }
+
+.header-logo {
+    width: 57px;
+    height: 50px;
+}
+
+.company_name {
+    font-family: 'DM Sans', Helvetica, sans-serif
+}
+
+.header-right-side svg {
+    height: 20px;
+    width: 20px;
+}
+
+.search-btn {
+    position: relative;
+    margin: 7px;
+}
+
+.message-btn {
+    position: relative;
+    margin: 7px;
+}
+
+.notifications-btn {
+    position: relative;
+    margin: 7px;
+}
+
+.search-btn::before, .message-btn::before, .notifications-btn::before {
+    display: block;
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 25px; 
+    padding: 1px; 
+    background: linear-gradient(180deg, #B049E1 0%, #612EF7 100%); 
+    -webkit-mask: 
+       linear-gradient(#fff 0 0) content-box, 
+       linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude; 
+}
