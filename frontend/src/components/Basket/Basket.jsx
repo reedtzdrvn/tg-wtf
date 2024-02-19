@@ -4,7 +4,7 @@ import Header from '../Header/Header';
 
 const Basket = () => {
     return (
-        <><Header /><h1>Basket</h1><Footer /></>
+        <><Header /><h1>Корзина</h1><Footer /></>
     )
 }
 
