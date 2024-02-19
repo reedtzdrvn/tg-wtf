@@ -24,7 +24,7 @@ async def command_webview(message: Message):
             inline_keyboard=[
                 [
                     InlineKeyboardButton(
-                        text="Open Webview", web_app=WebAppInfo(url='https://bejewelled-cajeta-416b24.netlify.app/')
+                        text="Open Webview", web_app=WebAppInfo(url='https://aquamarine-dasik-75f62c.netlify.app/')
                     )
                 ]
             ]
