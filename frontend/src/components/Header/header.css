@@ -26,9 +26,10 @@
     font-family: 'DM Sans', Helvetica, sans-serif
 }
 
-.header-right-side img {
+.header-right-side svg {
     height: 20px;
     width: 20px;
+    fill: transparent;
 }
 
 .search-btn {

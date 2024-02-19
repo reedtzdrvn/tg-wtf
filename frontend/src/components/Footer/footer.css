@@ -9,3 +9,7 @@ ul li img{
     width: 30px;
     height: 30px;
 }
+
+.home-btn-active {
+    fill: #000;
+}
