@@ -44,7 +44,7 @@ const CategoryItemsList = (props) => {
 
   return (
     <>
-      <div className="px-[8.5%]">
+      <div className="page px-[8.5%]">
         <div className="category-items-list-title mt-[5px]">
           <span className="text-[24px]" style={{fontFamily: 'Actor'}}>{state.from}</span>
         </div>

@@ -54,7 +54,7 @@ const Basket = () => {
 
   return (
     <>
-      <div className="px-[30px] mt-[10px]">
+      <div className="page px-[30px] mt-[10px]">
         <div className="flex ml-[22px] items-center align-center mt-[5px]">
           <img width={30} height={30} src={BasketIcon} />
           <span
