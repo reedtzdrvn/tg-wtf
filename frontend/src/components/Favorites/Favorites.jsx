@@ -59,7 +59,7 @@ const Favorites = () => {
 
   return (
     <>
-      <div className="cards-wrapper px-[8.5%]">
+      <div className="page cards-wrapper px-[8.5%]">
         <div className="fav-wrapper">
           <div className="flex items-center align-center mt-[5px]">
             <img width={30} height={30} src={HeartIcon} />
