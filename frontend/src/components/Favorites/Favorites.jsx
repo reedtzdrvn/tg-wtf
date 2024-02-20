@@ -37,7 +37,7 @@ const Favorites = () => {
       price: 120,
       image: Image2,
       isFavorite: true,
-      isAvailable: true,
+      isAvailable: false,
     },
     {
       id: 5,

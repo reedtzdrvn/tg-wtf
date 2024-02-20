@@ -1,10 +1,10 @@
 .card-item img {
-    border-radius: 25px;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  border-radius: 25px;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 }
 
 .card-item-title {
-    margin-top: 10px;
+  margin-top: 10px;
   color: rgb(150, 167, 175);
   font-family: Agency FB;
   font-size: 14px;
@@ -15,7 +15,7 @@
 }
 
 .card-item-price {
-    margin-top: 5px;
+  margin-top: 5px;
   color: rgb(151, 151, 151);
   font-family: Advent Pro;
   font-size: 14px;
@@ -27,6 +27,25 @@
 }
 
 .liked {
-    background-color: #fff;
-    border-radius: 25px;
+  background-color: #fff;
+  border-radius: 25px;
+}
+
+.liked img {
+  box-shadow: none;
+}
+
+.item-not-found {
+  background-color: rgba(97, 46, 247, 1);
+  border-radius: 7px;
+  font-family: DM Sans;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: -2%;
+}
+
+.card-item-img-blur {
+    filter: blur(3px);
 }
