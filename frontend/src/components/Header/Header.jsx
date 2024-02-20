@@ -8,9 +8,9 @@ import './header.css'
 const Header = () => {
     return (
         <div className='flex justify-center align-center'>
-            <div className="header w-[90%] h-[5%] flex items-center justify-between">
+            <div className="header w-[90%] h-[5%] flex items-center justify-between px-[6px]">
                 <div className='header-left-side flex justify-start align-center'>
-                    <img className='header-logo flex ml-[5px]' src={Logo} />
+                    <img className='header-logo flex' src={Logo} />
                     <span className='company_name w-[30px] h-[50px] text-[10px] leading-[10px] flex items-center font-bold'>
                         World
                         Transport

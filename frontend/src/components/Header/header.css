@@ -26,24 +26,24 @@
     font-family: 'DM Sans', Helvetica, sans-serif
 }
 
-.header-right-side svg {
-    height: 20px;
-    width: 20px;
+.header-right-side div img {
+    height: 27px;
+    width: 27px;
 }
 
 .search-btn {
     position: relative;
-    margin: 7px;
+    margin: 3px;
 }
 
 .message-btn {
     position: relative;
-    margin: 7px;
+    margin: 3px;
 }
 
 .notifications-btn {
     position: relative;
-    margin: 7px;
+    margin: 3px;
 }
 
 .search-btn::before, .message-btn::before, .notifications-btn::before {
