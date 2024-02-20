@@ -2,6 +2,7 @@ import { NavLink } from "react-router-dom";
 import slide from "../../images/slide.png";
 
 const Carousel2 = () => {
+    
     return ( 
         <>
         <div className="mt-[16px]">

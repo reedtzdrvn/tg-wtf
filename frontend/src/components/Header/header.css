@@ -20,10 +20,17 @@
 .header-logo {
     width: 57px;
     height: 50px;
+    
 }
 
 .company_name {
-    font-family: 'DM Sans', Helvetica, sans-serif
+    color: rgb(17, 17, 17);
+    font-family: DM Sans;
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 10px;
+    letter-spacing: -1%;
+    text-align: left;
 }
 
 .header-right-side div img {

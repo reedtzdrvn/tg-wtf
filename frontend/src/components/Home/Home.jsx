@@ -5,7 +5,7 @@ import background from "../../images/background.png"
 
 const Home = () => {
   return (
-    <div>
+    <div className="page">
       <Carousel1 />
       <Carousel2 />
       <div className="mx-[8.5%] mt-[32px] relative">
