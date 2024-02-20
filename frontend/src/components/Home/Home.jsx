@@ -25,7 +25,7 @@ const Home = () => {
         </div>
       </div>
       <div className="textlendunder mx-[8.5%] mt-[8px] text-center">
-      *We can do everything and even more. If something is not in our catalog, you can always place a special order.
+        *We can do everything and even more. If something is not in our catalog, you can always place a special order.
       </div>
     </div>
   );

@@ -1,0 +1,38 @@
+.HistoryTitle1{
+    font-family: Actor;
+    font-size: 24px;
+}
+.HistoryArtitle1{
+    color: rgb(106, 111, 135);
+    font-family: Nunito Sans;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: -1%;
+}
+.HistoryText1{
+    line-height: 16px;
+}
+
+.stringinfo{
+    border-top: solid 1px rgb(230, 239, 245);
+}
+.textOrderHistory{
+    color: rgb(35, 35, 35);
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 700;
+}
+.dateOrderHistory{
+    color: rgb(113, 142, 191);
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 400;
+    text-align: center;
+}
+.sumOrderHistory{
+    color: rgb(254, 92, 115);
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: right;
+}
