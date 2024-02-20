@@ -1,0 +1,11 @@
+.basket-list-item-button {
+  background-color: rgba(238, 238, 238, 1);
+  border-radius: 15px;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  font-family: Roboto;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 12px;
+  letter-spacing: 0.035em;
+  text-align: left;
+}
