@@ -7,6 +7,8 @@ import NoMatch from './components/NoMatch/NoMatch';
 import Home from './components/Home/Home';
 import Footer from './components/Footer/Footer';
 import Header from './components/Header/Header';
+import Status from "./components/Status/Status"
+import History from "./components/History/History"
 
 
 function App() {
@@ -19,6 +21,8 @@ function App() {
                     <Route exact path="/favorites" element={<Favorites />} />
                     <Route exact path="/basket" element={<Basket />} />
                     <Route exact path="/account" element={<Account />} />
+                    <Route exact path='/account/history' element={<History />} />
+                    <Route exact path='/account/status' element={<Status />} />
                     <Route exact path='/*' element={<NoMatch />} />
                 </Routes>
                 <Footer />
