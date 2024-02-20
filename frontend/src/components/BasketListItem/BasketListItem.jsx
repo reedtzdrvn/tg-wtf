@@ -26,14 +26,14 @@ const BasketListItem = ({ title, price, quantity, onQuantityChange }) => {
   return (
     <>
       <div className="basket-list-item mt-[12px] flex justify-between items-center">
-        <h3 className="font-bold">{title}</h3>
+        <h3 className="font-bold w-3/12">{title}</h3>
         <BasketListButton
           quantity={curr}
           increaseCurrentQuantity={increaseCurrentQuantity}
           decreaseCurrentQuantity={decreaseCurrentQuantity}
         />
-        <h3>${currPrice.toLocaleString()}</h3>
-        <div className="basket-list-item-action-wrapper flex items-center justify-center">
+        <h3 className="w-3/12 flex justify-center">${currPrice.toLocaleString()}</h3>
+        <div className="basket-list-item-action-wrapper flex items-center w-3/12 flex justify-end">
           <img src={DetailsItemIcon} width={15} height={15} />
           <img
             className="ml-[15px]"

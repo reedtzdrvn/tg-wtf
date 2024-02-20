@@ -91,10 +91,10 @@ const Basket = () => {
         </div>
         <div className="basket-list-items-wrapper px-[20px] mt-[35px]">
           <div className="basket-list-title flex justify-between">
-            <span>Position</span>
-            <span>Quantity</span>
-            <span>Price</span>
-            <span>Action</span>
+            <span className="w-3/12">Position</span>
+            <span className="w-3/12 text-center">Quantity</span>
+            <span className="w-3/12 text-center">Price</span>
+            <span className="w-3/12 flex justify-end">Action</span>
           </div>
           <div className="basket-list-items flex flex-col">
             {basketList.map((el) => (
