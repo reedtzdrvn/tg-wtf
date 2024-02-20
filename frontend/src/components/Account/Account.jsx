@@ -28,7 +28,7 @@ const Account = () => {
                         <div>
                             <img src={history} alt="1" className="w-[30px] h-[30px]"/>
                         </div>
-                        <div className="flex flex-col HistoryText">
+                        <div className="flex flex-col HistoryTextLo">
                             <div className="HistoryTitle">History</div>
                             <div className="HistoryArtitle ml-[14px]">12 transactions</div>
                         </div>
@@ -42,9 +42,9 @@ const Account = () => {
                         <div>
                             <img src={spinner} alt="1" className="w-[30px] h-[30px]"/>
                         </div>
-                        <div className="flex flex-col HistoryText">
-                            <div className="HistoryTitle">History</div>
-                            <div className="HistoryArtitle ml-[14px]">12 transactions</div>
+                        <div className="flex flex-col HistoryTextLo">
+                            <div className="HistoryTitle">Status</div>
+                            <div className="HistoryArtitle ml-[14px]">2 position</div>
                         </div>
                     </div>
                     <div>

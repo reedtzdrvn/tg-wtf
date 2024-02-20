@@ -21,16 +21,15 @@
     font-family: Nunito Sans;
     font-size: 16px;
     font-weight: 600;
-    line-height: 24px;
     letter-spacing: -1%;
-    text-align: left;
 }
 .HistoryArtitle{
     color: rgb(106, 111, 135);
     font-family: Nunito Sans;
     font-size: 12px;
     font-weight: 600;
-    line-height: 20px;
     letter-spacing: -1%;
-    text-align: left;
+}
+.HistoryTextLo{
+    line-height: 16px;
 }

@@ -30,7 +30,7 @@ const History = () => {
         },
     ]
     return ( 
-        <div className="mx-[8.5%] mt-[24px]">
+        <div className="mx-[8.5%] mt-[24px] page">
             <div className="flex gap-[10px] items-center">
                 <div><img src={history} alt="1" className="w-[30px] h-[30px]"/></div>
                 <div className="HistoryText1 flex flex-col -mb-[2px]">

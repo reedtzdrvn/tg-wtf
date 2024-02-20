@@ -122,3 +122,10 @@
     -webkit-background-clip: text;
     background-clip: text;
 }
+
+.CarouselSecond:first-child{
+  @apply pl-[8.5%]
+}
+.CarouselSecond:last-child{
+  @apply pr-[8.5%]
+}
