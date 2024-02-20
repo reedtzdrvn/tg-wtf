@@ -14,7 +14,7 @@ const BasketListButton = ({
       >
         -
       </span>
-      <span className="">{quantity}</span>
+      <span className="">{quantity.toString().padStart(2, '0')}</span>
       <span
         className="list-item-increase-quantity"
         onClick={increaseCurrentQuantity}

@@ -74,7 +74,7 @@ const Basket = () => {
                 Total Invested
                 <br /> Amount
               </span>
-              <span className="basket-total-price">{currentTotalSum}</span>
+              <span className="basket-total-price">{currentTotalSum.toLocaleString()}</span>
             </div>
           </div>
           <div className="basket-positions-wrapper flex justify-center items-center py-[20px] px-[15px]">
