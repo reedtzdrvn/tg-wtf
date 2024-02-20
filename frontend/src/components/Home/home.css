@@ -56,7 +56,7 @@
 
   
   .CarouselSecondSlide {
-    pointer-events: none;
+    /* pointer-events none: */
     user-select: none;
     border-radius: 25px;
     flex: 0 0 auto;

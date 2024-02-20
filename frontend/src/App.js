@@ -9,7 +9,7 @@ import Footer from './components/Footer/Footer';
 import Header from './components/Header/Header';
 import Status from "./components/Status/Status"
 import History from "./components/History/History"
-
+import CategoryItemsList from './components/CategoryItemsList/CategoryItemsList';
 
 function App() {
 
@@ -21,6 +21,7 @@ function App() {
                     <Route exact path="/favorites" element={<Favorites />} />
                     <Route exact path="/basket" element={<Basket />} />
                     <Route exact path="/account" element={<Account />} />
+                    <Route exact path='/categories/*' element={<CategoryItemsList />} />
                     <Route exact path='/account/history' element={<History />} />
                     <Route exact path='/account/status' element={<Status />} />
                     <Route exact path='/*' element={<NoMatch />} />
