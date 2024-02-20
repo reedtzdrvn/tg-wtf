@@ -19,7 +19,7 @@ const Footer = (props) => {
     console.log(location)
 
     return (
-        <div className="flex justify-center">
+        <div className="flex justify-center page">
             <div className="footer w-[90%] fixed flex items-center justify-between">
                 <ul className="footer-nav flex justify-around w-full">
                     <li>
