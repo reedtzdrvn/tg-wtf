@@ -108,6 +108,9 @@ const Basket = () => {
             ))}
           </div>
         </div>
+        <div className="basket-list-purchase mt-[20%] flex justify-center">
+                <span className="basket-list-purchase-button px-[88px] py-[12px]">I want this!</span>
+        </div>
       </div>
     </>
   );

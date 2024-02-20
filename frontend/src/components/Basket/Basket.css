@@ -32,47 +32,59 @@
 }
 
 .basket-information-wrapper {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
 }
 
 .basket-total-invested {
-    border: 1px solid rgba(22, 219, 204, 1);
-    border-radius: 15px;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(22, 219, 204, 1);
+  border-radius: 15px;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 }
 
 .basket-positions-wrapper {
-    border: 1px solid rgba(255, 130, 172, 1);
-    border-radius: 15px;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 130, 172, 1);
+  border-radius: 15px;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 }
 
 .basket-list-title {
-    border-bottom: 1px solid rgba(230, 239, 245, 1);
-    color: rgba(113, 142, 191, 1);
-    font-family: Inter;
-    font-size: 12px;
-    font-weight: 700;
-    line-height: 15px;
-    letter-spacing: 0em;
-    text-align: left;
+  border-bottom: 1px solid rgba(230, 239, 245, 1);
+  color: rgba(113, 142, 191, 1);
+  font-family: Inter;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 15px;
+  letter-spacing: 0em;
+  text-align: left;
 }
 
 .basket-list-title:last-child {
-    padding-right: 7px;
+  padding-right: 7px;
 }
 
 .basket-list-items-separator {
-    /* width: px; */
-    background-color: rgba(242, 244, 247, 1);
+  /* width: px; */
+  background-color: rgba(242, 244, 247, 1);
 }
 
 .basket-list-item {
-    font-family: Inter;
-    font-size: 12px;
-    font-weight: 400;
-    line-height: 15px;
-    letter-spacing: 0em;
-    text-align: left;
+  font-family: Inter;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 15px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+.basket-list-purchase-button {
+  background-color: rgba(17, 17, 17, 1);
+  border-radius: 10px;
+  color: white;
+  font-family: "DM Sans";
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: -0.01em;
+  text-align: left;
 }
