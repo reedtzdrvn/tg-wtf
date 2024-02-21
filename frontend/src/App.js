@@ -10,6 +10,7 @@ import Header from './components/Header/Header';
 import Status from "./components/Status/Status"
 import History from "./components/History/History"
 import CategoryItemsList from './components/CategoryItemsList/CategoryItemsList';
+import EspeciallyForYouPage from './components/EspeciallyForYouPage/EspeciallyForYouPage';
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
                     <Route exact path='/categories/*' element={<CategoryItemsList />} />
                     <Route exact path='/account/history' element={<History />} />
                     <Route exact path='/account/status' element={<Status />} />
+                    <Route exact path='/especially-for-you' element={<EspeciallyForYouPage />} />
                     <Route exact path='/*' element={<NoMatch />} />
                 </Routes>
                 <Footer />
