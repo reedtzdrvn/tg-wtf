@@ -1,0 +1,12 @@
+.swiper-button-prev {
+  background-image: url("../../images/card-item-carousel-left-btn.svg") !important;
+  background-repeat: no-repeat;
+}
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  display: none;
+}
+.swiper-button-next {
+  background-image: url("../../images/card-item-carousel-right-btn.svg") !important;
+  background-repeat: no-repeat;
+}
