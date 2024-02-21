@@ -2,6 +2,7 @@ import Carousel1 from "../Carousel1/Carousel1";
 import "./home.css";
 import Carousel2 from "../Carousel2/Carousel2";
 import background from "../../images/background.png"
+import { NavLink } from "react-router-dom";
 
 const Home = () => {
   return (
@@ -18,6 +19,9 @@ const Home = () => {
                 <div className="text-right">
                     FOR YOU
                 </div>
+            </div>
+            <div className="flex justify-center">
+                <NavLink to='/especially-for-you' className="mt-[6px] buttonlend flex justify-center items-center">Checkout</NavLink>
             </div>
         </div>
       </div>

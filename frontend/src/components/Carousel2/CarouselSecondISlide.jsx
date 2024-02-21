@@ -5,7 +5,7 @@ const CarouselSecondSlide = ({ imageSrc, title }) => {
 
   return (
     <div className="CarouselSecondSlide">
-      <NavLink to={path} state={{from: title}}>
+      <NavLink to={path} state={{from: title, path: path}}>
         <div className="relative ">
             <img src={imageSrc} alt="1" className="w-[150px] h-[210px]" />
             <div className="bg-blue text-white px-[2px] py-[4px] flex justify-center items-center absolute top-[152px] -left-[22px]">
