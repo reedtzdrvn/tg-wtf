@@ -1,7 +1,7 @@
 import Image1 from "../../images/image1.png";
 import CardItem from "../CardItem/CardItem";
 
-import { useLocation } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 
 const CategoryItemsList = (props) => {
   const location = useLocation();
@@ -46,18 +46,22 @@ const CategoryItemsList = (props) => {
     <>
       <div className="page px-[8.5%]">
         <div className="category-items-list-title mt-[5px]">
-          <span className="text-[24px]" style={{fontFamily: 'Actor'}}>{state.from}</span>
+          <span className="text-[24px]" style={{ fontFamily: "Actor" }}>
+            {state.from}
+          </span>
         </div>
         <div className="category-items-list-wrapper grid grid-cols-2 gap-[20px] mt-[15px]">
           {ItemsFromSelecterCategory.map((el) => (
-            <CardItem
-              title={el.title}
-              price={el.price}
-              image={el.image}
-              isFavorite={el.isFavorite}
-              isAvailable={el.isAvailable}
-              key={el.id}
-            />
+            <NavLink to={'item-details/' + state.path + '/' + el.id}>
+              <CardItem
+                title={el.title}
+                price={el.price}
+                image={el.image}
+                isFavorite={el.isFavorite}
+                isAvailable={el.isAvailable}
+                key={el.id}
+              />
+            </NavLink>
           ))}
         </div>
       </div>
