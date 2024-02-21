@@ -19,9 +19,6 @@ const Home = () => {
                     FOR YOU
                 </div>
             </div>
-            <div className="flex justify-center">
-                <button className="mt-[6px] buttonlend flex justify-center items-center">Checkout</button>
-            </div>
         </div>
       </div>
       <div className="textlendunder mx-[8.5%] mt-[8px] text-center">
