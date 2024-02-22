@@ -1,23 +1,29 @@
 import { useState } from "react";
+import { NavLink, useLocation } from 'react-router-dom'
+
 import slide1 from "../../images/detail-item-slide1.png";
 import slide2 from "../../images/detail-item-slide2.jpg";
 import slide3 from "../../images/detail-item-slide3.jpg";
+import returnIcon from "../../images/return-button.svg";
 import CardItemCarousel from "./CardItemCarousel";
 import CardItemSizeButton from "./CardItemSizeButton";
 
 import CardItemStars from "./CardItemStars";
 
 const CardItemDetails = (props) => {
-  const [currentSize, setCurrentSize] = useState('')
+  const location = useLocation();
+  const { state } = location;
+
+  const [currentSize, setCurrentSize] = useState("");
 
   const chooseCurrentSizeHandler = (size) => {
-    if (currentSize === '') {
+    if (currentSize === "") {
       setCurrentSize(size);
     }
     if (currentSize === size) {
-      setCurrentSize('')
+      setCurrentSize("");
     }
-  }
+  };
 
   const item = {
     title: "Cappadacia",
@@ -31,12 +37,18 @@ const CardItemDetails = (props) => {
     reviewsCount: 653,
     starsCount: 4,
     images: [slide1, slide2, slide3],
+    category: 'Hockey uniform'
   };
 
   return (
     <>
       <div>
         <CardItemCarousel images={item.images} />
+        <NavLink to={`/categories/${state.from}`} state={{category: item.category}}>
+          <div className="card-item-details-return-button flex justify-center items-center absolute left-[20px] top-[25px]">
+            <img className="m-[10px]" src={returnIcon} width={20} height={20} />
+          </div>
+        </NavLink>
         <div className="card-item-details-wrapper absolute top-[55%] w-full">
           <div className="card-item-details-title-wrapper flex justify-between items-center">
             <div className="card-item-details-title-left-side">
@@ -64,13 +76,17 @@ const CardItemDetails = (props) => {
             <span className="card-item-details-size-title">Size</span>
             <div className="mt-[10px]">
               {item.availableSizes.map((size) => (
-                <CardItemSizeButton currentSize={currentSize} chooseCurrentSizeHandler={chooseCurrentSizeHandler} size={size} />
+                <CardItemSizeButton
+                  currentSize={currentSize}
+                  chooseCurrentSizeHandler={chooseCurrentSizeHandler}
+                  size={size}
+                />
               ))}
             </div>
           </div>
 
           <div className="card-item-details-description ml-[20px] mr-[25px] mt-[25px]">
-              {item.description}
+            {item.description}
           </div>
         </div>
       </div>

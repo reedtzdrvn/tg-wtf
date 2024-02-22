@@ -6,7 +6,7 @@ import { NavLink, useLocation } from "react-router-dom";
 const CategoryItemsList = (props) => {
   const location = useLocation();
   const { state } = location;
-  console.log(state.pathTitle)
+
   const ItemsFromSelecterCategory = [
     {
       id: 1,
@@ -47,12 +47,12 @@ const CategoryItemsList = (props) => {
       <div className="page px-[8.5%]">
         <div className="category-items-list-title mt-[5px]">
           <span className="text-[24px]" style={{ fontFamily: "Actor" }}>
-            {state.from}
+            {state.category}
           </span>
         </div>
         <div className="category-items-list-wrapper grid grid-cols-2 gap-[20px] mt-[15px]">
           {ItemsFromSelecterCategory.map((el) => (
-            <NavLink to={'item-details/' + state.pathTitle + '/' + el.id}>
+            <NavLink to={'item-details/' + state.pathTitle + '/' + el.id} state={{from: state.pathTitle}}>
               <CardItem
                 title={el.title}
                 price={el.price}
