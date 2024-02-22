@@ -22,7 +22,6 @@
 
 .lend{
     font-family: "Inter";
-    font-family: Inter;
     font-size: 40px;
     font-weight: 900;
     line-height: 32px;
@@ -30,12 +29,60 @@
     text-align: center;
 }
 
-.input-1 div input{
+.input1 div input{
+    font-family: "Inter";
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 15px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #718EBF;
+
+    padding: 15px;
     margin-top: 10px;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
     height: 40px;
     width: 100%;
     border: 1px solid #DFEAF2;
     border-radius: 10px;
+  }
+
+  .textarea1 div textarea{
+    font-family: "Inter";
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 15px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #718EBF;
+
+    padding: 15px;
+    margin-top: 10px;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    height: 129px;
+    width: 100%;
+    border: 1px solid #DFEAF2;
+    border-radius: 10px;
+  }
+
+  .textarea1 label{
+    font-family: "Inter";
+    font-size: 13px;
+  }
+
+  .input1 label{
+    font-family: "Inter";
+    font-size: 13px;
+  }
+
+  .buttonnextESP{
+    margin-top: 123px;
+    height: 44px;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    padding: 12px, 10px, 12px, 10px;
+    border-radius: 10px;
+    gap: 10px;
+    font-size: 14px;
+    font-family: sans-serif;
   }
 
