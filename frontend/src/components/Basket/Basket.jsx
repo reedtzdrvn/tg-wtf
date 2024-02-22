@@ -74,7 +74,9 @@ const Basket = () => {
                 Total Invested
                 <br /> Amount
               </span>
-              <span className="basket-total-price">{currentTotalSum.toLocaleString()}</span>
+              <span className="basket-total-price">
+                {currentTotalSum.toLocaleString()}
+              </span>
             </div>
           </div>
           <div className="basket-positions-wrapper flex justify-center items-center py-[20px] px-[15px]">
@@ -85,7 +87,9 @@ const Basket = () => {
               <span className="basket-total-positions-title block">
                 Positions
               </span>
-              <span className="basket-total-positions-count">{basketList.length}</span>
+              <span className="basket-total-positions-count">
+                {basketList.length}
+              </span>
             </div>
           </div>
         </div>
@@ -109,7 +113,9 @@ const Basket = () => {
           </div>
         </div>
         <div className="basket-list-purchase mt-[20%] flex justify-center">
-                <span className="basket-list-purchase-button px-[88px] py-[12px]">I want this!</span>
+          <span className="basket-list-purchase-button px-[88px] py-[12px]">
+            I want this!
+          </span>
         </div>
       </div>
     </>
