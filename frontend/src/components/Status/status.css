@@ -43,3 +43,12 @@
 .lolgreen{
     fill: green;
 }
+.loltext span{
+    font-size: 10px;
+}
+.ststusInform{
+    background-color: white;
+}
+.hidden {
+    display: none;
+}

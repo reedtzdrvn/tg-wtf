@@ -25,7 +25,7 @@ const EspeciallyForYouPage = () => {
       <form onSubmit={handleSubmit}>
         <div className="mx-[8.5%] mt-[32px] relative">
           <img src={background} alt="Background" className="imgbanner" />
-          <div className="absolute top-0 bottom-0 w-full text-white px-[10%] py-[12px] h-max">
+          <div className="absolute top-0 bottom-0 w-full text-white px-[10%] py-[40px] h-152px[]">
             <div className="lend flex flex-col gap-2 leading-10 font-bold">
               <div className="text-left">ESPECIALLY</div>
               <div className="text-right">FOR YOU</div>

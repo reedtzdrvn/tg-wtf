@@ -11,7 +11,7 @@ const Home = () => {
       <Carousel2 />
       <div className="mx-[8.5%] mt-[32px] relative">
         <img src={background} alt="1" className="imghomepage"/>
-        <div className="absolute top-0 w-full text-white px-[10%] py-[12px]">
+        <div className="absolute top-0 w-full text-white px-[10%] py-[12px] h-[152px] py-[20px]">
             <div className="lend flex flex-col gap-2 leading-10 font-bold">
                 <div className="text-left">
                     ESPECIALLY
@@ -31,5 +31,5 @@ const Home = () => {
     </div>
   );
 };
-
+  
 export default Home;

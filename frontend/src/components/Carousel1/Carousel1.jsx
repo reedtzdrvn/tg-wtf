@@ -7,6 +7,7 @@ const Carousel1 = () => {
   const [touchStartX, setTouchStartX] = useState(0);
   const [touchEndX, setTouchEndX] = useState(0);
   const [intervalId, setIntervalId] = useState(null);
+  const [isSwiping, setIsSwiping] = useState(false);
 
   useEffect(() => {
     const id = setInterval(() => {
@@ -19,21 +20,27 @@ const Carousel1 = () => {
 
   const handleStart = (clientX) => {
     setTouchStartX(clientX);
+    setIsSwiping(true);
   };
 
   const handleMove = (clientX) => {
-    setTouchEndX(clientX);
+    if (isSwiping) {
+      setTouchEndX(clientX);
+    }
   };
 
   const handleEnd = () => {
-    handleSwipe();
-    setTouchStartX(0);
-    setTouchEndX(0);
+    if (isSwiping) {
+      handleSwipe();
+      setIsSwiping(false);
+      setTouchStartX(0);
+      setTouchEndX(0);
+    }
   };
 
   const handleSwipe = () => {
     const difference = touchEndX - touchStartX;
-    if (Math.abs(difference) > 50) {
+    if (Math.abs(difference) > 50 && parseInt(Math.abs(difference))!==Math.abs(difference) ) {
       if (difference > 0) {
         setCurrentSlide((prevSlide) => (prevSlide === 0 ? 3 : prevSlide - 1));
       } else {
@@ -56,10 +63,9 @@ const Carousel1 = () => {
               <div
                 className="fill"
                 style={{
-                    width: currentSlide === index ? "100%" :  "0",
-                    transition: currentSlide === index ? "width 10s" : "none",
-                  }}
-                  
+                  width: currentSlide === index ? "100%" : "0",
+                  transition: currentSlide === index ? "width 10s" : "none",
+                }}
               ></div>
             </div>
           ))}
