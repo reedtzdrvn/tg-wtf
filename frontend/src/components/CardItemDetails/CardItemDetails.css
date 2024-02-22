@@ -10,3 +10,82 @@
   background-image: url("../../images/card-item-carousel-right-btn.svg") !important;
   background-repeat: no-repeat;
 }
+
+.card-item-details-wrapper {
+  background-color: #fff;
+  border-radius: 40px 40px 0px 0px;
+  z-index: 1;
+  height: -webkit-fill-available;
+}
+
+.card-item-details-title-wrapper {
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-top: 30px;
+  font-family: Roboto;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 21px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+.card-item-details-title-ratings,
+.card-item-details-estimateDelTime {
+  font-family: "DM Sans";
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: -0.02em;
+  color: rgba(141, 138, 138, 1);
+
+  text-align: left;
+}
+
+.card-item-details-dollar-sign {
+  color: rgba(255, 122, 26, 1);
+}
+
+.card-item-details-size-title {
+  font-family: Roboto;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 18px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #000;
+}
+
+.card-item-details-size-button {
+  box-shadow: 2px 2px 15px 0px rgba(0, 0, 0, 0.25);
+  font-family: "Roboto";
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 18px;
+  letter-spacing: 0em;
+  text-align: left;
+  padding: 8px 12px;
+  margin-right: 10px;
+  border-radius: 8px;
+}
+
+.card-item-details-description {
+  font-family: "Roboto";
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 18px;
+  letter-spacing: 0.05em;
+  text-align: left;
+  color: rgba(130, 130, 130, 1);
+}
+
+.active-item-details-size-button {
+    background-color: rgba(240, 145, 255, 1);
+}
+
+.card-item-details-return-button {
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    background-color: #fff;
+    z-index: 1;
+    border-radius: 15px;
+}

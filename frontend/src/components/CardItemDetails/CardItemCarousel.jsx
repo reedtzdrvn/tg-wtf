@@ -1,25 +1,32 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState } from "react";
 // Import Swiper React components
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { Swiper, SwiperSlide } from "swiper/react";
 
 // Import Swiper styles
-import 'swiper/css';
-import 'swiper/css/navigation';
+import "swiper/css";
+import "swiper/css/navigation";
 
-import './CardItemDetails.css';
+import "./CardItemDetails.css";
 
-import { Navigation } from 'swiper/modules';
+import { Navigation } from "swiper/modules";
 
-const CardItemCarousel = ({images}) => {
+const CardItemCarousel = ({ images }) => {
   return (
     <>
-      <Swiper navigation={true} modules={[Navigation]} className="h-[70vh]">
-        {images.map(imgSrc => (
-            <SwiperSlide><img className='w-full h-full' src={imgSrc} /></SwiperSlide>
+      <Swiper
+        loop={true}
+        navigation={true}
+        modules={[Navigation]}
+        className="h-[70vh]"
+      >
+        {images.map((imgSrc) => (
+          <SwiperSlide>
+            <img className="w-full h-full" src={imgSrc} />
+          </SwiperSlide>
         ))}
       </Swiper>
     </>
   );
-}
+};
 
-export default CardItemCarousel
+export default CardItemCarousel;
