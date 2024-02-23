@@ -67,3 +67,13 @@
     -webkit-mask-composite: xor;
             mask-composite: exclude; 
 }
+
+.blacked-out {
+    background-color: #000;
+    border-radius: 25px;
+}
+
+.blacked-out img {
+    height: 27px;
+    width: 27px;
+}

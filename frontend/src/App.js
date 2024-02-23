@@ -16,6 +16,7 @@ import EspeciallyForYouPage from "./components/EspeciallyForYouPage/EspeciallyFo
 import CardItemDetails from "./components/CardItemDetails/CardItemDetails";
 import Pay from "./components/Pay/Pay";
 import CategoriesList from "./components/CategoriesList/CategoriesList";
+import Notifications from "./components/Notifications/Notifications";
 
 function App() {
   const location = useLocation();
@@ -26,6 +27,7 @@ function App() {
       {!pathname.includes("/categories/item-details/") ? <Header /> : ""}
       <Routes>
         <Route exact path="/" element={<Home />} />
+        <Route exact path="/notifications" element={<Notifications />} />
         <Route exact path="/favorites" element={<Favorites />} />
         <Route exact path="/basket" element={<Basket />} />
         <Route exact path="/account" element={<Account />} />
