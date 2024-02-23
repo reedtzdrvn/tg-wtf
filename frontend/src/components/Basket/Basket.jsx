@@ -2,10 +2,10 @@ import { useState } from "react";
 import BasketIcon from "../../images/basket-icon.svg";
 import Moneybag from "../../images/moneybag.svg";
 import PositionsIcon from "../../images/positions-icon.svg";
-
 import BasketListItem from "../BasketListItem/BasketListItem";
 
 import "./Basket.css";
+import { NavLink } from "react-router-dom";
 
 const Basket = () => {
   const basketList = [
@@ -113,9 +113,10 @@ const Basket = () => {
           </div>
         </div>
         <div className="basket-list-purchase mt-[20%] flex justify-center">
-          <span className="basket-list-purchase-button px-[88px] py-[12px]">
-            I want this!
-          </span>
+          <NavLink to='/basket/placingorder'
+               className="basket-list-purchase-button px-[88px] py-[12px]">
+              I want this!
+          </NavLink>
         </div>
       </div>
     </>

@@ -15,8 +15,6 @@ import './footer.css'
 const Footer = (props) => {
     const location = useLocation();
     const currentPath = location.pathname;
-    console.log(currentPath)
-    console.log(location)
 
     return (
         <div className="flex justify-center page">
