@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { NavLink, useLocation } from 'react-router-dom'
+import { NavLink, useLocation } from "react-router-dom";
 
 import slide1 from "../../images/detail-item-slide1.png";
 import slide2 from "../../images/detail-item-slide2.jpg";
@@ -7,21 +7,37 @@ import slide3 from "../../images/detail-item-slide3.jpg";
 import returnIcon from "../../images/return-button.svg";
 import CardItemCarousel from "./CardItemCarousel";
 import CardItemSizeButton from "./CardItemSizeButton";
+import CardItemDetailsBasketButton from "./CardItemDetailsBasketButton";
 
 import CardItemStars from "./CardItemStars";
 
 const CardItemDetails = (props) => {
+  const [currentAmount, setCurrentAmount] = useState(0);
+  const [currentSize, setCurrentSize] = useState("");
+
   const location = useLocation();
   const { state } = location;
 
-  const [currentSize, setCurrentSize] = useState("");
+  const increaseAmountHandler = () => {
+    setCurrentAmount(currentAmount + 1);
+  };
+
+  const decreaseAmountHandler = () => {
+    if (currentAmount > 1) {
+      setCurrentAmount(currentAmount - 1);
+    } else {
+      setCurrentAmount(0);
+      setCurrentSize("");
+    }
+  };
 
   const chooseCurrentSizeHandler = (size) => {
-    if (currentSize === "") {
-      setCurrentSize(size);
-    }
     if (currentSize === size) {
       setCurrentSize("");
+      setCurrentAmount(0)
+    } else {
+      setCurrentSize(size);
+      setCurrentAmount(1);
     }
   };
 
@@ -37,14 +53,17 @@ const CardItemDetails = (props) => {
     reviewsCount: 653,
     starsCount: 4,
     images: [slide1, slide2, slide3],
-    category: 'Hockey uniform'
+    category: "Hockey uniform",
   };
 
   return (
     <>
       <div>
         <CardItemCarousel images={item.images} />
-        <NavLink to={`/categories/${state.from}`} state={{category: item.category}}>
+        <NavLink
+          to={`/categories/${state.from}`}
+          state={{ category: item.category, pathTitle: item.category.toLowerCase().replace(/\s/g, "-") }}
+        >
           <div className="card-item-details-return-button flex justify-center items-center absolute left-[20px] top-[25px]">
             <img className="m-[10px]" src={returnIcon} width={20} height={20} />
           </div>
@@ -65,7 +84,12 @@ const CardItemDetails = (props) => {
             <div className="card-item-details-title-right-side flex flex-col justify-center items-center">
               <div>
                 <span className="card-item-details-dollar-sign">$</span>
-                <span> {item.price}</span>
+                <span>
+                  {" "}
+                  {currentAmount === 0
+                    ? item.price
+                    : item.price * currentAmount}
+                </span>
               </div>
               <div className="card-item-details-estimateDelTime">
                 {item.estimateDeliveryTime} days
@@ -88,6 +112,12 @@ const CardItemDetails = (props) => {
           <div className="card-item-details-description ml-[20px] mr-[25px] mt-[25px]">
             {item.description}
           </div>
+
+          <CardItemDetailsBasketButton
+            increaseAmountHandler={increaseAmountHandler}
+            decreaseAmountHandler={decreaseAmountHandler}
+            currentAmount={currentAmount}
+          />
         </div>
       </div>
     </>
