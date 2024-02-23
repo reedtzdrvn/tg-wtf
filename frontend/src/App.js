@@ -14,6 +14,7 @@ import History from "./components/History/History";
 import CategoryItemsList from "./components/CategoryItemsList/CategoryItemsList";
 import EspeciallyForYouPage from "./components/EspeciallyForYouPage/EspeciallyForYouPage";
 import CardItemDetails from "./components/CardItemDetails/CardItemDetails";
+import Pay from "./components/Pay/Pay";
 
 function App() {
   const location = useLocation();
@@ -40,6 +41,7 @@ function App() {
           path="/especially-for-you"
           element={<EspeciallyForYouPage />}
         />
+        <Route exact path="/basket/payment" element={<Pay />}/>
         <Route exact path="/*" element={<NoMatch />} />
       </Routes>
       {!pathname.includes("/categories/item-details/") ? <Footer /> : ""}
