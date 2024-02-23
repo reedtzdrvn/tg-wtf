@@ -43,7 +43,7 @@
 }
 
 .card-item-details-dollar-sign {
-  color: rgba(255, 122, 26, 1);
+  color: rgba(255, 122, 26, 1) !important;
 }
 
 .card-item-details-size-title {
@@ -115,7 +115,8 @@
   text-align: left;
 }
 
-.amount-button-increase-circle, .amount-button-decrease-circle {
+.amount-button-increase-circle,
+.amount-button-decrease-circle {
   font-size: 26px;
   font-weight: normal;
   width: 36px;
@@ -129,5 +130,88 @@
   align-items: center;
 }
 
-.amount-button-sign {
+.card-item-details-ratings-title-left-side-header,
+.card-item-details-current-price,
+.card-item-details-dollar-sign {
+  font-family: Roboto;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 21px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: rgb(0, 0, 0);
+}
+
+.card-item-details-ratings-title-left-side-deltime {
+  font-family: Roboto;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 14px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: rgba(130, 130, 130, 1);
+}
+
+.card-item-details-ratings-score {
+  font-family: Manrope;
+  font-size: 40px;
+  font-weight: 800;
+  line-height: 96px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+ul li span {
+  font-family: Manrope;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 18px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: rgba(106, 106, 106, 1);
+}
+
+.card-item-details-ratings-rectangle {
+  border-radius: 25px;
+  background: linear-gradient(269.85deg, #6d21b1 0%, #5d5dff 65.66%);
+}
+
+.card-item-details-ratings-reviews-count {
+  border-radius: 25px;
+  background-color: rgba(5, 5, 5, 1);
+  font-family: Manrope;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 15px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: rgba(255, 255, 255, 1);
+}
+
+.card-item-details-ratings-reviews-title {
+  font-family: Manrope;
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 40px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+.card-item-details-ratings-reviews-subtitle {
+  font-family: Manrope;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 36px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+.card-item-details-ratings-all-reviews-text {
+  font-family: Manrope;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 36px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: rgba(93, 93, 255, 1);
 }
