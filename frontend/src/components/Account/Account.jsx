@@ -15,7 +15,7 @@ const Account = () => {
                         </div>
                     </div>
                     <div>
-                        <button className="px-[12px] buttonEditPforile flex items-center justify-center">Edit Profile</button>
+                        <button className="buttonEditPforile flex items-center justify-center">Edit Profile</button>
                     </div>
                 </div>
                 <div className="iconMain flex items-center justify-end">
