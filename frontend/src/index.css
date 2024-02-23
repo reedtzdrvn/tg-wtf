@@ -9,3 +9,9 @@ body{
     height: 100vh;
     background-color: white;
 }
+::-webkit-scrollbar {
+    display: none; /* Для вебкит-браузеров (Chrome, Safari, Opera) */
+}
+html {
+    scrollbar-width: none;
+}

@@ -1,10 +1,10 @@
 .buttonEditPforile{
     background-color: rgb(32, 34, 43);
     color: rgb(1, 219, 165);
-    width: 84px;
     height: 20px;
     font-size: 12px;
     border-radius: 16px;
+    @apply px-[10px]
 }
 .number{
     font-weight: 600;

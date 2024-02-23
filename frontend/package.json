@@ -15,7 +15,9 @@
     "react-scripts": "5.0.1",
     "sort-by": "^1.2.0",
     "swiper": "^11.0.6",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "react-phone-input-2": "^2.15.1",
+    "react-phone-number-input": "^3.3.9"
   },
   "scripts": {
     "start": "react-scripts start",

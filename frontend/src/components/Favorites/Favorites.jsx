@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import HeartIcon from "../../images/heart.svg";
 
 import Image1 from "../../images/image1.png";
@@ -14,6 +15,7 @@ const Favorites = () => {
       image: Image1,
       isFavorite: true,
       isAvailable: true,
+      category: "Hockey uniform",
     },
     {
       id: 2,
@@ -22,6 +24,7 @@ const Favorites = () => {
       image: Image2,
       isFavorite: true,
       isAvailable: true,
+      category: "Football uniform",
     },
     {
       id: 3,
@@ -30,6 +33,7 @@ const Favorites = () => {
       image: Image1,
       isFavorite: true,
       isAvailable: true,
+      category: "Hockey uniform",
     },
     {
       id: 4,
@@ -38,6 +42,7 @@ const Favorites = () => {
       image: Image2,
       isFavorite: true,
       isAvailable: false,
+      category: "Casual",
     },
     {
       id: 5,
@@ -46,6 +51,7 @@ const Favorites = () => {
       image: Image1,
       isFavorite: true,
       isAvailable: false,
+      category: "Streetwear",
     },
     {
       id: 6,
@@ -54,6 +60,7 @@ const Favorites = () => {
       image: Image2,
       isFavorite: true,
       isAvailable: true,
+      category: "Techno",
     },
   ];
 
@@ -74,14 +81,28 @@ const Favorites = () => {
 
         <div className="cards grid grid-cols-2 gap-[20px] mt-[15px]">
           {favorites.map((el) => (
-            <CardItem
-              title={el.title}
-              price={el.price}
-              image={el.image}
-              isFavorite={el.isFavorite}
-              isAvailable={el.isAvailable}
-              key={el.id}
-            />
+            <NavLink
+              to={
+                "/categories/item-details/" +
+                el.category.toLowerCase().replace(/\s/g, "-") +
+                "/" +
+                el.id
+              }
+              state={{
+                category: el.category,
+                pathTitle: el.category.toLowerCase().replace(/\s/g, "-"),
+                from: el.category.toLowerCase().replace(/\s/g, "-")
+              }}
+            >
+              <CardItem
+                title={el.title}
+                price={el.price}
+                image={el.image}
+                isFavorite={el.isFavorite}
+                isAvailable={el.isAvailable}
+                key={el.id}
+              />
+            </NavLink>
           ))}
         </div>
       </div>

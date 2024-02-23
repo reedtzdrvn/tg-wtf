@@ -1,0 +1,192 @@
+.PlacingTextTitle{
+    color: rgb(17, 17, 17);
+    font-family: Actor;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 32px;
+    letter-spacing: 0%;
+    text-align: center;
+}
+.titleStage{
+    color: rgb(1, 219, 165);
+    font-family: Inter;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: -1%;
+    border-radius: 10px;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    background: rgb(17, 17, 17);
+    @apply px-[10px] h-[22px] flex items-center
+}
+.inputPlacing{
+    outline:none;
+    box-sizing: border-box;
+    border: 1px solid rgb(223, 234, 242);
+    border-radius: 10px;
+    height: 40px;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    background: rgb(255, 255, 255);
+    color: rgb(113, 142, 191);
+    font-family: Inter;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0%;
+    text-align: left;
+    @apply px-[18px] 
+}
+
+.labelPlacingInput{
+    color: rgb(35, 35, 35);
+    font-family: Inter;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0%;
+}
+.ddff{
+    color: rgb(46, 66, 247);
+}
+.lolkek{
+    height: 130px !important;
+    resize: none
+}
+
+
+
+.react-tel-input{
+    width: 140px !important;
+    height: 40px !important;
+    
+}
+.react-tel-input .form-control {
+    position: absolute !important;
+    left: 0 !important;
+    margin-left: 48px !important;
+    padding: 0 !important;
+    padding-left: 9px !important;
+    padding-right: 9px !important;
+    box-sizing: border-box !important ; 
+    border: 1px solid rgb(223, 234, 242) !important;
+    border-radius: 10px !important;
+    background: rgb(255, 255, 255) !important;
+    height: 40px !important;
+    color: rgb(113, 142, 191);
+    font-family: Inter;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 15px;
+    letter-spacing: 0%;
+    text-align: left;
+    width: 100% !important;
+} 
+.flag-dropdown {
+    box-sizing: border-box !important ; 
+    border: 1px solid rgb(223, 234, 242) !important;
+    border-radius: 10px !important;
+    background: rgb(255, 255, 255) !important;
+    height: 40px !important;
+}
+.butonAdditional{
+    border-radius: 10px;
+    color: rgb(255, 255, 255);
+    font-family: DM Sans;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 20px;
+    letter-spacing: -1%;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    background: rgb(17, 17, 17);
+    margin-left: 52px;
+}
+.nextPageButton{
+    border-radius: 10px;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    background: rgb(17, 17, 17);
+    color: rgb(255, 255, 255);
+    font-family: DM Sans;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    letter-spacing: -1%;
+    height: 44px;
+}
+.butonAdditional2{
+    border-radius: 10px;
+    color: rgb(255, 255, 255);
+    font-family: DM Sans;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 20px;
+    letter-spacing: -1%;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    background: rgb(17, 17, 17);
+}
+
+.infoTitle{
+    color: rgb(35, 35, 35);
+    font-family: Inter;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 16px;
+    letter-spacing: 0%;
+}
+.infoInfo{
+    color: rgb(113, 142, 191);
+font-family: Inter;
+font-size: 12px;
+font-weight: 400;
+line-height: 15px;
+letter-spacing: 0px;
+}
+.divInfoOrder{
+    padding: 6px;
+    border-bottom: 1px solid rgb(242, 244, 247);
+}
+.kkff{
+    text-align: left;
+    color: rgb(17, 17, 17);
+    font-family: Actor;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 25px;
+    letter-spacing: 0%;
+    text-align: left;
+}
+.texttableorder{
+    color: rgb(113, 142, 191);
+    font-family: Inter;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 15px;
+    letter-spacing: 0%;
+    border-bottom: 1px solid rgb(242, 244, 247);
+    padding-bottom: 4px;
+}
+.texttableorder2{
+    color: rgb(35, 35, 35);
+    font-family: Inter;
+    font-size: 12px;
+    font-weight: 800;
+    line-height: 15px;
+    letter-spacing: 0%;
+    border-bottom: 1px solid rgb(242, 244, 247);
+    @apply py-[8px]
+}
+.ddfftt{
+    text-align: right;
+}
+.totalpriceinfo{
+    color: rgb(35, 35, 35);
+    font-family: Inter;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 15px;
+    letter-spacing: 0%;
+}
+.pricetotalsunorder{
+    color: rgb(35, 35, 35);
+    font-family: Inter;
+    font-size: 12px;
+    font-weight: 800;
+    line-height: 15px;
+    letter-spacing: 0%;
+}
