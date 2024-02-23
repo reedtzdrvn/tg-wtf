@@ -34,7 +34,7 @@ const CardItem = ({ title, price, image, isFavorite, isAvailable }) => {
           )}
         </div>
         <div className="card-item-title">{title}</div>
-        <div className="card-item-price">{price}$</div>
+        {price !== null ? <div className="card-item-price">{price}$</div> : ''}
       </div>
     </>
   );

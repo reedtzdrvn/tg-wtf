@@ -15,6 +15,7 @@ import CategoryItemsList from "./components/CategoryItemsList/CategoryItemsList"
 import EspeciallyForYouPage from "./components/EspeciallyForYouPage/EspeciallyForYouPage";
 import CardItemDetails from "./components/CardItemDetails/CardItemDetails";
 import Pay from "./components/Pay/Pay";
+import CategoriesList from "./components/CategoriesList/CategoriesList";
 
 function App() {
   const location = useLocation();
@@ -29,6 +30,7 @@ function App() {
         <Route exact path="/basket" element={<Basket />} />
         <Route exact path="/account" element={<Account />} />
         <Route exact path="/categories/*" element={<CategoryItemsList />} />
+        <Route exact path="/categories" element={<CategoriesList />} />
         <Route
           exact
           path="/categories/item-details/*"

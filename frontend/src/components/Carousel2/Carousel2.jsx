@@ -41,7 +41,7 @@ const Carousel2 = () => {
         </div>
       </div>
       <div className="mt-[32px] flex justify-center items-center">
-        <NavLink to="/">
+        <NavLink to="/categories">
           <button className="bg-black text-white flex justify-center items-center buttonview">
             View all
           </button>
