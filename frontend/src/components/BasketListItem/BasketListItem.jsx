@@ -32,7 +32,7 @@ const BasketListItem = ({ title, price, quantity, onQuantityChange }) => {
           increaseCurrentQuantity={increaseCurrentQuantity}
           decreaseCurrentQuantity={decreaseCurrentQuantity}
         />
-        <h3 className="w-3/12 flex justify-center">${currPrice.toLocaleString()}</h3>
+        <h3 className="w-3/12 flex justify-center">${currPrice.toLocaleString('en-US')}</h3>
         <div className="basket-list-item-action-wrapper flex items-center w-3/12 flex justify-end">
           <img src={DetailsItemIcon} width={15} height={15} />
           <img
