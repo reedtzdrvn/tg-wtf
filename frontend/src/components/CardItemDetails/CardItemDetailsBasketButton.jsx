@@ -1,5 +1,6 @@
 import increaseAmountIcon from "../../images/increase-amount-icon.svg";
 import decreaseAmountIcon from "../../images/decrease-amount-icon.svg";
+import { NavLink } from "react-router-dom";
 
 const CardItemDetailsBasketButton = ({
   currentAmount,
@@ -27,7 +28,9 @@ const CardItemDetailsBasketButton = ({
             </div>
           </div>
           <div className="add-to-basket-button-wrapper">
-            <button className="add-to-basket-button">Add to Basket</button>
+            <NavLink to={"/basket"}>
+              <button className="add-to-basket-button">Add to Basket</button>
+            </NavLink>
           </div>
         </div>
       ) : (

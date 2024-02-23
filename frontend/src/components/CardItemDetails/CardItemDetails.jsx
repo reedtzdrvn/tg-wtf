@@ -37,7 +37,7 @@ const CardItemDetails = (props) => {
       setCurrentAmount(0)
     } else {
       setCurrentSize(size);
-      setCurrentAmount(1);
+      if (currentAmount === 0) setCurrentAmount(1)
     }
   };
 
@@ -74,7 +74,7 @@ const CardItemDetails = (props) => {
               <span>{item.title}</span>
               <div className="card-item-details-title-ratings flex justify-start items-center">
                 <CardItemStars starCount={item.starsCount} />
-                <div className="ml-[8px]">
+                <div className="ml-[8px] mt-[3px]">
                   <span>{item.ratingsCount} Ratings</span>
                   <span> | </span>
                   <span>{item.learnersCount} Learners</span>
