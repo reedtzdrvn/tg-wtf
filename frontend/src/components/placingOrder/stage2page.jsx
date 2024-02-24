@@ -3,20 +3,33 @@ const Stage2Page = (props) => {
 
     const [editional, setEditional] = useState(false)
 
+    const handleNextClick = () => {
+        if (
+            props.address.trim() === "" ||
+            props.appNumber.trim() === "" ||
+            props.postcode1.trim() === ""
+        ) {
+            alert("Пожалуйста, заполните все поля.");
+            return;
+        }
+
+        props.setStage(3);
+    };
+
     return ( 
         <div className="formOrderPlacingStage1 flex flex-col gap-[16px] mt-[20px]">
              <div className="flex flex-col gap-[8px]">
-                <label className="labelPlacingInput" htmlFor="Adress">Present Address</label>
-                <input id="Adress" type="text" value={props.address} onChange={(e) => props.setAddress(e.target.value)} placeholder="San Jose, California, USA" className="inputPlacing"/>
+                <label className="labelPlacingInput" htmlFor="Adress">Present Address*</label>
+                <input id="Adress" type="text" required value={props.address} onChange={(e) => props.setAddress(e.target.value)} placeholder="San Jose, California, USA" className="inputPlacing"/>
             </div>
             <div className="flex flex-col gap-[8px]">
-                <label className="labelPlacingInput" htmlFor="Apartment">Apartment number</label>
-                <input id="Apartment" type="text" value={props.appNumber} onChange={(e) => props.setAppNumber(e.target.value)} placeholder="4" className="inputPlacing"/>
+                <label className="labelPlacingInput" htmlFor="Apartment">Apartment number*</label>
+                <input id="Apartment" type="text" required value={props.appNumber} onChange={(e) => props.setAppNumber(e.target.value)} placeholder="4" className="inputPlacing"/>
             </div>
             <div className="flex flex-col gap-[8px]">
-                <label className="labelPlacingInput" htmlFor="postcode">Postal Code</label>
+                <label className="labelPlacingInput" htmlFor="postcode">Postal Code*</label>
                 <div className="flex justify-between"> 
-                    <input id="postcode" type="text" value={props.postcode1} onChange={(e) => props.setPostcode1(e.target.value)} placeholder="4" className="inputPlacing w-[120px]"/>
+                    <input id="postcode" required type="text" value={props.postcode1} onChange={(e) => props.setPostcode1(e.target.value)} placeholder="4" className="inputPlacing w-[120px]"/>
                     <div onClick={() => setEditional(!editional)} className="butonAdditional2 px-[12px] flex items-center justify-center cursor-pointer">Additional address</div>
                 </div>
                 {editional ? 
@@ -29,7 +42,7 @@ const Stage2Page = (props) => {
                 <textarea id="Information" type="text" value={props.information} onChange={(e) => props.setInformation(e.target.value)} placeholder="4" className="inputPlacing lolkek py-[12px]"/>
             </div>
             <div className="flex justify-center items-center mt-[64px]">
-                <div onClick={() => props.setStage(3)} className="cursor-pointer nextPageButton w-[75%] flex items-center justify-center">
+                <div onClick={handleNextClick} className="cursor-pointer nextPageButton w-[75%] flex items-center justify-center">
                     Next
                 </div>
             </div>
