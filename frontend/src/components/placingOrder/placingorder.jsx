@@ -7,10 +7,10 @@ import Stage2Page from "./stage2page";
 import Stage3Page from "./stage3page";
 
 const PlacingOrder = () => {
+
     const [stage, setStage] = useState(1);
-    const [value, setValue] = useState('');
-    const [value2, setValue2] = useState('');
-    const [editional, setEditional] = useState(false)
+    const [valueNumber1, setValueNumber1] = useState('');
+    const [valueNumber2, setValueNumber2] = useState('');
 
     const [name, setName] = useState('')
     const [telegramName, setTelegramName] = useState('')
@@ -21,7 +21,7 @@ const PlacingOrder = () => {
     const [address, setAddress] = useState('')
     const [appNumber, setAppNumber] = useState('')
     const [postcode1, setPostcode1] = useState('')
-    const [postcode2, setCisetPostcode2] = useState('')
+    const [postcode2, setPostcode2] = useState('')
     const [information, setInformation] = useState('')
 
     return ( 
@@ -37,27 +37,50 @@ const PlacingOrder = () => {
                 {
                     stage === 1 ? 
                     <Stage1Page 
-                        setValue={setValue} 
-                        setValue2={setValue2} 
-                        setEditional={setEditional} 
+                        setValue={setValueNumber1} 
+                        setValue2={setValueNumber2}  
                         setStage={setStage} 
-                        value={value} 
-                        value2={value2} 
-                        editional={editional} 
+                        value={valueNumber1} 
+                        value2={valueNumber2} 
+                        name={name}
+                        setName={setName}
+                        telegramName={telegramName}
+                        setTelegramName={setTelegramName}
+                        email={email}
+                        setEmail={setEmail}
+                        country={country}
+                        setCountry={setCountry}
+                        city={city}
+                        setCity={setCity}
+
                     /> :
                     stage === 2 ?
-                    <Stage2Page 
+                    <Stage2Page
                         setStage={setStage} 
+                        address={address}
+                        setAddress={setAddress}
+                        appNumber={appNumber}
+                        setAppNumber={setAppNumber}
+                        postcode1={postcode1}
+                        setPostcode1={setPostcode1}
+                        postcode2={postcode2}
+                        setPostcode2={setPostcode2}
+                        information={information}
+                        setInformation={setInformation}
                     /> :
                     stage === 3 ?
                     <Stage3Page 
-                        setValue={setValue} 
-                        setValue2={setValue2} 
-                        setEditional={setEditional} 
                         setStage={setStage} 
-                        value={value} 
-                        value2={value2} 
-                        editional={editional} 
+                        name={name}
+                        telegramName={telegramName}
+                        email={email}
+                        address={address}
+                        value={valueNumber1} 
+                        value2={valueNumber2} 
+                        country={country}
+                        city={city}
+                        postcode1={postcode1}
+                        postcode2={postcode2}
                     /> : "Ошибка формы"
                 }
             </form>
