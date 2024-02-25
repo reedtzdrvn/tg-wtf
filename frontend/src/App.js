@@ -22,14 +22,6 @@ import PlacingOrder from "./components/placingOrder/placingorder";
 let tg = window.Telegram.WebApp;
 tg.expand();
 
-let phoneNumber = tg.requestContact(function (result) {
-  if (result) {
-    console.log(result)
-    tg.showAlert("я дединсайд");
-  } else {
-    tg.showAlert("Contact denied");
-  }
-});
 
 function App() {
   const location = useLocation();
@@ -48,9 +40,8 @@ function App() {
           path="/account"
           element={
             <Account
-              firstName={tg.initDataUnsafe.user.first_name}
-              lastName={tg.initDataUnsafe.user.last_name}
-              phoneNumber={phoneNumber}
+            firstName={tg.initDataUnsafe.user.first_name}
+            lastName={tg.initDataUnsafe.user.last_name}
             />
           }
         />

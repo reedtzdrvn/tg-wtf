@@ -4,7 +4,7 @@ import play from "../../images/play.svg";
 import spinner from "../../images/spinner.svg";
 import "./account.css";
 import { NavLink } from "react-router-dom";
-const Account = ({ firstName, lastName, phoneNumber }) => {
+const Account = ({ firstName, lastName }) => {
   return (
     <div className="mx-[8.5%] page">
       <div className="flex justify-between mt-[24px]">
@@ -12,7 +12,7 @@ const Account = ({ firstName, lastName, phoneNumber }) => {
           <div className="flex flex-col gap-[10px]">
             <div className="text-[24px] flex flex-col gap-0 textInfo">
               {firstName} {lastName}
-              <span className="number text-[14px]">{phoneNumber}</span>
+              <span className="number text-[14px]">(629) 555-0129</span>
             </div>
           </div>
           <div>
