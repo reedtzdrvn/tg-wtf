@@ -2,6 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import {config as dotenvConfig} from 'dotenv';
+import userController from "./controllers/userController.js"
 
 dotenvConfig();
 
@@ -14,6 +15,8 @@ mongoose.connect(process.env.NODE_DB_URL)
     .then(() => console.log('DB OK'))
     .catch((err) => console.log('DB error', err));
 
+
+
 const PORT = process.env.PORT || 4444
 
 app.listen(PORT, (err) => {
@@ -25,7 +28,14 @@ app.listen(PORT, (err) => {
 });
 
 
-app.get('/', (req, res) => {
-  console.log('priv')
-  res.send('hi')
-})
+
+//GET
+
+app.get('/')
+
+
+
+app.get('/user', userController.getUser)
+
+
+//POST

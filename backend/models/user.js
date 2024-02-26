@@ -17,7 +17,6 @@ const UserSchema = new mongoose.Schema({
     },
     email: {
         type: String,
-        require: true
     },
     favourites: [{
         type: mongoose.Schema.Types.ObjectId,
@@ -33,6 +32,11 @@ const UserSchema = new mongoose.Schema({
     }],
     admin: {
         type: Boolean,
+        default: false
+    },
+    telegramId: {
+        type: String,
+        require: true
     }
 })
 
