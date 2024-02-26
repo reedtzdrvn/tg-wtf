@@ -6,7 +6,7 @@ class Db:
     def __init__(self):
         self.client = MongoClient(DB_URL)
         self.db = self.client["WTF"]
-        self.collection = self.db["user"]
+        self.collection = self.db["users"]
 
         try:
             self.db.command('ping')
