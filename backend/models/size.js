@@ -6,3 +6,5 @@ const SizeSchema = new mongoose.Schema({
         require: true
     }
 })
+
+export default mongoose.model("Size", SizeSchema);

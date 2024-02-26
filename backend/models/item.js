@@ -38,3 +38,5 @@ const ItemSchema = new mongoose.Schema({
         require: true
     }
 })
+
+export default mongoose.model("Item", ItemSchema);
