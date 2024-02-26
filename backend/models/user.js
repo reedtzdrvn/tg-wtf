@@ -30,7 +30,10 @@ const UserSchema = new mongoose.Schema({
     }],
     especiallyForYou: [{
         type: mongoose.Schema.Types.ObjectId,
-    }]
+    }],
+    admin: {
+        type: Boolean,
+    }
 })
 
 export default mongoose.model("User", UserSchema);
