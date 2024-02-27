@@ -11,18 +11,11 @@ const Account = () => {
   
   const [userData, setUserData] = useState(null);
 
-  console.log(userData)
+  let tg = window.Telegram.WebApp;
+  //const userId = '703999322';
+  const userId = tg.initDataUnsafe.user.id;
 
   useEffect(() => {
-
-    let tg = window.Telegram.WebApp;
-    //const userId = '703999322';
-    const userId = tg.initDataUnsafe.user.id;
-
-    console.log(tg)
-
-    console.log(userId)
-
     axios.get(`http://localhost:4444/user`, { params: { telegramId: userId } })
         .then(response => {
             setUserData(response.data[0]);
@@ -49,8 +42,8 @@ const Account = () => {
         <div className="infoMain flex flex-col gap-[10px]">
           <div className="flex flex-col gap-[10px]">
             <div className="text-[24px] flex flex-col gap-0 textInfo">
-              {userData.firstName} {userData.lastName}
-              <span className="number text-[14px]">{formatPhoneNumber(userData.phoneNumber)}</span>
+              {userData?.firstName} {userData?.lastName}
+              <span className="number text-[14px]">{formatPhoneNumber(userData?.phoneNumber)}</span>
             </div>
           </div>
           <div>
