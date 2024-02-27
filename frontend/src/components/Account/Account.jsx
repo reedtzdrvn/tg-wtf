@@ -16,7 +16,7 @@ const Account = () => {
   const userId = tg.initDataUnsafe.user.id;
 
   useEffect(() => {
-    axios.get(`http://localhost:4444/user`, { params: { telegramId: userId } })
+    axios.get(`https://tg-wtf.onrender.com/user`, { params: { telegramId: userId } })
         .then(response => {
             setUserData(response.data[0]);
         })
