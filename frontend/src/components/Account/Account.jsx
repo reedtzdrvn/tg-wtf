@@ -15,6 +15,10 @@ const Account = () => {
   //const userId = '703999322';
   const userId = tg.initDataUnsafe.user.id;
 
+  console.log(tg)
+
+  console.log(userId)
+
   useEffect(() => {
     axios.get(`http://localhost:4444/user`, { params: { telegramId: userId } })
         .then(response => {
