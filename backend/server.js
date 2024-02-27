@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import {config as dotenvConfig} from 'dotenv';
 import userController from "./controllers/userController.js"
+import {wakeServer} from './utils/ping.js'
 
 dotenvConfig();
 
@@ -10,7 +11,7 @@ const app = express();
 
 app.use(express.json());
 app.use(cors());
-
+wakeServer();
 mongoose.connect(process.env.NODE_DB_URL)
     .then(() => console.log('DB OK'))
     .catch((err) => console.log('DB error', err));
