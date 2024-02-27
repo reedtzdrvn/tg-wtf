@@ -21,9 +21,11 @@ async def start_handler(msg: Message):
     await msg.answer(
         "Привет! Чтоб получить доступ к веб приложению необходимо поделиться номером телефона, чтобы зарегистрироваться в интернет-магазине.",
         reply_markup=ReplyKeyboardMarkup(
+            is_persistent=True,
+            resize_keyboard=True,
             keyboard=[
                 [KeyboardButton(text="Поделиться контактом", request_contact=True)]
-            ]
+            ],
         ),
     )
 
@@ -40,20 +42,32 @@ async def contacts(msg: Message):
         await msg.answer(
             f"Пользователь успешно добавлен. Теперь вы можете перейти в веб-приложение.",
             reply_markup=ReplyKeyboardMarkup(
-                keyboard=[
-                    [KeyboardButton(text="/web")]
-                ]
+                is_persistent=True,
+                resize_keyboard=True,
+                keyboard=[[KeyboardButton(text="Открыть веб-приложение")]],
             ),
         )
     else:
-        await msg.answer(
-            "Произошла ошибка при добавлении пользователя.",
-            reply_markup=ReplyKeyboardMarkup(
-                keyboard=[
-                    [KeyboardButton(text="/start")]
-                ]
-            ),
+        markup = ReplyKeyboardMarkup(
+            is_persistent=True,
+            resize_keyboard=True,
+            keyboard=[
+                [KeyboardButton(text="Зарегистрироваться в веб-приложении")],
+                [KeyboardButton(text="Открыть веб-приложение")],
+            ],
         )
+
+        await msg.answer(
+            "Произошла ошибка при добавлении пользователя.", reply_markup=markup
+        )
+
+
+@router.message()
+async def process_command(msg: Message):
+    if msg.text == "Открыть веб-приложение":
+        await command_webview(msg)
+    elif msg.text == "Зарегистрироваться в веб-приложении":
+        await start_handler(msg)
 
 
 @router.message(Command(commands=["web"]))
