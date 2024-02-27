@@ -19,11 +19,13 @@ import CategoriesList from "./components/CategoriesList/CategoriesList";
 import Notifications from "./components/Notifications/Notifications";
 import PlacingOrder from "./components/placingOrder/placingorder";
 
+
 let tg = window.Telegram.WebApp;
 tg.expand();
 
 
 function App() {
+
   const location = useLocation();
   const { pathname } = location;
 
@@ -39,10 +41,7 @@ function App() {
           exact
           path="/account"
           element={
-            <Account
-            firstName={tg.initDataUnsafe.user.first_name}
-            lastName={tg.initDataUnsafe.user.last_name}
-            />
+            <Account />
           }
         />
         <Route exact path="/categories/*" element={<CategoryItemsList />} />

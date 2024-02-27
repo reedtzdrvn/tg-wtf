@@ -4,15 +4,46 @@ import play from "../../images/play.svg";
 import spinner from "../../images/spinner.svg";
 import "./account.css";
 import { NavLink } from "react-router-dom";
-const Account = ({ firstName, lastName }) => {
+import { useState, useEffect } from "react";
+import axios from "axios";
+
+const Account = () => {
+  
+  const [userData, setUserData] = useState(null);
+
+  let tg = window.Telegram.WebApp;
+  //const userId = '703999322';
+  const userId = tg.initDataUnsafe.user.id;
+
+  useEffect(() => {
+    axios.get(`http://localhost:4444/user`, { params: { telegramId: userId } })
+        .then(response => {
+            setUserData(response.data[0]);
+        })
+        .catch(error => {
+            console.error('Ошибка при получении JSON файла', error);
+        });
+  }, []);
+
+  const formatPhoneNumber = (phoneNumber) => {
+    const cleaned = ('' + phoneNumber).replace(/\D/g, '');
+    
+    const match = cleaned.match(/^(\d{1})(\d{3})(\d{3})(\d{2})(\d{2})$/);
+    if (match) {
+      return `+${match[1]} (${match[2]}) ${match[3]}-${match[4]}-${match[5]}`;
+    }
+    
+    return phoneNumber;
+  };
+
   return (
     <div className="mx-[8.5%] page">
       <div className="flex justify-between mt-[24px]">
         <div className="infoMain flex flex-col gap-[10px]">
           <div className="flex flex-col gap-[10px]">
             <div className="text-[24px] flex flex-col gap-0 textInfo">
-              {firstName} {lastName}
-              <span className="number text-[14px]">(629) 555-0129</span>
+              {userData?.firstName} {userData?.lastName}
+              <span className="number text-[14px]">{formatPhoneNumber(userData?.phoneNumber)}</span>
             </div>
           </div>
           <div>
