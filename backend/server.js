@@ -3,6 +3,8 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import {config as dotenvConfig} from 'dotenv';
 import userController from "./controllers/userController.js"
+import categoryController from './controllers/categoryController.js';
+import itemController from './controllers/itemController.js';
 
 dotenvConfig();
 
@@ -37,5 +39,13 @@ app.get('/')
 
 app.get('/user', userController.getUser)
 
+app.get('/item', itemController.getItem)
+
 
 //POST
+
+app.post('/category', categoryController.addCategory)
+
+app.post('/size', itemController.addSize)
+
+app.post('/item', itemController.addItem)

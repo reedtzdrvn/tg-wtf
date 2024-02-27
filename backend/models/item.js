@@ -29,8 +29,14 @@ const ItemSchema = new mongoose.Schema({
     },
     sizes:[
         {
-            type: mongoose.Schema.Types.ObjectId,
-            require: true
+            id: { 
+                type: mongoose.Schema.Types.ObjectId,
+                require: true
+            },
+            count: {
+                type: Number,
+                require: true
+            }
         }
     ],
     description: {
