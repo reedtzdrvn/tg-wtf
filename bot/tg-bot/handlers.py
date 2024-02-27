@@ -13,6 +13,8 @@ from db import Db
 
 router = Router()
 
+database = Db()
+
 
 @router.message(CommandStart())
 async def start_handler(msg: Message):
@@ -28,7 +30,6 @@ async def start_handler(msg: Message):
 
 @router.message(F.contact)
 async def contacts(msg: Message):
-    database = Db()
     if database.add_user(
         msg.contact.first_name,
         msg.contact.last_name,
@@ -37,31 +38,49 @@ async def contacts(msg: Message):
         msg.contact.user_id,
     ):
         await msg.answer(
-            f"Пользователь успешно добавлен. Введите команду /web для доступа к веб-приложению.",
-            reply_markup=ReplyKeyboardRemove(),
+            f"Пользователь успешно добавлен. Теперь вы можете перейти в веб-приложение.",
+            reply_markup=ReplyKeyboardMarkup(
+                keyboard=[
+                    [KeyboardButton(text="/web")]
+                ]
+            ),
         )
     else:
         await msg.answer(
-            "Произошла ошибка при добавлении пользователя. \
-                Напишите команду /start еще раз. Либо введите команду /web, если вы уже зарегистрированы в веб-приложении",
-            reply_markup=ReplyKeyboardRemove(),
+            "Произошла ошибка при добавлении пользователя.",
+            reply_markup=ReplyKeyboardMarkup(
+                keyboard=[
+                    [KeyboardButton(text="/start")]
+                ]
+            ),
         )
 
 
 @router.message(Command(commands=["web"]))
 async def command_webview(message: Message):
-    await message.answer(
-        "Хороших покупок!",
-        reply_markup=InlineKeyboardMarkup(
-            inline_keyboard=[
-                [
-                    InlineKeyboardButton(
-                        text="Open Webview",
-                        web_app=WebAppInfo(
-                            url="https://aquamarine-dasik-75f62c.netlify.app/"
-                        ),
-                    )
+    user = database.find_user_by_telegram_id(message.from_user.id)
+    if user:
+        await message.answer(
+            "Хороших покупок!",
+            reply_markup=InlineKeyboardMarkup(
+                inline_keyboard=[
+                    [
+                        InlineKeyboardButton(
+                            text="Open Webview",
+                            web_app=WebAppInfo(
+                                url="https://aquamarine-dasik-75f62c.netlify.app/"
+                            ),
+                        )
+                    ]
                 ]
-            ]
-        ),
-    )
+            ),
+        )
+    else:
+        await message.answer(
+            "Вы не зарегистрированы в веб-приложении. Поделитесь контактом, чтобы зарегистрироваться",
+            reply_markup=ReplyKeyboardMarkup(
+                keyboard=[
+                    [KeyboardButton(text="Поделиться контактом", request_contact=True)]
+                ]
+            ),
+        )

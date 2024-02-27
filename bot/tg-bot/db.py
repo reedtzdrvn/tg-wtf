@@ -1,10 +1,10 @@
 from pymongo import MongoClient
 
-from config import DB_URL
+import os
 
 class Db:
     def __init__(self):
-        self.client = MongoClient(DB_URL)
+        self.client = MongoClient(os.environ['DB_URL'])
         self.db = self.client["WTF"]
         self.collection = self.db["users"]
 
