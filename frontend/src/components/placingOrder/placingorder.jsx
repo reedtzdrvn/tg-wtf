@@ -11,9 +11,15 @@ import axios from '../../axios.js'
 const PlacingOrder = () => {
 
     let tg = window.Telegram.WebApp;
-    //const userId = tg.initDataUnsafe.user.id;
 
-    const userId = '703999322';
+    let userId = ''
+
+    if (!tg.initDataUnsafe.user){
+        userId='703999322'
+    }
+    else{
+        userId=tg.initDataUnsafe.user?.id
+    }
 
     const [stage, setStage] = useState(1);
     const [valueNumber1, setValueNumber1] = useState('');
