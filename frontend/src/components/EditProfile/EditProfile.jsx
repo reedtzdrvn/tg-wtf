@@ -41,7 +41,19 @@ const EditProfile = () => {
 
 
     const handlerConfirm = () => {
-        
+        axios.post('/updateuser', {firstName: firstname, lastName: lastname, email: email, phoneNumber: phonenumber, telegramId: userId})
+        .then(response => {
+            const {firstName, lastName, phoneNumber, email} = response.data[0]
+            setFirstName(firstName)
+            setLastName(lastName)
+            setEmail(email)
+            setPhone(phoneNumber)
+            console.log(response.data[0])
+        })
+
+        .catch(error => {
+            console.error('Ошибка при получении JSON файла', error);
+        });
     }
 
     return (
@@ -77,7 +89,7 @@ const EditProfile = () => {
                             required
                         />
                     </div>
-                    <div className="flex justify-center items-center mt-[300px]">
+                    <div className="flex justify-center items-center mt-[185px]">
                         <div onClick={handlerConfirm} className="cursor-pointer nextPageButton w-[75%] flex items-center justify-center">
                             Confirm
                         </div>
