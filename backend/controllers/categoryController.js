@@ -3,7 +3,13 @@ import CategorySchema from "../models/category.js"
 export default class categoryController {
 
     static getCategories = async (req, res) => {
+        const categoriesData = await CategorySchema.find()
 
+        if (!categoriesData) {
+            return res.status(404).json({ message: 'Ошибка получения информации' });
+        }
+
+        res.status(200).json(categoriesData);
     }
 
     static getCategory = async (req, res) => {
@@ -30,8 +36,8 @@ export default class categoryController {
             }
 
             const category = await new CategorySchema({
-                name: req.body.name,
-                photo: req.body.link,
+                title: req.body.name,
+                image: req.body.link,
             })
 
             await category.save();

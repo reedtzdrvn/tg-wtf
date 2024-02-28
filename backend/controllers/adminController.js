@@ -2,7 +2,7 @@ import NotificationSchema from "../models/notification.js"
 
 export default class adminController {
 
-    addNotification = async (req, res) => {
+    static addNotification = async (req, res) => {
         try {
             console.log(req.body)
 
@@ -30,7 +30,7 @@ export default class adminController {
         }
     }
 
-    deleteNotification = async (req, res) => {
+    static deleteNotification = async (req, res) => {
 
     }
 
