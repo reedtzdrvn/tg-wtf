@@ -1,77 +1,90 @@
 import 'react-phone-input-2/lib/style.css';
 import PhoneInput from 'react-phone-input-2';
-import "./placingorder.css";
-import { useState } from 'react';
+import user from "../../images/fi-rr-user.svg"
+import "./EditProfile.css";
+import { useState, useEffect } from "react";
+import axios from '../../axios.js'
 
-const Stage1Page = (props) => {
+const EditProfile = () => {
 
-    const [editional, setEditional] = useState(false)
+    const [firstname, setFirstName] = useState(null)
+    const [lastname, setLastName] = useState(null)
+    const [email, setEmail] = useState(null)
+    const [phonenumber, setPhone] = useState(null)
 
-    const handlerNextClick = () => {
-        if (
-            props.name.trim() === '' ||
-            props.telegramName.trim() === '' ||
-            props.email.trim() === '' ||
-            props.country.trim() === '' ||
-            props.city.trim() === '' ||
-            props.value.trim() === ''
-        ) {
-            alert('Пожалуйста, заполните все поля.');
-            return;
-        }
+    let tg = window.Telegram.WebApp;
 
-        props.setStage(2);
-    };
+    let userId = ''
+  
+    if (!tg.initDataUnsafe.user){
+      userId='703999322'
+    }
+    else{
+      userId=tg.initDataUnsafe.user?.id
+    }
+  
+    useEffect(() => {
+        axios.get(`/user`, { params: { telegramId: userId } })
+            .then(response => {
+                const {firstName, lastName, phoneNumber, email} = response.data[0]
+                setFirstName(firstName)
+                setLastName(lastName)
+                setEmail(email)
+                setPhone(phoneNumber)
+                console.log(response.data[0])
+            })
 
-    return ( 
-        <div className="formOrderPlacingStage1 flex flex-col gap-[16px] mt-[20px]">
+            .catch(error => {
+                console.error('Ошибка при получении JSON файла', error);
+            });
+      }, []);
+
+
+    const handlerConfirm = () => {
+        
+    }
+
+    return (
+
+        <div className ="mx-[8.5%] mt-[24px] page">
+            <div className="flex gap-[10px] items-center">
+                <img src={user} alt="1" className="w-[30px] h-[30px]"/>
+                <div className="flex justify-between w-full items-center">
+                    <div className="PlacingTextTitle"><div className="flex flex-col kkff "><div>Edit Profile</div></div></div>
+                </div>
+            </div>
+            <div className="formOrderPlacingStage1 flex flex-col gap-[16px] mt-[20px]">
                     <div className="flex flex-col gap-[8px]">
-                        <label className="labelPlacingInput" htmlFor="NamePerson">Your Name*</label>
-                        <input id="NamePerson" type="text" required value={props.name} onChange={(e) => props.setName(e.target.value)} placeholder="Charlene Reed" className="inputPlacing"/>
+                        <label className="labelPlacingInput" htmlFor="FirstNamePerson">Your First Name</label>
+                        <input id="FirstNamePerson" type="text" required value={firstname} onChange={(e) => setFirstName(e.target.value)} placeholder="Charlene" className="inputPlacing"/>
                     </div>
                     <div className="flex flex-col gap-[8px]">
-                        <label className="labelPlacingInput" htmlFor="UserNameTelegram">User Name* <span className="ddff">Telegram</span></label>
-                        <input id="UserNameTelegram" type="text" required value={props.telegramName} onChange={(e) => props.setTelegramName(e.target.value)} placeholder="@Charlene Reed " className="inputPlacing"/>
+                        <label className="labelPlacingInput" htmlFor="LastNamePerson">Your Last Name</label>
+                        <input id="LastNamePerson" type="text" required value={lastname} onChange={(e) => setLastName(e.target.value)} placeholder="Reed" className="inputPlacing"/>
                     </div>
                     <div className="flex flex-col gap-[8px]">
-                        <label className="labelPlacingInput" htmlFor="Email">Email*</label>
-                        <input id="Email" type="text" required value={props.email} onChange={(e) => props.setEmail(e.target.value)} placeholder="charlenereed@gmail.com " className="inputPlacing"/>
+                        <label className="labelPlacingInput" htmlFor="Email">Email</label>
+                        <input id="Email" type="text" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="charlenereed@gmail.com " className="inputPlacing"/>
                     </div>
                     <div className="flex flex-col gap-[8px]">
-                        <label className="labelPlacingInput" htmlFor="Country">Country*</label>
-                        <input id="Country" type="text" required value={props.country} onChange={(e) => props.setCountry(e.target.value)} placeholder="Russia" className="inputPlacing"/>
+                        <label className="labelPlacingInput" htmlFor="PhoneNumbrer">Phone Number</label>
                     </div>
-                    <div className="flex flex-col gap-[8px]">
-                        <label className="labelPlacingInput" htmlFor="City">City*</label>
-                        <input id="City" type="text" required value={props.city} onChange={(e) => props.setCity(e.target.value)}  placeholder="Moscow" className="inputPlacing"/>
-                    </div>
-                    <div className="inputNumber flex justify-between items-center w-full">
+                    <div className="inputNumber flex items-center w-full">
                         <PhoneInput
                             country={'ru'}
-                            value={props.value}
-                            onChange={props.setValue}
+                            value={phonenumber}
+                            onChange={setPhone}
                             required
                         />
-                        
-                        <div onClick={() => setEditional(!editional)} className="cursor-pointer flex items-center justify-between px-[10px] h-[40px] butonAdditional">Additional number</div>
                     </div>
-                    { editional ?
-                        <div>
-                            <PhoneInput
-                                country={'ru'}
-                                value={props.value2}
-                                onChange={props.setValue2}
-                            />
-                        </div> : ""
-                    }
-                    <div className="flex justify-center items-center mt-[64px]">
-                        <div onClick={handlerNextClick} className="cursor-pointer nextPageButton w-[75%] flex items-center justify-center">
-                            Next
+                    <div className="flex justify-center items-center mt-[300px]">
+                        <div onClick={handlerConfirm} className="cursor-pointer nextPageButton w-[75%] flex items-center justify-center">
+                            Confirm
                         </div>
                     </div>
-                    
                 </div>
+        </div>
      );
 }
  
-export default Stage1Page;
+export default EditProfile;

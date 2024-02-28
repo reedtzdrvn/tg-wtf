@@ -18,6 +18,7 @@ import Pay from "./components/Pay/Pay";
 import CategoriesList from "./components/CategoriesList/CategoriesList";
 import Notifications from "./components/Notifications/Notifications";
 import PlacingOrder from "./components/placingOrder/placingorder";
+import EditProfile from "./components/EditProfile/EditProfile";
 
 
 let tg = window.Telegram.WebApp;
@@ -53,6 +54,7 @@ function App() {
         />
         <Route exact path="/account/history" element={<History />} />
         <Route exact path="/account/status" element={<Status />} />
+        <Route exact path="/account/edit" element={<EditProfile />} />
         <Route
           exact
           path="/especially-for-you"

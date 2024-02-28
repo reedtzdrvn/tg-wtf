@@ -54,9 +54,9 @@ const Account = () => {
             </div>
           </div>
           <div>
-            <button className="buttonEditPforile flex items-center justify-center">
+            <NavLink to = "/account/edit" className="buttonEditPforile flex items-center justify-center">
               Edit Profile
-            </button>
+            </NavLink>
           </div>
         </div>
         <div className="iconMain flex items-center justify-end">
