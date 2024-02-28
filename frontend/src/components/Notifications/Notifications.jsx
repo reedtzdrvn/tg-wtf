@@ -32,7 +32,7 @@ const Notifications = () => {
   return (
     <>
       {notifications? 
-      <div>
+      <div className="page">
         {notifications.map((el) => (
           el.seen === false? <NotificationsListItem title={el.name} date={el.date} key={el._id} id={el._id} seen = {el.seen}/>: ""
         ))}

@@ -9,7 +9,7 @@ const CardItem = ({ title, price, image, isFavorite, isAvailable }) => {
         <div className="relative">
           <img
             src={image}
-            className={isAvailable ? "w-full" : "w-full card-item-img-blur"}
+            className={isAvailable ? "w-[150px] h-[210px]" : "card-item-img-blur w-[150px] h-[210px]"}
           />
           {isFavorite ? (
             <div className="liked absolute bottom-[10%] left-[10%] w-[36px] h-[36px] flex justify-center items-center">
