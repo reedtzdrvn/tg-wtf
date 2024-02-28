@@ -49,8 +49,6 @@ export default class userController {
     static seenNotification = async (req, res) => {
         try {
             const { notificationId, telegramId } = req.body;
-
-            console.log(notificationId, telegramId)
     
             const user = await UserSchema.findOne({ telegramId });
     
@@ -76,8 +74,29 @@ export default class userController {
     }
     
     static updateUser = async (req, res) => {
+
+        try {
+            const { firstName, lastName, email, phoneNumber, telegramId } = req.body;
+
+            const user = await UserSchema.findOne({ telegramId });
+
+            if (!user) {
+                return res.status(404).json({ error: "Пользователь не найден" });
+            }
+
+            if (firstName) user.firstName = firstName;
+            if (lastName) user.lastName = lastName;
+            if (email) user.email = email;
+            if (phoneNumber) user.phoneNumber = phoneNumber;
     
+            await user.save();
+    
+            return res.status(200).json({ user });
+
+        } catch (err) {
+            console.error(err);
+            return res.status(500).json({ error: "Возникла ошибка" });
+        }
+    }
     }
     
-
-}

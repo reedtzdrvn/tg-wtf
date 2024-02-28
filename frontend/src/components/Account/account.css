@@ -4,7 +4,9 @@
     height: 20px;
     font-size: 12px;
     border-radius: 16px;
+    width: max-content;
     @apply px-[10px]
+    
 }
 .number{
     font-weight: 600;

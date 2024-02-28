@@ -1,6 +1,6 @@
 import usericon from "../../images/usericonpage.svg";
 import history from "../../images/history.svg";
-import play from "../../images/play.svg";
+import play from "../../images/fi-rr-play.svg";
 import spinner from "../../images/spinner.svg";
 import "./account.css";
 import { NavLink } from "react-router-dom";

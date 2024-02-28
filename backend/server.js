@@ -63,3 +63,5 @@ app.post('/item', itemController.addItem)
 app.post('/notification', adminController.addUserNotification)
 
 app.post('/seenNotification', userController.seenNotification)
+
+app.post('/updateuser', userController.updateUser)
