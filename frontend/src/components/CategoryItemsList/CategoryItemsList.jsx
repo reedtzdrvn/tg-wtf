@@ -11,7 +11,9 @@ const CategoryItemsList = (props) => {
   const { state } = location;
 
   const [categoryId, setCategoryId] = useState(null);
-  const [ItemsFromSelecterCategory, setItemsFromSelecterCategory] = useState([])
+  const [ItemsFromSelecterCategory, setItemsFromSelecterCategory] = useState(
+    []
+  );
 
   const getCategoryId = (categoryName) => {
     axios
@@ -33,7 +35,7 @@ const CategoryItemsList = (props) => {
       .catch((error) => {
         console.error("Ошибка при получении JSON файла", error);
       });
-  }
+  };
 
   useEffect(() => {
     getCategoryId(state.category);
@@ -92,9 +94,10 @@ const CategoryItemsList = (props) => {
           {ItemsFromSelecterCategory.map((el) => (
             <NavLink
               to={"item-details/" + state.pathTitle + "/" + el._id}
-              state={{ from: state.pathTitle }}
+              state={{ from: state.pathTitle, itemId: el._id }}
             >
               <CardItem
+                itemId={el._id}
                 title={el.name}
                 price={el.price}
                 image={el.photos[0]}

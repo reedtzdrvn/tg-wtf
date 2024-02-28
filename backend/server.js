@@ -51,7 +51,7 @@ app.get('/categories', categoryController.getCategories)
 
 app.get('/notifications', userController.getNotifications)
 
-
+app.get('/size', itemController.getSize)
 //POST
 
 app.post('/category', categoryController.addCategory)
