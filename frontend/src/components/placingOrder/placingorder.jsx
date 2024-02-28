@@ -1,12 +1,17 @@
 import basket from "../../images/basket-active.svg";
 import user from "../../images/fi-rr-user.svg";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./placingorder.css";
 import Stage1Page from "./stage1page";
 import Stage2Page from "./stage2page";
 import Stage3Page from "./stage3page";
 
+import axios from '../../axios.js'
+
 const PlacingOrder = () => {
+
+    let tg = window.Telegram.WebApp;
+    const userId = tg.initDataUnsafe.user.id;
 
     const [stage, setStage] = useState(1);
     const [valueNumber1, setValueNumber1] = useState('');
@@ -23,6 +28,20 @@ const PlacingOrder = () => {
     const [postcode1, setPostcode1] = useState('')
     const [postcode2, setPostcode2] = useState('')
     const [information, setInformation] = useState('')
+
+    useEffect(() => {
+        axios.get(`/user`, { params: { telegramId: userId } })
+            .then(response => {
+                const {firstName, lastName, phoneNumber, userName} = response.data[0]
+                let fullName = `${firstName} ${lastName}`
+                setName(fullName)
+                setValueNumber1(phoneNumber)
+                setTelegramName(`@${userName}`)
+            })
+            .catch(error => {
+                console.error('Ошибка при получении JSON файла', error);
+            });
+      }, []);
 
     return ( 
         <div className="mx-[8.5%] mt-[24px] page">
