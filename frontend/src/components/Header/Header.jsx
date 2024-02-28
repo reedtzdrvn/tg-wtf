@@ -3,13 +3,36 @@ import Search from "../../images/search.svg";
 import On from "../../images/notification.svg";
 import notificationOn from "../../images/notification-on.svg";
 import Message from "../../images/message.svg";
-
+import { useState, useEffect } from "react";
+import axios from "../../axios.js";
 import { NavLink } from "react-router-dom";
 
 import "./header.css";
 
 const Header = () => {
-    const haveNotifications = true 
+
+  const [haveNotifications, setNotifications] = useState()
+
+  let tg = window.Telegram.WebApp;
+
+  let userId = ''
+
+  if (!tg.initDataUnsafe.user){
+    userId = '703999322'
+  }
+  else{
+    userId = tg.initDataUnsafe.user?.id
+  }
+
+  useEffect(() => {
+    axios.get(`/notifications`, { params: { telegramId: userId } })
+        .then(response => {
+            setNotifications(response.data.filter((el) => el.seen === false).length)
+        })
+        .catch(error => {
+            console.error('Ошибка при получении JSON файла', error);
+        });
+  }, []);
 
   return (
     <div className="flex justify-center align-center">
@@ -24,11 +47,11 @@ const Header = () => {
           <div className="search-btn">
             <img className="search-btn" src={Search} />
           </div>
-          <NavLink to={"/notifications"}>
-            <div className={`notifications-btn flex items-center align-center ${haveNotifications ? 'blacked-out' : ''}`}>
-              <img className={'notifications-btn'} src={haveNotifications ? notificationOn : On} />
-            </div>
-          </NavLink>
+              <NavLink to={"/notifications"}>
+              <div className={`notifications-btn flex items-center align-center ${haveNotifications>0 ? 'blacked-out' : ''}`}>
+                <img className={'notifications-btn'} src={haveNotifications>0 ? notificationOn : On} />
+              </div>
+            </NavLink>
           <div className="message-btn">
             <img className="message-btn" src={Message} />
           </div>

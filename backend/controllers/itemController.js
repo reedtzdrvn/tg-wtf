@@ -1,5 +1,6 @@
 import ItemSchema from "../models/item.js";
 import SizeSchema from "../models/size.js";
+import mongoose from "mongoose";
 
 export default class itemController {
   static getItems = async (req, res) => {};
@@ -83,25 +84,67 @@ export default class itemController {
 
   static getSize = async (req, res) => {
     try {
-      const sizeId = req.query.sizeId;
+        const itemId = req.query.itemId;
 
-      if (!sizeId) {
-        return res.status(404).json({ message: "Ошибка получения информации" });
-      }
+        const result = await ItemSchema.aggregate([
+            {
+                $match: {
+                    "_id": mongoose.Types.ObjectId.createFromHexString(itemId)
+                }
+            },
+            {
+                $lookup: {
+                    from: "categories",
+                    localField: "category",
+                    foreignField: "_id",
+                    as: "categoryInfo"
+                }
+            },
+            {
+                $unwind: "$categoryInfo"
+            },
+            {
+                $unwind: "$sizes"
+            },
+            {
+                $lookup: {
+                    from: "sizes",
+                    localField: "sizes.id",
+                    foreignField: "_id",
+                    as: "sizeInfo"
+                }
+            },
+            {
+                $unwind: "$sizeInfo"
+            },
+            {
+                $group: {
+                    _id: "$_id",
+                    name: { $first: "$name" },
+                    category: { $first: "$categoryInfo" },
+                    photos: { $first: "$photos" },
+                    price: { $first: "$price" },
+                    sale: { $first: "$sale" },
+                    deliveryTime: { $first: "$deliveryTime" },
+                    description: { $first: "$description" },
+                    reviews: { $first: "$reviews" },
+                    sizes: {
+                        $push: {
+                            _id: "$sizeInfo._id",
+                            name: "$sizeInfo.name",
+                            count: "$sizes.count"
+                        }
+                    }
+                }
+            }
+        ]);
 
-      const sizeData = await SizeSchema.findOne({ _id: sizeId });
-
-      if (sizeData.length === 0) {
-        return res.status(404).json({ message: "Ошибка получения информации" });
-      }
-
-      return res.status(200).json(sizeData);
+        res.status(200).json(result[0]); // Возвращаем первый элемент массива, так как результат агрегации будет содержать только один элемент
     } catch (error) {
-      res.status(500).json({
-        error: "Возникла ошибка",
-      });
+        console.error("Error in getSize:", error);
+        res.status(500).json({ error: "Internal Server Error" });
     }
-  };
+};
 
   static addSize = async (req, res) => {
     try {

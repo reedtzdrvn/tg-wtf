@@ -19,6 +19,7 @@ import CategoriesList from "./components/CategoriesList/CategoriesList";
 import Notifications from "./components/Notifications/Notifications";
 import PlacingOrder from "./components/placingOrder/placingorder";
 import EditProfile from "./components/EditProfile/EditProfile";
+import NotFound from "./components/errors/notFound";
 
 
 let tg = window.Telegram.WebApp;
@@ -62,7 +63,7 @@ function App() {
         />
         <Route exact path="/basket/payment" element={<Pay />} />
         <Route exact path="/basket/placingorder" element={<PlacingOrder />} />
-        <Route exact path="/*" element={<NoMatch />} />
+        <Route exact path="/*" element={<NotFound />} />
       </Routes>
       {!pathname.includes("/categories/item-details/") ? <Footer /> : ""}
     </div>

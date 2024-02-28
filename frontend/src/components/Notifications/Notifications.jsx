@@ -1,12 +1,13 @@
 import NotificationsListItem from "./NotificationsListItem";
 import axios from '../../axios.js'
+import CheckAuth from "../errors/checkAuth.js";
 
 import './Notifications.css'
 import { useState, useEffect } from "react";
 
 const Notifications = () => {
 
-  const [notifications, setNotifications] = useState(null)
+  const [notifications, setNotifications] = useState()
 
   let tg = window.Telegram.WebApp;
 
@@ -22,22 +23,27 @@ const Notifications = () => {
   useEffect(() => {
     axios.get(`/notifications`, { params: { telegramId: userId } })
         .then(response => {
-            setNotifications(response.data)
+          setNotifications(response.data.filter((el) => el.seen === false))
         })
         .catch(error => {
             console.error('Ошибка при получении JSON файла', error);
         });
   })
+  if (!notifications) {
+    return <CheckAuth/>
+  }
+
+  console.log(notifications)
 
   return (
     <>
-      {notifications? 
-      <div className="page">
+      {notifications?.length>0? 
+      <div>
         {notifications.map((el) => (
-          el.seen === false? <NotificationsListItem title={el.name} date={el.date} key={el._id} id={el._id} seen = {el.seen}/>: ""
+          el.seen === false? <NotificationsListItem title={el.name} date={el.date} key={el._id} id={el._id} />: ""
         ))}
       </div>
-      : <div>Уведомлений нет!</div>}
+      : <div className="flex items-center justify-center mt-[100px]">Уведомлений нет!</div>}
     </>
   );
 };

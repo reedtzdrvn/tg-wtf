@@ -5,6 +5,7 @@ import "./EditProfile.css";
 import { useState, useEffect } from "react";
 import axios from '../../axios.js'
 import { useNavigate } from 'react-router-dom';
+import CheckAuth from '../errors/checkAuth.js';
 
 const EditProfile = () => {
 
@@ -39,6 +40,10 @@ const EditProfile = () => {
                 console.error('Ошибка при получении JSON файла', error);
             });
       }, []);
+
+      if (!firstname || !lastname || !email || !phonenumber) {
+        return <CheckAuth/>
+      }
 
 
     const handlerConfirm = () => {

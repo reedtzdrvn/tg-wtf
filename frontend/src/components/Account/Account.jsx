@@ -6,6 +6,7 @@ import "./account.css";
 import { NavLink } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "../../axios.js";
+import CheckAuth from "../errors/checkAuth.js";
 
 const Account = () => {
   
@@ -31,6 +32,10 @@ const Account = () => {
             console.error('Ошибка при получении JSON файла', error);
         });
   }, []);
+
+  if (!userData) {
+    return <CheckAuth/>
+  }
 
   const formatPhoneNumber = (phoneNumber) => {
     const cleaned = ('' + phoneNumber).replace(/\D/g, '');
