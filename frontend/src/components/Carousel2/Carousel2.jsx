@@ -1,42 +1,34 @@
 import { NavLink } from "react-router-dom";
-import slide from "../../images/slide.png";
+// import slide from "../../images/slide.png";
 import CarouselSecondSlide from "./CarouselSecondISlide";
+import { useState, useEffect } from "react";
+
+import axios from '../../axios.js'
 
 const Carousel2 = () => {
-  const caterogies = [
-    {
-      id: 1,
-      title: "Hockey uniform",
-      image: slide,
-    },
-    {
-      id: 2,
-      title: "Football uniform",
-      image: slide,
-    },
-    {
-      id: 3,
-      title: "Streetwear",
-      image: slide,
-    },
-    {
-      id: 4,
-      title: "Casual",
-      image: slide,
-    },
-    {
-      id: 5,
-      title: "Techno",
-      image: slide,
-    },
-  ];
+  const [caterogies, setCategories] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(`/categories`)
+      .then((response) => {
+        setCategories(response.data);
+      })
+      .catch((error) => {
+        console.error("Ошибка при получении JSON файла", error);
+      });
+  }, []);
 
   return (
     <>
       <div className="mt-[16px]">
         <div className="CarouselSecond flex gap-[8px]">
-          {caterogies.map(el => (
-            <CarouselSecondSlide imageSrc={el.image} title={el.title} key={el.id} />
+          {caterogies.map((el) => (
+            <CarouselSecondSlide
+              imageSrc={el.image}
+              title={el.title}
+              key={el._id}
+            />
           ))}
         </div>
       </div>
