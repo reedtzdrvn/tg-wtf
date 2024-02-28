@@ -1,5 +1,4 @@
 import { NavLink } from "react-router-dom";
-// import slide from "../../images/slide.png";
 import CarouselSecondSlide from "./CarouselSecondISlide";
 import { useState, useEffect } from "react";
 

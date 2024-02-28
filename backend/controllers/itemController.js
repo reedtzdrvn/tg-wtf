@@ -35,6 +35,28 @@ export default class itemController {
         }
     }
 
+    static getItemsByCategory = async (req, res) => {
+        try {
+            const categoryId = req.body.categoryId;
+
+            if (!categoryId) {
+                return res.status(404).json({ message: 'Ошибка получения информации' });
+            }
+
+            const itemsFromSelectedCategoryData = await ItemSchema.find({category: categoryId})
+
+            if (itemsFromSelectedCategoryData.length === 0) {
+                return res.status(404).json({ message: 'Нет товаров из данной категории' });
+            }
+
+            res.status(200).json(itemsFromSelectedCategoryData)
+        } catch (error) {
+            res.status(500).json({
+                error: "Возникла ошибка"
+            })
+        }
+    }
+
     static addItem = async (req, res) => {
         try {
 

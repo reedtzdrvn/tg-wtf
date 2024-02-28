@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 
 const Notifications = () => {
 
-  const [notifications, setNotifications] = useState()
+  const [notifications, setNotifications] = useState(null)
 
   let tg = window.Telegram.WebApp;
 
@@ -29,14 +29,12 @@ const Notifications = () => {
         });
   })
 
-  console.log(notifications)
-
   return (
     <>
       {notifications? 
       <div>
         {notifications.map((el) => (
-          <NotificationsListItem title={el.name} date={el.date} key={el.id} />
+          el.seen === false? <NotificationsListItem title={el.name} date={el.date} key={el._id} id={el._id} seen = {el.seen}/>: ""
         ))}
       </div>
       : <div>Уведомлений нет!</div>}
