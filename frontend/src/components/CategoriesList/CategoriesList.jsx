@@ -2,46 +2,63 @@ import CardItem from "../CardItem/CardItem";
 
 import slide from "../../images/slide.png";
 
+import { useState, useEffect } from "react";
+
+import axios from '../../axios.js'
+
 import { NavLink } from "react-router-dom";
 
 const CategoriesList = () => {
-  const allCategories = [
-    {
-      id: 1,
-      title: "Hockey uniform",
-      image: slide,
-      isFavorite: false,
-      isAvailable: true,
-    },
-    {
-      id: 2,
-      title: "Football uniform",
-      image: slide,
-      isFavorite: false,
-      isAvailable: true,
-    },
-    {
-      id: 3,
-      title: "Streetwear",
-      image: slide,
-      isFavorite: false,
-      isAvailable: true,
-    },
-    {
-      id: 4,
-      title: "Casual",
-      image: slide,
-      isFavorite: false,
-      isAvailable: true,
-    },
-    {
-      id: 5,
-      title: "Techno",
-      image: slide,
-      isFavorite: false,
-      isAvailable: true,
-    },
-  ];
+  const [allCategories, setAllCategories] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(`/categories`)
+      .then((response) => {
+        setAllCategories(response.data);
+      })
+      .catch((error) => {
+        console.error("Ошибка при получении JSON файла", error);
+      });
+  }, []);
+
+  // const allCategories = [
+  //   {
+  //     id: 1,
+  //     title: "Hockey uniform",
+  //     image: slide,
+  //     isFavorite: false,
+  //     isAvailable: true,
+  //   },
+  //   {
+  //     id: 2,
+  //     title: "Football uniform",
+  //     image: slide,
+  //     isFavorite: false,
+  //     isAvailable: true,
+  //   },
+  //   {
+  //     id: 3,
+  //     title: "Streetwear",
+  //     image: slide,
+  //     isFavorite: false,
+  //     isAvailable: true,
+  //   },
+  //   {
+  //     id: 4,
+  //     title: "Casual",
+  //     image: slide,
+  //     isFavorite: false,
+  //     isAvailable: true,
+  //   },
+  //   {
+  //     id: 5,
+  //     title: "Techno",
+  //     image: slide,
+  //     isFavorite: false,
+  //     isAvailable: true,
+  //   },
+  // ];
 
   return (
     <>
@@ -59,10 +76,10 @@ const CategoriesList = () => {
             <CardItem
               title={category.title}
               image={category.image}
-              isFavorite={category.isFavorite}
-              isAvailable={category.isAvailable}
+              isFavorite={false}
+              isAvailable={true}
               price={null}
-              key={category.id}
+              key={category._id}
             />
           </NavLink>
         ))}
