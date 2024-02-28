@@ -19,8 +19,8 @@ const CardItemCarousel = ({ images }) => {
         modules={[Navigation]}
         className="h-[70vh]"
       >
-        {images.map((imgSrc) => (
-          <SwiperSlide>
+        {images.map((imgSrc, index) => (
+          <SwiperSlide key={index}>
             <img className="w-full h-full" src={imgSrc} />
           </SwiperSlide>
         ))}

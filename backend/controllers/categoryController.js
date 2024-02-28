@@ -39,6 +39,7 @@ export default class categoryController {
         }
     }
 
+
     static getCategoryItems = async (req, res) => {
 
     }

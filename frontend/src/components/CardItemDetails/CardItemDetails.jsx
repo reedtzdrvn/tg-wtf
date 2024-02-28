@@ -16,7 +16,7 @@ import CardItemDetailsRatings from "./CardItemDetailsRatings";
 
 const CardItemDetails = (props) => {
   const [item, setItem] = useState(false);
-  const [sizes, setSizes] = useState([]);
+
   const [showRatings, setShowRatings] = useState(false);
   const [currentAmount, setCurrentAmount] = useState(0);
   const [currentSize, setCurrentSize] = useState("");
@@ -25,38 +25,17 @@ const CardItemDetails = (props) => {
   const { state } = location;
 
   useEffect(() => {
-    console.log(
-      location.pathname.substring(location.pathname.lastIndexOf("/") + 1)
-    );
     axios
-      .get(`/item`, { params: { itemId: state.itemId } })
+      .get(`/size`, { params: { itemId: state.itemId } })
       .then((response) => {
         setItem(response.data);
       })
       .catch((error) => {
         console.error("Ошибка при получении JSON файла", error);
       });
+      
   }, []);
 
-  useEffect(() => {
-    if (item) {
-      getSizesOfItem();
-    }
-  }, [item]);
-
-  const getSizesOfItem = () => {
-    Promise.all(item.sizes.map((size) => {
-      return axios.get(`/size`, { params: { sizeId: size.id } })
-        .then((response) => response.data.name)
-        .catch((error) => {
-          console.error("Ошибка при получении JSON файла", error);
-          return null;
-        });
-    })).then((sizeNames) => {
-      setSizes(sizeNames.filter(Boolean));
-      console.log(sizeNames);
-    });
-  };
 
   const changeShowRatingsHandler = () => {
     setShowRatings(!showRatings);
@@ -84,7 +63,7 @@ const CardItemDetails = (props) => {
       if (currentAmount === 0) setCurrentAmount(1);
     }
   };
-
+  console.log(item)
   // const item = {
   //   title: "Cappadacia",
   //   ratingsCount: 258,
@@ -102,15 +81,15 @@ const CardItemDetails = (props) => {
 
   return (
     <>
-      {(item && sizes.length !== 0) && (
+      {item && item.photos.length >= 2 && (
         <div>
-          <CardItemCarousel images={item.photos} />
+          <CardItemCarousel images={item.photos.slice(1)} />
           {!showRatings ? (
             <NavLink
               to={`/categories/${state.from}`}
               state={{
-                category: item.category,
-                pathTitle: item.category.toLowerCase().replace(/\s/g, "-"),
+                category: item.category.title,
+                pathTitle: item.category.title.toLowerCase().replace(/\s/g, "-"),
               }}
             >
               <div className="card-item-details-return-button flex justify-center items-center absolute left-[20px] top-[25px]">
@@ -146,7 +125,7 @@ const CardItemDetails = (props) => {
                       className="card-item-details-title-ratings flex justify-start items-center"
                     >
                       <CardItemStars starCount={0} />
-                      <div className="ml-[8px] mt-[3px]">
+                      <div className="ml-[8px] mt-[2px]">
                         <span>{item.reviews.length} Ratings</span>
                         <span> | </span>
                         <span>{113} Learners</span>
@@ -171,11 +150,12 @@ const CardItemDetails = (props) => {
                 <div className="ml-[20px] mt-[15px] card-item-details-size-wrapper">
                   <span className="card-item-details-size-title">Size</span>
                   <div className="mt-[10px]">
-                    {sizes.map((size) => (
+                    {item.sizes.map((size) => (
                       <CardItemSizeButton
                         currentSize={currentSize}
                         chooseCurrentSizeHandler={chooseCurrentSizeHandler}
-                        size={size}
+                        size={size.name}
+                        key={size._id}
                       />
                     ))}
                   </div>
