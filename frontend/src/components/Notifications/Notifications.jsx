@@ -1,38 +1,45 @@
 import NotificationsListItem from "./NotificationsListItem";
+import axios from '../../axios.js'
 
 import './Notifications.css'
+import { useState, useEffect } from "react";
 
 const Notifications = () => {
-  const notifications = [
-    {
-      id: 1,
-      title: "example1",
-      date: new Date(2024, 1, 23, 12, 12, 12),
-    },
-    {
-      id: 2,
-      title: "example2",
-      date: new Date(2024, 1, 23, 13, 12, 12),
-    },
-    {
-      id: 3,
-      title: "example3",
-      date: new Date(2024, 1, 23, 14, 12, 12),
-    },
-    {
-      id: 4,
-      title: "example4",
-      date: new Date(2024, 1, 23, 15, 12, 12),
-    },
-  ];
+
+  const [notifications, setNotifications] = useState()
+
+  let tg = window.Telegram.WebApp;
+
+  let userId = ''
+
+  if (!tg.initDataUnsafe.user){
+    userId = '703999322'
+  }
+  else{
+    userId = tg.initDataUnsafe.user?.id
+  }
+
+  useEffect(() => {
+    axios.get(`/notifications`, { params: { telegramId: userId } })
+        .then(response => {
+            setNotifications(response.data)
+        })
+        .catch(error => {
+            console.error('Ошибка при получении JSON файла', error);
+        });
+  })
+
+  console.log(notifications)
 
   return (
     <>
+      {notifications? 
       <div>
         {notifications.map((el) => (
-          <NotificationsListItem title={el.title} date={el.date} key={el.id} />
+          <NotificationsListItem title={el.name} date={el.date} key={el.id} />
         ))}
       </div>
+      : <div>Уведомлений нет!</div>}
     </>
   );
 };

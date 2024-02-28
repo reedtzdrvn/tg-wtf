@@ -1,36 +1,37 @@
-import NotificationSchema from "../models/notification.js"
+import UserSchema from "../models/user.js"
 
 export default class adminController {
 
-    addNotification = async (req, res) => {
+    static addUserNotification = async (req, res) => {
         try {
-            console.log(req.body)
+            const { name, telegramId } = req.body;
 
-            const notificationData = await NotificationSchema.find({name: req.body.name});
+            const date = new Date()
 
-            if (notificationData.length!==0) {
-                return res.status(500).json({ message: 'Невозможно добавить уведомление' });
+            const user = await UserSchema.findOne({ telegramId });
+
+            if (!user) {
+                return res.status(404).json({ error: "Пользователь не найден" });
             }
 
-            const notification = await new NotificationSchema({
-                name: req.body.name,
-                date: req.body.date,
-            })
+            const newNotification = {
+                name,
+                date,
+                seen: false
+            };
 
-            await notification.save();
-    
-            return (res.status(200).json({
-                ...notification
-            }))
+            user.notifications.push(newNotification);
 
+            await user.save();
+
+            return res.status(200).json({ notification: newNotification });
         } catch (err) {
-            res.status(500).json({
-                error: "Возникла ошибка"
-            })
+            console.error(err);
+            return res.status(500).json({ error: "Возникла ошибка" });
         }
     }
 
-    deleteNotification = async (req, res) => {
+    static deleteNotification = async (req, res) => {
 
     }
 

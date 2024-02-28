@@ -43,6 +43,9 @@ app.get('/user', userController.getUser)
 
 app.get('/item', itemController.getItem)
 
+app.get('/categories', categoryController.getCategories)
+
+app.get('/notifications', userController.getNotifications)
 
 //POST
 
@@ -52,4 +55,4 @@ app.post('/size', itemController.addSize)
 
 app.post('/item', itemController.addItem)
 
-app.post('/notification', adminController.addNotification)
+app.post('/notification', adminController.addUserNotification)
