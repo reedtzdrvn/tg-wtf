@@ -12,8 +12,8 @@ const Account = () => {
   const [userData, setUserData] = useState(null);
 
   let tg = window.Telegram.WebApp;
-  //const userId = '703999322';
-  const userId = tg.initDataUnsafe.user.id;
+  const userId = '703999322';
+  //const userId = tg.initDataUnsafe.user.id;
 
   useEffect(() => {
     axios.get(`/user`, { params: { telegramId: userId } })

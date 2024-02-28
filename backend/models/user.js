@@ -37,7 +37,22 @@ const UserSchema = new mongoose.Schema({
     telegramId: {
         type: String,
         require: true
-    }
+    },
+    notifications: [{
+        name: {
+            type: String,
+            require: true
+        },
+        date: {
+            type: mongoose.Schema.Types.Date,
+            require: true
+        },
+        seen: {
+            type: Boolean,
+            require: true,
+            default: false
+        }
+    }]
 })
 
 export default mongoose.model("User", UserSchema);
