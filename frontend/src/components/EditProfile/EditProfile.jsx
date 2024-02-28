@@ -4,6 +4,7 @@ import user from "../../images/fi-rr-user.svg"
 import "./EditProfile.css";
 import { useState, useEffect } from "react";
 import axios from '../../axios.js'
+import { useNavigate } from 'react-router-dom';
 
 const EditProfile = () => {
 
@@ -11,6 +12,7 @@ const EditProfile = () => {
     const [lastname, setLastName] = useState(null)
     const [email, setEmail] = useState(null)
     const [phonenumber, setPhone] = useState(null)
+    let navigate = useNavigate();
 
     let tg = window.Telegram.WebApp;
 
@@ -31,7 +33,6 @@ const EditProfile = () => {
                 setLastName(lastName)
                 setEmail(email)
                 setPhone(phoneNumber)
-                console.log(response.data[0])
             })
 
             .catch(error => {
@@ -42,14 +43,9 @@ const EditProfile = () => {
 
     const handlerConfirm = () => {
         axios.post('/updateuser', {firstName: firstname, lastName: lastname, email: email, phoneNumber: phonenumber, telegramId: userId})
-        .then(response => {
-            const {firstName, lastName, phoneNumber, email} = response.data[0]
-            setFirstName(firstName)
-            setLastName(lastName)
-            setEmail(email)
-            setPhone(phoneNumber)
-            console.log(response.data[0])
-        })
+            .then(response => {
+                navigate('/account');
+            })
 
         .catch(error => {
             console.error('Ошибка при получении JSON файла', error);
@@ -89,7 +85,7 @@ const EditProfile = () => {
                             required
                         />
                     </div>
-                    <div className="flex justify-center items-center mt-[185px]">
+                    <div className="flex justify-center items-center mt-[60px]">
                         <div onClick={handlerConfirm} className="cursor-pointer nextPageButton w-[75%] flex items-center justify-center">
                             Confirm
                         </div>
