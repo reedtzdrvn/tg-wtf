@@ -42,7 +42,20 @@ const ItemSchema = new mongoose.Schema({
     description: {
         type: String,
         require: true
-    }
+    },
+    reviews: [{
+        user: {
+            type: mongoose.Schema.Types.ObjectId,
+            require: true
+        },
+        ratingsCount: {
+            type: Number,
+            require: true
+        },
+        textReview:{
+            type: String
+        }
+    }]
 })
 
 export default mongoose.model("Item", ItemSchema);
