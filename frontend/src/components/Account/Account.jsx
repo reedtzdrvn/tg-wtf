@@ -5,7 +5,7 @@ import spinner from "../../images/spinner.svg";
 import "./account.css";
 import { NavLink } from "react-router-dom";
 import { useState, useEffect } from "react";
-import axios from "axios";
+import axios from "../../axios.js";
 
 const Account = () => {
   
@@ -16,7 +16,7 @@ const Account = () => {
   const userId = tg.initDataUnsafe.user.id;
 
   useEffect(() => {
-    axios.get(`https://tg-wtf.onrender.com/user`, { params: { telegramId: userId } })
+    axios.get(`/user`, { params: { telegramId: userId } })
         .then(response => {
             setUserData(response.data[0]);
         })
