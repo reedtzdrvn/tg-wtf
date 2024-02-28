@@ -6,6 +6,7 @@ import userController from "./controllers/userController.js"
 import categoryController from './controllers/categoryController.js';
 import itemController from './controllers/itemController.js';
 import {wakeServer} from './utils/ping.js'
+import adminController from './controllers/adminController.js';
 
 dotenvConfig();
 
@@ -50,3 +51,5 @@ app.post('/category', categoryController.addCategory)
 app.post('/size', itemController.addSize)
 
 app.post('/item', itemController.addItem)
+
+app.post('/notification', adminController.addNotification)
