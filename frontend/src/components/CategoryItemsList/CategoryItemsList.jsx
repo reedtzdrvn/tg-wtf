@@ -1,5 +1,8 @@
+import { useState, useEffect } from "react";
 import Image1 from "../../images/image1.png";
 import CardItem from "../CardItem/CardItem";
+
+import axios from "../../axios.js";
 
 import { NavLink, useLocation } from "react-router-dom";
 
@@ -7,40 +10,72 @@ const CategoryItemsList = (props) => {
   const location = useLocation();
   const { state } = location;
 
-  const ItemsFromSelecterCategory = [
-    {
-      id: 1,
-      title: "Belt suit blazer",
-      price: 120,
-      image: Image1,
-      isFavorite: false,
-      isAvailable: true,
-    },
-    {
-      id: 2,
-      title: "Belt suit blazer",
-      price: 120,
-      image: Image1,
-      isFavorite: false,
-      isAvailable: true,
-    },
-    {
-      id: 3,
-      title: "Belt suit blazer",
-      price: 120,
-      image: Image1,
-      isFavorite: true,
-      isAvailable: true,
-    },
-    {
-      id: 4,
-      title: "Belt suit blazer",
-      price: 120,
-      image: Image1,
-      isFavorite: false,
-      isAvailable: true,
-    },
-  ];
+  const [categoryId, setCategoryId] = useState(null);
+  const [ItemsFromSelecterCategory, setItemsFromSelecterCategory] = useState([])
+
+  const getCategoryId = (categoryName) => {
+    axios
+      .get(`/category`, { params: { categoryName: categoryName } })
+      .then((response) => {
+        setCategoryId(response.data[0]._id);
+        console.log(response.data[0]._id)
+      })
+      .catch((error) => {
+        console.error("Ошибка при получении JSON файла", error);
+      });
+  };
+
+  const getItemsFromSelectedCategory = (categoryId) => {
+    axios
+      .get(`/category-items`, { params: { categoryId: categoryId } })
+      .then((response) => {
+        setItemsFromSelecterCategory(response.data);
+        console.log(response.data)
+      })
+      .catch((error) => {
+        console.error("Ошибка при получении JSON файла", error);
+      });
+  }
+
+  useEffect(() => {
+    getCategoryId(state.category);
+    getItemsFromSelectedCategory(categoryId)
+  }, []);
+
+  // const ItemsFromSelecterCategory = [
+  //   {
+  //     id: 1,
+  //     title: "Belt suit blazer",
+  //     price: 120,
+  //     image: Image1,
+  //     isFavorite: false,
+  //     isAvailable: true,
+  //   },
+  //   {
+  //     id: 2,
+  //     title: "Belt suit blazer",
+  //     price: 120,
+  //     image: Image1,
+  //     isFavorite: false,
+  //     isAvailable: true,
+  //   },
+  //   {
+  //     id: 3,
+  //     title: "Belt suit blazer",
+  //     price: 120,
+  //     image: Image1,
+  //     isFavorite: true,
+  //     isAvailable: true,
+  //   },
+  //   {
+  //     id: 4,
+  //     title: "Belt suit blazer",
+  //     price: 120,
+  //     image: Image1,
+  //     isFavorite: false,
+  //     isAvailable: true,
+  //   },
+  // ];
 
   return (
     <>
@@ -52,14 +87,17 @@ const CategoryItemsList = (props) => {
         </div>
         <div className="category-items-list-wrapper grid grid-cols-2 gap-[20px] mt-[15px]">
           {ItemsFromSelecterCategory.map((el) => (
-            <NavLink to={'item-details/' + state.pathTitle + '/' + el.id} state={{from: state.pathTitle}}>
+            <NavLink
+              to={"item-details/" + state.pathTitle + "/" + el._id}
+              state={{ from: state.pathTitle }}
+            >
               <CardItem
-                title={el.title}
+                title={el.name}
                 price={el.price}
-                image={el.image}
+                image={el.photos[0]}
                 isFavorite={el.isFavorite}
                 isAvailable={el.isAvailable}
-                key={el.id}
+                key={el._id}
               />
             </NavLink>
           ))}

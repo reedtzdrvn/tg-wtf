@@ -43,7 +43,12 @@ app.get('/user', userController.getUser)
 
 app.get('/item', itemController.getItem)
 
+app.get('/category-items', itemController.getItemsByCategory)
+
+app.get('/category', categoryController.getCategory)
+
 app.get('/categories', categoryController.getCategories)
+
 
 //POST
 

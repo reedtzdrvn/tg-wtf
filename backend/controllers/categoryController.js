@@ -3,17 +3,41 @@ import CategorySchema from "../models/category.js"
 export default class categoryController {
 
     static getCategories = async (req, res) => {
-        const categoriesData = await CategorySchema.find()
+        try {
+            const categoriesData = await CategorySchema.find()
 
-        if (!categoriesData) {
-            return res.status(404).json({ message: 'Ошибка получения информации' });
+            if (!categoriesData) {
+                return res.status(404).json({ message: 'Ошибка получения информации' });
+            }
+
+            res.status(200).json(categoriesData);
+        } catch (error) {
+            res.status(500).json({
+                error: "Возникла ошибка"
+            })
         }
-
-        res.status(200).json(categoriesData);
     }
 
     static getCategory = async (req, res) => {
+        try {
+            const categoryName = req.body.categoryName
 
+            if (!categoryName) {
+                return res.status(404).json({ message: 'Ошибка получения категории' });
+            }
+
+            const categoryData = await CategorySchema.findOne({title: categoryName});
+
+            if (categoryData.length===0) {
+                return res.status(404).json({message: 'Не удалось найти необходимую категорию'})
+            }
+
+            res.status(200).json(categoryData);
+        } catch (error) {
+            res.status(500).json({
+                error: "Возникла ошибка"
+            })
+        }
     }
 
     static getCategoryItems = async (req, res) => {
