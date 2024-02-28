@@ -17,8 +17,7 @@ const CategoryItemsList = (props) => {
     axios
       .get(`/category`, { params: { categoryName: categoryName } })
       .then((response) => {
-        setCategoryId(response.data[0]._id);
-        console.log(response.data[0]._id)
+        setCategoryId(response.data._id);
       })
       .catch((error) => {
         console.error("Ошибка при получении JSON файла", error);
@@ -30,7 +29,6 @@ const CategoryItemsList = (props) => {
       .get(`/category-items`, { params: { categoryId: categoryId } })
       .then((response) => {
         setItemsFromSelecterCategory(response.data);
-        console.log(response.data)
       })
       .catch((error) => {
         console.error("Ошибка при получении JSON файла", error);
@@ -39,8 +37,13 @@ const CategoryItemsList = (props) => {
 
   useEffect(() => {
     getCategoryId(state.category);
-    getItemsFromSelectedCategory(categoryId)
   }, []);
+
+  useEffect(() => {
+    if (categoryId !== null) {
+      getItemsFromSelectedCategory(categoryId);
+    }
+  }, [categoryId]);
 
   // const ItemsFromSelecterCategory = [
   //   {
@@ -96,7 +99,7 @@ const CategoryItemsList = (props) => {
                 price={el.price}
                 image={el.photos[0]}
                 isFavorite={el.isFavorite}
-                isAvailable={el.isAvailable}
+                isAvailable={el.sizes.length === 0 ? false : true}
                 key={el._id}
               />
             </NavLink>

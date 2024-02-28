@@ -41,7 +41,7 @@ const PlacingOrder = () => {
         axios.get(`/user`, { params: { telegramId: userId } })
             .then(response => {
                 const {firstName, lastName, phoneNumber, userName} = response.data[0]
-                let fullName = `${firstName} ${lastName}`
+                let fullName = `${firstName} ${lastName}`.trim()
                 setName(fullName)
                 setValueNumber1(phoneNumber)
                 setTelegramName(`@${userName}`)

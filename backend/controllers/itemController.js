@@ -37,7 +37,7 @@ export default class itemController {
 
     static getItemsByCategory = async (req, res) => {
         try {
-            const categoryId = req.body.categoryId;
+            const categoryId = req.query.categoryId;
 
             if (!categoryId) {
                 return res.status(404).json({ message: 'Ошибка получения информации' });

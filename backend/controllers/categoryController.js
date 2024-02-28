@@ -20,7 +20,7 @@ export default class categoryController {
 
     static getCategory = async (req, res) => {
         try {
-            const categoryName = req.body.categoryName
+            const categoryName = req.query.categoryName
 
             if (!categoryName) {
                 return res.status(404).json({ message: 'Ошибка получения категории' });
@@ -31,7 +31,6 @@ export default class categoryController {
             if (categoryData.length===0) {
                 return res.status(404).json({message: 'Не удалось найти необходимую категорию'})
             }
-
             res.status(200).json(categoryData);
         } catch (error) {
             res.status(500).json({
