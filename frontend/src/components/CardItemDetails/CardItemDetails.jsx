@@ -144,7 +144,7 @@ const CardItemDetails = (props) => {
                       <CardItemSizeButton
                         currentSize={currentSize}
                         chooseCurrentSizeHandler={chooseCurrentSizeHandler}
-                        size={size.name}
+                        size={size.name.toUpperCase()}
                         key={size._id}
                       />
                     ))}
