@@ -1,7 +1,6 @@
 import 'react-phone-input-2/lib/style.css';
 import PhoneInput from 'react-phone-input-2';
 import user from "../../images/fi-rr-user.svg"
-import "./EditProfile.css";
 import { useState, useEffect } from "react";
 import axios from '../../axios.js'
 import { useNavigate } from 'react-router-dom';

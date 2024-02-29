@@ -20,7 +20,7 @@ import Notifications from "./components/Notifications/Notifications";
 import PlacingOrder from "./components/placingOrder/placingorder";
 import EditProfile from "./components/EditProfile/EditProfile";
 import NotFound from "./components/errors/notFound";
-
+import Review from "./components/Review/Review";
 
 let tg = window.Telegram.WebApp;
 tg.expand();
@@ -54,6 +54,7 @@ function App() {
           element={<CardItemDetails />}
         />
         <Route exact path="/account/history" element={<History />} />
+        <Route exact path="/account/history/review" element={<Review />} />
         <Route exact path="/account/status" element={<Status />} />
         <Route exact path="/account/edit" element={<EditProfile />} />
         <Route
