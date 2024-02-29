@@ -1,5 +1,5 @@
 import module from "./errors.module.css"
-const CheckAuth = () => {
+const Preloader = () => {
     return(
         <div className={module.error}>
             <title>Проверка</title>
@@ -7,4 +7,4 @@ const CheckAuth = () => {
         </div>
     )
 }
-export default CheckAuth;
+export default Preloader;

@@ -6,7 +6,7 @@ import "./account.css";
 import { NavLink } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "../../axios.js";
-import CheckAuth from "../errors/checkAuth.js";
+import Preloader from "../errors/Preloader.js";
 
 const Account = () => {
   
@@ -34,7 +34,7 @@ const Account = () => {
   }, []);
 
   if (!userData) {
-    return <CheckAuth/>
+    return <Preloader/>
   }
 
   const formatPhoneNumber = (phoneNumber) => {

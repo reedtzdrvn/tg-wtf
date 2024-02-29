@@ -41,11 +41,11 @@ export default class itemController {
         category: categoryId,
       });
 
-      if (itemsFromSelectedCategoryData.length === 0) {
-        return res
-          .status(404)
-          .json({ message: "Нет товаров из данной категории" });
-      }
+      // if (itemsFromSelectedCategoryData.length === 0) {
+      //   return res
+      //     .status(404)
+      //     .json({ message: "Нет товаров из данной категории" });
+      // }
 
       res.status(200).json(itemsFromSelectedCategoryData);
     } catch (error) {

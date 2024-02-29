@@ -1,6 +1,6 @@
 import NotificationsListItem from "./NotificationsListItem";
 import axios from '../../axios.js'
-import CheckAuth from "../errors/checkAuth.js";
+import Preloader from "../errors/Preloader.js";
 
 import './Notifications.css'
 import { useState, useEffect } from "react";
@@ -30,7 +30,7 @@ const Notifications = () => {
         });
   })
   if (!notifications) {
-    return <CheckAuth/>
+    return <Preloader/>
   }
 
   console.log(notifications)
