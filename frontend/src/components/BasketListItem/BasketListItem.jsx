@@ -5,15 +5,61 @@ import DeleteItemIcon from "../../images/delete-basket-icon.svg";
 
 import BasketListButton from "./BasketListButton";
 
-const BasketListItem = ({ title, price, quantity, onQuantityChange }) => {
+import axios from "../../axios.js";
+import { NavLink } from "react-router-dom";
+
+const BasketListItem = ({
+  itemId,
+  telegramId,
+  title,
+  price,
+  quantity,
+  onQuantityChange,
+  sizes,
+  chosenSize,
+}) => {
   const [curr, setCurr] = useState(quantity);
   const [currPrice, setCurrPrice] = useState(price);
+  const [categoryName, setCategoryName] = useState("");
+
+  useEffect(() => {
+    axios
+      .get("/categoryNameFromItemId", { params: { itemId: itemId } })
+      .then((response) => {
+        setCategoryName(response.data.categoryName);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
+  const changeSizeHandler = (currentCount) => {
+    console.log(telegramId, itemId, currentCount);
+    axios
+      .post(`/updateitemcart`, {
+        telegramId: telegramId,
+        itemId: itemId,
+        count: currentCount,
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   const increaseCurrentQuantity = () => {
-    setCurr(curr + 1);
-    onQuantityChange(price);
+    const currentSize = sizes.find(
+      (s) => s.name.toLowerCase() === chosenSize.toLowerCase()
+    );
+
+    if (curr < currentSize.count) {
+      changeSizeHandler(curr + 1);
+      setCurr(curr + 1);
+      onQuantityChange(price);
+    }
   };
   const decreaseCurrentQuantity = () => {
     if (curr >= 2) {
+      changeSizeHandler(curr - 1);
       setCurr(curr - 1);
       onQuantityChange(-price);
     }
@@ -32,9 +78,21 @@ const BasketListItem = ({ title, price, quantity, onQuantityChange }) => {
           increaseCurrentQuantity={increaseCurrentQuantity}
           decreaseCurrentQuantity={decreaseCurrentQuantity}
         />
-        <h3 className="w-3/12 flex justify-center">${currPrice.toLocaleString('en-US')}</h3>
+        <h3 className="w-3/12 flex justify-center">
+          ${currPrice.toLocaleString("en-US")}
+        </h3>
         <div className="basket-list-item-action-wrapper flex items-center w-3/12 flex justify-end">
-          <img src={DetailsItemIcon} width={15} height={15} />
+          <NavLink
+            to={`/categories/item-details/${categoryName
+              .toLowerCase()
+              .replace(/\s/g, "-")}/${itemId}`}
+            state={{
+              itemId: itemId,
+              from: categoryName.toLowerCase().replace(/\s/g, "-"),
+            }}
+          >
+            <img src={DetailsItemIcon} width={15} height={15} />
+          </NavLink>
           <img
             className="ml-[15px]"
             src={DeleteItemIcon}

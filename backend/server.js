@@ -40,6 +40,8 @@ app.get('/')
 
 
 
+app.get('/categoryNameFromItemId', categoryController.getCategoryNameByItemId)
+
 app.get('/user', userController.getUser)
 
 app.get('/item', itemController.getItem)
@@ -59,6 +61,8 @@ app.get('/especiallyforyou', espforyouController.getEspeciallyForYou)
 app.get('/getitemcart', userController.getItemCartUser)
 
 //POST
+
+app.post('/updateitemcart', itemController.updateItemCart)
 
 app.post('/category', categoryController.addCategory)
 

@@ -26,50 +26,17 @@ const Basket = () => {
     axios
       .get(`/getitemcart`, { params: { telegramId: userId } })
       .then((response) => {
-        setBasketList(response.data.itemsInCart[0].itemsInCart);
-        console.log(response.data.itemsInCart[0].itemsInCart);
+        setBasketList(response.data);
+        console.log(response.data);
       })
       .catch((error) => {
         console.error("Ошибка при получении JSON файла", error);
       });
   }, []);
-  console.log(basketList);
-  // const basketList = [
-  //   {
-  //     id: 1,
-  //     title: "Skins",
-  //     quantity: 1,
-  //     price: 40500,
-  //   },
-  //   {
-  //     id: 2,
-  //     title: "Skins",
-  //     quantity: 1,
-  //     price: 40500,
-  //   },
-  //   {
-  //     id: 3,
-  //     title: "Skins",
-  //     quantity: 1,
-  //     price: 40500,
-  //   },
-  //   {
-  //     id: 4,
-  //     title: "Skins",
-  //     quantity: 1,
-  //     price: 40500,
-  //   },
-  //   {
-  //     id: 5,
-  //     title: "Skins",
-  //     quantity: 1,
-  //     price: 40500,
-  //   },
-  // ];
 
   let currentSum = 0;
-  basketList.map((el) => {
-    currentSum = currentSum + el.price * el.count;
+  basketList?.map((el) => {
+    currentSum = currentSum + (el.price * el.chosenCount);
   });
 
   const [currentTotalSum, setCurrentTotalSum] = useState(currentSum);
@@ -133,11 +100,15 @@ const Basket = () => {
           <div className="basket-list-items flex flex-col">
             {basketList.map((el) => (
               <BasketListItem
+                itemId={el.itemId}
+                telegramId={userId}
                 onQuantityChange={onQuantityChange}
                 title={el.name}
                 price={el.price}
-                quantity={el.count}
-                key={el.id}
+                quantity={el.chosenCount}
+                key={el._id}
+                sizes={el.sizes}
+                chosenSize={el.chosenSize}
               />
             ))}
           </div>

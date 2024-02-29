@@ -1,5 +1,6 @@
 import ItemSchema from "../models/item.js";
 import SizeSchema from "../models/size.js";
+import UserSchema from "../models/user.js";
 import mongoose from "mongoose";
 
 export default class itemController {
@@ -80,75 +81,103 @@ export default class itemController {
     }
   };
 
+  static updateItemCart = async (req, res) => {
+    const { telegramId, itemId, count } = req.body;
+
+    if (!telegramId || !itemId || !count) {
+      return res.status(400).json({ message: "Ошибка получения информации" });
+    }
+
+    console.log(telegramId, itemId, count)
+
+    try {
+      const userData = await UserSchema.findOneAndUpdate(
+        { telegramId: telegramId, "cart.itemId": itemId },
+        { $set: { "cart.$.count": count } },
+        { new: true }
+      );
+    
+      if (!userData) {
+        return res.status(404).json({ message: "Пользователь не найден" });
+      }
+
+      return res
+        .status(200)
+        .json({ message: "Корзина обновлена успешно", userData });
+    } catch (error) {
+      console.error("Ошибка при обновлении корзины:", error);
+      return res.status(500).json({ message: "Внутренняя ошибка сервера" });
+    }
+  };
+
   static updateItem = async (req, res) => {};
 
   static getSize = async (req, res) => {
     try {
-        const itemId = req.query.itemId;
+      const itemId = req.query.itemId;
 
-        const result = await ItemSchema.aggregate([
-            {
-                $match: {
-                    "_id": mongoose.Types.ObjectId.createFromHexString(itemId)
-                }
+      const result = await ItemSchema.aggregate([
+        {
+          $match: {
+            _id: mongoose.Types.ObjectId.createFromHexString(itemId),
+          },
+        },
+        {
+          $lookup: {
+            from: "categories",
+            localField: "category",
+            foreignField: "_id",
+            as: "categoryInfo",
+          },
+        },
+        {
+          $unwind: "$categoryInfo",
+        },
+        {
+          $unwind: "$sizes",
+        },
+        {
+          $lookup: {
+            from: "sizes",
+            localField: "sizes.id",
+            foreignField: "_id",
+            as: "sizeInfo",
+          },
+        },
+        {
+          $unwind: "$sizeInfo",
+        },
+        {
+          $group: {
+            _id: "$_id",
+            name: { $first: "$name" },
+            category: { $first: "$categoryInfo" },
+            photos: { $first: "$photos" },
+            price: { $first: "$price" },
+            sale: { $first: "$sale" },
+            deliveryTime: { $first: "$deliveryTime" },
+            description: { $first: "$description" },
+            reviews: { $first: "$reviews" },
+            sizes: {
+              $push: {
+                _id: "$sizeInfo._id",
+                name: "$sizeInfo.name",
+                count: "$sizes.count",
+              },
             },
-            {
-                $lookup: {
-                    from: "categories",
-                    localField: "category",
-                    foreignField: "_id",
-                    as: "categoryInfo"
-                }
-            },
-            {
-                $unwind: "$categoryInfo"
-            },
-            {
-                $unwind: "$sizes"
-            },
-            {
-                $lookup: {
-                    from: "sizes",
-                    localField: "sizes.id",
-                    foreignField: "_id",
-                    as: "sizeInfo"
-                }
-            },
-            {
-                $unwind: "$sizeInfo"
-            },
-            {
-                $group: {
-                    _id: "$_id",
-                    name: { $first: "$name" },
-                    category: { $first: "$categoryInfo" },
-                    photos: { $first: "$photos" },
-                    price: { $first: "$price" },
-                    sale: { $first: "$sale" },
-                    deliveryTime: { $first: "$deliveryTime" },
-                    description: { $first: "$description" },
-                    reviews: { $first: "$reviews" },
-                    sizes: {
-                        $push: {
-                            _id: "$sizeInfo._id",
-                            name: "$sizeInfo.name",
-                            count: "$sizes.count"
-                        }
-                    }
-                }
-            }
-        ]);
+          },
+        },
+      ]);
 
-        res.status(200).json(result[0]); // Возвращаем первый элемент массива, так как результат агрегации будет содержать только один элемент
+      res.status(200).json(result[0]); // Возвращаем первый элемент массива, так как результат агрегации будет содержать только один элемент
     } catch (error) {
-        console.error("Error in getSize:", error);
-        res.status(500).json({ error: "Internal Server Error" });
+      console.error("Error in getSize:", error);
+      res.status(500).json({ error: "Internal Server Error" });
     }
-};
+  };
 
   static addSize = async (req, res) => {
     try {
-
       const sizeData = await SizeSchema.find({ name: req.body.name });
 
       if (sizeData.length !== 0) {
@@ -171,10 +200,7 @@ export default class itemController {
     }
   };
 
-  static getItemReviews = async (req, res) => {
-    
-  }
-  
+  static getItemReviews = async (req, res) => {};
 
   static updateSize = async (req, res) => {};
 
