@@ -7,6 +7,7 @@ import categoryController from './controllers/categoryController.js';
 import itemController from './controllers/itemController.js';
 import {wakeServer} from './utils/ping.js'
 import adminController from './controllers/adminController.js';
+import espforyouController from './controllers/espforyouController.js';
 
 dotenvConfig();
 
@@ -52,6 +53,9 @@ app.get('/categories', categoryController.getCategories)
 app.get('/notifications', userController.getNotifications)
 
 app.get('/size', itemController.getSize)
+
+app.get('/especiallyforyou', espforyouController.getEspeciallyForYou)
+
 //POST
 
 app.post('/category', categoryController.addCategory)
@@ -65,3 +69,5 @@ app.post('/notification', adminController.addUserNotification)
 app.post('/seenNotification', userController.seenNotification)
 
 app.post('/updateuser', userController.updateUser)
+
+app.post('/especiallyforyou', espforyouController.addEspeciallyForYou)

@@ -148,7 +148,6 @@ export default class itemController {
 
   static addSize = async (req, res) => {
     try {
-      console.log(req.body);
 
       const sizeData = await SizeSchema.find({ name: req.body.name });
 

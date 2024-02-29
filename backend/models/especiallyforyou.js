@@ -1,12 +1,16 @@
 import mongoose from "mongoose"
 
 const EspeciallyForYouSchema = new mongoose.Schema({
-    adress: {
+    address: {
         type: String,
         require: true
     },
     information: {
         type: String,
+        require: true
+    },
+    date: {
+        type: mongoose.Schema.Types.Date,
         require: true
     },
 })

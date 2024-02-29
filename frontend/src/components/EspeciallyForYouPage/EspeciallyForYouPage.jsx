@@ -1,28 +1,42 @@
 import React, { useState } from 'react';
 import background from "../../images/background.png";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import axios from '../../axios.js'
 import "./EspeciallyForYouPage.css";
 
 const EspeciallyForYouPage = () => {
-  const [presentAddress, setPresentAddress] = useState('');
-  const [additionalInfo, setAdditionalInfo] = useState('');
-  const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+  const [address, setPresentAddress] = useState(null);
+  const [information, setAdditionalInfo] = useState(null);
+  let navigate = useNavigate();
+  let tg = window.Telegram.WebApp;
+
+    let userId = ''
+  
+    if (!tg.initDataUnsafe.user){
+      userId='703999322'
+    }
+    else{
+      userId=tg.initDataUnsafe.user?.id
+    }
+
+
+  const handlerSubmit = async (e) => {
     e.preventDefault();
 
-    const formData = {
-      presentAddress,
-      additionalInfo,
-    };
+    axios.post('/especiallyforyou', {address: address, information: information, telegramId: userId})
+            .then(response => {
+                navigate('/');
+            })
 
-    console.log('Отправка данных:', formData);
-
+        .catch(error => {
+            console.error('Ошибка при получении JSON файла', error);
+        });
   };
 
   return (
     <div className="page">
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handlerSubmit}>
         <div className="mx-[8.5%] mt-[32px] relative">
           <img src={background} alt="Background" className="imgbanner" />
           <div className="absolute top-0 bottom-0 w-full text-white px-[10%] py-[40px] h-[152px]">
@@ -38,7 +52,7 @@ const EspeciallyForYouPage = () => {
                 placeholder="San Jose, California, USA"
                 type="text"
                 id="presentAddress"
-                value={presentAddress}
+                value={address}
                 onChange={(e) => setPresentAddress(e.target.value)}
                 required
               />
@@ -50,7 +64,7 @@ const EspeciallyForYouPage = () => {
               <textarea
                 placeholder="Please provide all necessary additional information related to your order."
                 id="additionalInfo"
-                value={additionalInfo}
+                value={information}
                 onChange={(e) => setAdditionalInfo(e.target.value)}
                 required
               />
@@ -58,7 +72,7 @@ const EspeciallyForYouPage = () => {
           </div>
           <div className="flex justify-center items-center">
           <button type="submit" className="bg-black text-white flex justify-center items-center buttonnextESP w-[70%]">
-            Next
+            Confirm
           </button>
           </div>
         </div>
