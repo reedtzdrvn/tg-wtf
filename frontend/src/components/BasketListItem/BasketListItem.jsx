@@ -17,6 +17,9 @@ const BasketListItem = ({
   onQuantityChange,
   sizes,
   chosenSize,
+  setBasketList,
+  basketList,
+  deleteCartItemHandler
 }) => {
   const [curr, setCurr] = useState(quantity);
   const [currPrice, setCurrPrice] = useState(price);
@@ -95,6 +98,13 @@ const BasketListItem = ({
           </NavLink>
           <img
             className="ml-[15px]"
+            onClick={() =>
+              deleteCartItemHandler(
+                sizes.find(
+                  (s) => s.name.toLowerCase() === chosenSize.toLowerCase()
+                ),itemId
+              )
+            }
             src={DeleteItemIcon}
             width={15}
             height={15}
