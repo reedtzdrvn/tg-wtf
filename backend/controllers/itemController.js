@@ -81,6 +81,35 @@ export default class itemController {
     }
   };
 
+  static deleteItemFromCart = async (req, res) => {
+    const { telegramId, itemId, sizeItem } = req.body;
+    console.log(telegramId, itemId, sizeItem);
+    if (!telegramId || !itemId) {
+      return res.status(400).json({ message: "Ошибка получения информации" });
+    }
+
+    
+
+    try {
+      const userData = await UserSchema.findOneAndUpdate(
+        { telegramId: telegramId },
+        { $pull: { cart: { itemId: itemId, size: sizeItem } } },
+        { new: true }
+      );
+
+      if (!userData) {
+        return res.status(404).json({ message: "Пользователь не найден" });
+      }
+
+      return res
+        .status(200)
+        .json({ message: "Товар удален из корзины успешно", userData });
+    } catch (error) {
+      console.error("Ошибка при удалении товара из корзины:", error);
+      return res.status(500).json({ message: "Внутренняя ошибка сервера" });
+    }
+  };
+
   static updateItemCart = async (req, res) => {
     const { telegramId, itemId, count } = req.body;
 

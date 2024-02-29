@@ -22,6 +22,22 @@ const Basket = () => {
     userId = tg.initDataUnsafe.user?.id;
   }
 
+  const deleteCartItemHandler = (currentSize, itemId) => {
+    axios
+      .post(`/deleteItemFromCart`, {
+        telegramId: userId,
+        itemId: itemId,
+        sizeItem: currentSize.id,
+      })
+      .then((response) => {
+        setBasketList(basketList => basketList.filter(item => ((item.itemId === itemId) && (item.chosenSize.toLowerCase() === currentSize.name.toLowerCase()))));
+        console.log(basketList)
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   useEffect(() => {
     axios
       .get(`/getitemcart`, { params: { telegramId: userId } })
@@ -36,7 +52,7 @@ const Basket = () => {
 
   let currentSum = 0;
   basketList?.map((el) => {
-    currentSum = currentSum + (el.price * el.chosenCount);
+    currentSum = currentSum + el.price * el.chosenCount;
   });
 
   const [currentTotalSum, setCurrentTotalSum] = useState(currentSum);
@@ -109,6 +125,9 @@ const Basket = () => {
                 key={el._id}
                 sizes={el.sizes}
                 chosenSize={el.chosenSize}
+                setBasketList={setBasketList}
+                basketList={basketList}
+                deleteCartItemHandler={deleteCartItemHandler}
               />
             ))}
           </div>

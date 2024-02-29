@@ -81,3 +81,8 @@ app.post('/especiallyforyou', espforyouController.addEspeciallyForYou)
 app.post('/additemcart', userController.addItemCartUser)
 
 app.post('/itemreview', userController.addItemReview)
+
+// DELETE
+
+app.post('/deleteItemFromCart', itemController.deleteItemFromCart)
+
