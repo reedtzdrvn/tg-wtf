@@ -1,5 +1,6 @@
 import ItemSchema from "../models/item.js";
 import SizeSchema from "../models/size.js";
+import UserSchema from "../models/user.js"
 import mongoose from "mongoose";
 
 export default class itemController {
@@ -139,7 +140,15 @@ export default class itemController {
             }
         ]);
 
-        res.status(200).json(result[0]); // Возвращаем первый элемент массива, так как результат агрегации будет содержать только один элемент
+        for (const item of result[0].reviews) {
+          const tg = item.telegramId;
+          const userlol = await UserSchema.findOne({telegramId : tg});
+          const userName = userlol ? userlol.firstName + ' ' + userlol.lastName : "Unknown";
+      
+          item.telegramId = userName;
+      }
+
+        res.status(200).json(result[0]);
     } catch (error) {
         console.error("Error in getSize:", error);
         res.status(500).json({ error: "Internal Server Error" });
