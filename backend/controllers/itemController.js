@@ -88,7 +88,7 @@ export default class itemController {
       return res.status(400).json({ message: "Ошибка получения информации" });
     }
 
-    console.log(telegramId, itemId, count)
+    console.log(telegramId, itemId, count);
 
     try {
       const userData = await UserSchema.findOneAndUpdate(
@@ -96,7 +96,7 @@ export default class itemController {
         { $set: { "cart.$.count": count } },
         { new: true }
       );
-    
+
       if (!userData) {
         return res.status(404).json({ message: "Пользователь не найден" });
       }
@@ -169,7 +169,17 @@ export default class itemController {
         },
       ]);
 
-      res.status(200).json(result[0]); // Возвращаем первый элемент массива, так как результат агрегации будет содержать только один элемент
+      for (const item of result[0].reviews) {
+        const tg = item.telegramId;
+        const userlol = await UserSchema.findOne({ telegramId: tg });
+        const userName = userlol
+          ? userlol.firstName + " " + userlol.lastName
+          : "Unknown";
+
+        item.telegramId = userName;
+      }
+
+      res.status(200).json(result[0]);
     } catch (error) {
       console.error("Error in getSize:", error);
       res.status(500).json({ error: "Internal Server Error" });

@@ -85,6 +85,23 @@ const CardItemDetails = (props) => {
     }
   };
 
+    const calculateRating = (reviews) => {
+      if (reviews.length === 0) {
+          return 0;
+      }
+
+      let totalRating = 0;
+      for (const review of reviews) {
+          totalRating += review.ratingsCount;
+      }
+
+      return totalRating / reviews.length;
+  };
+
+  
+
+
+
   return (
     <>
       {item && item.photos.length >= 2 && (
@@ -99,7 +116,7 @@ const CardItemDetails = (props) => {
                   .toLowerCase()
                   .replace(/\s/g, "-"),
               }}
-            >
+            > 
               <div className="card-item-details-return-button flex justify-center items-center absolute left-[20px] top-[25px]">
                 <img
                   className="m-[10px]"
@@ -132,7 +149,7 @@ const CardItemDetails = (props) => {
                       onClick={changeShowRatingsHandler}
                       className="card-item-details-title-ratings flex justify-start items-center"
                     >
-                      <CardItemStars starCount={0} />
+                      <CardItemStars starCount={Math.round(calculateRating(item.reviews))} />
                       <div className="ml-[8px] mt-[2px]">
                         <span>{item.reviews.length} Ratings</span>
                         <span> | </span>
@@ -189,8 +206,9 @@ const CardItemDetails = (props) => {
                 currentPrice={
                   currentAmount === 0 ? item.price : item.price * currentAmount
                 }
-                ratingsScore={0}
+                ratingsScore={calculateRating(item.reviews)}
                 reviewsCount={item.reviews.length}
+                reviews = {item.reviews}
               /> 
             )}
           </div>
