@@ -124,10 +124,10 @@ export default class userController {
 
     static getItemCartUser = async (req, res) => {
         try {
-            const { telegramId } = req.body;
-    
+            const telegramId = req.query.telegramId;
+
             const user = await UserSchema.findOne({ telegramId });
-    
+
             if (!user) {
                 return res.status(404).json({ error: "Пользователь не найден" });
             }

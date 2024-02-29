@@ -4,13 +4,13 @@ import Moneybag from "../../images/moneybag.svg";
 import PositionsIcon from "../../images/positions-icon.svg";
 import BasketListItem from "../BasketListItem/BasketListItem";
 
-import axios from '../../axios.js'
+import axios from "../../axios.js";
 
 import "./Basket.css";
 import { NavLink } from "react-router-dom";
 
 const Basket = () => {
-  const [basketList, setBasketList] = useState([])
+  const [basketList, setBasketList] = useState([]);
 
   let tg = window.Telegram.WebApp;
 
@@ -26,13 +26,14 @@ const Basket = () => {
     axios
       .get(`/getitemcart`, { params: { telegramId: userId } })
       .then((response) => {
-        setBasketList(response.data);
+        setBasketList(response.data.itemsInCart[0].itemsInCart);
+        console.log(response.data.itemsInCart[0].itemsInCart);
       })
       .catch((error) => {
         console.error("Ошибка при получении JSON файла", error);
       });
   }, []);
-  console.log(basketList)
+  console.log(basketList);
   // const basketList = [
   //   {
   //     id: 1,
@@ -68,10 +69,14 @@ const Basket = () => {
 
   let currentSum = 0;
   basketList.map((el) => {
-    currentSum = currentSum + el.price;
+    currentSum = currentSum + el.price * el.count;
   });
 
   const [currentTotalSum, setCurrentTotalSum] = useState(currentSum);
+
+  useEffect(() => {
+    setCurrentTotalSum(currentSum);
+  }, [basketList]);
 
   const onQuantityChange = (sum) => {
     setCurrentTotalSum(currentTotalSum + sum);
@@ -100,7 +105,7 @@ const Basket = () => {
                 <br /> Amount
               </span>
               <span className="basket-total-price">
-                {currentTotalSum.toLocaleString('en-US')}
+                {currentTotalSum.toLocaleString("en-US")}
               </span>
             </div>
           </div>
@@ -129,18 +134,20 @@ const Basket = () => {
             {basketList.map((el) => (
               <BasketListItem
                 onQuantityChange={onQuantityChange}
-                title={el.title}
+                title={el.name}
                 price={el.price}
-                quantity={el.quantity}
+                quantity={el.count}
                 key={el.id}
               />
             ))}
           </div>
         </div>
         <div className="basket-list-purchase mt-[20%] flex justify-center">
-          <NavLink to='/basket/placingorder'
-               className="basket-list-purchase-button px-[88px] py-[12px]">
-              I want this!
+          <NavLink
+            to="/basket/placingorder"
+            className="basket-list-purchase-button px-[88px] py-[12px]"
+          >
+            I want this!
           </NavLink>
         </div>
       </div>
