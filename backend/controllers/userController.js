@@ -155,6 +155,7 @@ export default class userController {
                     sale: item.itemId.sale,
                     chosenCount: item.count,
                     chosenSize: size.name,
+                    chosenId: size._id,
                     sizes: item.itemId.sizes.map(size => ({
                         id: size.id._id,
                         name: size.id.name,

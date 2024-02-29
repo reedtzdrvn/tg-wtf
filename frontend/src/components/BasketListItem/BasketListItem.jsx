@@ -19,7 +19,8 @@ const BasketListItem = ({
   chosenSize,
   setBasketList,
   basketList,
-  deleteCartItemHandler
+  chosenSizeId,
+  deleteCartItemHandler,
 }) => {
   const [curr, setCurr] = useState(quantity);
   const [currPrice, setCurrPrice] = useState(price);
@@ -35,6 +36,8 @@ const BasketListItem = ({
         console.log(error);
       });
   }, []);
+
+  useEffect(() => {}, [basketList]);
 
   const changeSizeHandler = (currentCount) => {
     console.log(telegramId, itemId, currentCount);
@@ -75,6 +78,7 @@ const BasketListItem = ({
   return (
     <>
       <div className="basket-list-item mt-[12px] flex justify-between items-center">
+        <span>{chosenSize}</span>
         <h3 className="font-bold w-3/12">{title}</h3>
         <BasketListButton
           quantity={curr}
@@ -102,7 +106,9 @@ const BasketListItem = ({
               deleteCartItemHandler(
                 sizes.find(
                   (s) => s.name.toLowerCase() === chosenSize.toLowerCase()
-                ),itemId
+                ),
+                itemId,
+                chosenSizeId
               )
             }
             src={DeleteItemIcon}

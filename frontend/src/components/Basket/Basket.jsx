@@ -30,8 +30,18 @@ const Basket = () => {
         sizeItem: currentSize.id,
       })
       .then((response) => {
-        setBasketList(basketList => basketList.filter(item => ((item.itemId === itemId) && (item.chosenSize.toLowerCase() === currentSize.name.toLowerCase()))));
-        console.log(basketList)
+        let temp = [];
+        basketList.map((item) => {
+          const tempId = `${itemId}${currentSize.id}`;
+          console.log(tempId);
+          if (tempId !== `${itemId}${item.chosenId}`) {
+            temp.push(item);
+          }
+        });
+        console.log(temp);
+        // console.log(`upd: ${updatedBasketList}`);
+        setBasketList([...temp]);
+        console.log(basketList);
       })
       .catch((error) => {
         console.log(error);
@@ -43,7 +53,7 @@ const Basket = () => {
       .get(`/getitemcart`, { params: { telegramId: userId } })
       .then((response) => {
         setBasketList(response.data);
-        console.log(response.data);
+        // console.log(response.data);
       })
       .catch((error) => {
         console.error("Ошибка при получении JSON файла", error);
@@ -114,6 +124,7 @@ const Basket = () => {
             <span className="w-3/12 flex justify-end">Action</span>
           </div>
           <div className="basket-list-items flex flex-col">
+            {console.log(basketList)}
             {basketList.map((el) => (
               <BasketListItem
                 itemId={el.itemId}
@@ -122,12 +133,13 @@ const Basket = () => {
                 title={el.name}
                 price={el.price}
                 quantity={el.chosenCount}
-                key={el._id}
+                key={`${el.itemId}${el.chosenSize}`}
                 sizes={el.sizes}
                 chosenSize={el.chosenSize}
                 setBasketList={setBasketList}
                 basketList={basketList}
                 deleteCartItemHandler={deleteCartItemHandler}
+                chosenSizeId={el.chosenId}
               />
             ))}
           </div>
