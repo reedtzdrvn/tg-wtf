@@ -98,5 +98,90 @@ export default class userController {
             return res.status(500).json({ error: "Возникла ошибка" });
         }
     }
+
+    static addItemCartUser = async (req, res) => {
+
+        try {
+            const { itemId, count, telegramId, sizeId } = req.body;
+
+            const user = await UserSchema.findOne({ telegramId });
+
+            if (!user) {
+                return res.status(404).json({ error: "Пользователь не найден" });
+            }
+
+            user.cart.push({ itemId: itemId, count: count, size: sizeId });
+    
+            await user.save();
+    
+            return res.status(200).json({ user });
+
+        } catch (err) {
+            console.error(err);
+            return res.status(500).json({ error: "Возникла ошибка" });
+        }
+    }
+
+    static getItemCartUser = async (req, res) => {
+        try {
+            const { telegramId } = req.body;
+    
+            const user = await UserSchema.findOne({ telegramId });
+    
+            if (!user) {
+                return res.status(404).json({ error: "Пользователь не найден" });
+            }
+    
+            const itemsInCart = await UserSchema.aggregate([
+                { $match: { telegramId } },
+                { $unwind: "$cart" },
+                {
+                    $lookup: {
+                        from: "items",
+                        localField: "cart.itemId",
+                        foreignField: "_id",
+                        as: "cartItems"
+                    }
+                },
+                {
+                    $lookup: {
+                        from: "sizes",
+                        localField: "cart.size",
+                        foreignField: "_id",
+                        as: "sizeInfo"
+                    }
+                },
+                {
+                    $addFields: {
+                        "cart.name": { $arrayElemAt: ["$cartItems.name", 0] },
+                        "cart.price": { $arrayElemAt: ["$cartItems.price", 0] },
+                        "cart.sale": { $arrayElemAt: ["$cartItems.sale", 0] },
+                        "cart.sizeInfo": { $arrayElemAt: ["$sizeInfo", 0] }
+                    }
+                },
+                {
+                    $group: {
+                        _id: "$cart.itemId",
+                        cart: { $push: "$cart" }
+                    }
+                },
+                {
+                    $project: {
+                        "_id": 0,
+                        "itemsInCart": "$cart"
+                    }
+                }
+            ]);
+    
+            return res.status(200).json({ itemsInCart });
+    
+        } catch (err) {
+            console.error(err);
+            return res.status(500).json({ error: "Возникла ошибка" });
+        }
     }
     
+}
+    
+
+

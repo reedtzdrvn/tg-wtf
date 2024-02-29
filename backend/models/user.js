@@ -22,7 +22,16 @@ const UserSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
     }],
     cart: [{
-        type: mongoose.Schema.Types.ObjectId,
+        itemId: {
+            type: mongoose.Schema.Types.ObjectId
+        },
+        count: {
+            type: Number, 
+            require: true
+        },
+        size: {
+            type: mongoose.Schema.Types.ObjectId
+        }
     }],
     orders: [{
         type: mongoose.Schema.Types.ObjectId,

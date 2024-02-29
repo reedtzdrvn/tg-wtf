@@ -56,6 +56,8 @@ app.get('/size', itemController.getSize)
 
 app.get('/especiallyforyou', espforyouController.getEspeciallyForYou)
 
+app.get('/getitemcart', userController.getItemCartUser)
+
 //POST
 
 app.post('/category', categoryController.addCategory)
@@ -71,3 +73,5 @@ app.post('/seenNotification', userController.seenNotification)
 app.post('/updateuser', userController.updateUser)
 
 app.post('/especiallyforyou', espforyouController.addEspeciallyForYou)
+
+app.post('/additemcart', userController.addItemCartUser)
