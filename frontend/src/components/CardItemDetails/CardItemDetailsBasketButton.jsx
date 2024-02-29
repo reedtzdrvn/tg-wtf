@@ -2,11 +2,29 @@ import increaseAmountIcon from "../../images/increase-amount-icon.svg";
 import decreaseAmountIcon from "../../images/decrease-amount-icon.svg";
 import { NavLink } from "react-router-dom";
 
+import axios from '../../axios.js'
+
 const CardItemDetailsBasketButton = ({
   currentAmount,
   increaseAmountHandler,
   decreaseAmountHandler,
+  itemId,
+  telegramId,
+  sizeId,
 }) => {
+  const handleAddToBasket = () => {
+    axios
+      .post(`/additemcart`, {
+        itemId: itemId,
+        count: currentAmount,
+        telegramId: telegramId,
+        sizeId: sizeId,
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <>
       {currentAmount >= 1 ? (
@@ -29,7 +47,14 @@ const CardItemDetailsBasketButton = ({
           </div>
           <div className="add-to-basket-button-wrapper">
             <NavLink to={"/basket"}>
-              <button className="add-to-basket-button">Add to Basket</button>
+              <button
+                onClick={() =>
+                  handleAddToBasket(itemId, currentAmount, telegramId, sizeId)
+                }
+                className="add-to-basket-button"
+              >
+                Add to Basket
+              </button>
             </NavLink>
           </div>
         </div>

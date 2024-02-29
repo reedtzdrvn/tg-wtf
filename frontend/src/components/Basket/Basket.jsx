@@ -1,45 +1,70 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import BasketIcon from "../../images/basket-icon.svg";
 import Moneybag from "../../images/moneybag.svg";
 import PositionsIcon from "../../images/positions-icon.svg";
 import BasketListItem from "../BasketListItem/BasketListItem";
 
+import axios from '../../axios.js'
+
 import "./Basket.css";
 import { NavLink } from "react-router-dom";
 
 const Basket = () => {
-  const basketList = [
-    {
-      id: 1,
-      title: "Skins",
-      quantity: 1,
-      price: 40500,
-    },
-    {
-      id: 2,
-      title: "Skins",
-      quantity: 1,
-      price: 40500,
-    },
-    {
-      id: 3,
-      title: "Skins",
-      quantity: 1,
-      price: 40500,
-    },
-    {
-      id: 4,
-      title: "Skins",
-      quantity: 1,
-      price: 40500,
-    },
-    {
-      id: 5,
-      title: "Skins",
-      quantity: 1,
-      price: 40500,
-    },
-  ];
+  const [basketList, setBasketList] = useState([])
+
+  let tg = window.Telegram.WebApp;
+
+  let userId = "";
+
+  if (!tg.initDataUnsafe.user) {
+    userId = "703999322";
+  } else {
+    userId = tg.initDataUnsafe.user?.id;
+  }
+
+  useEffect(() => {
+    axios
+      .get(`/getitemcart`, { params: { telegramId: userId } })
+      .then((response) => {
+        setBasketList(response.data);
+      })
+      .catch((error) => {
+        console.error("Ошибка при получении JSON файла", error);
+      });
+  }, []);
+  console.log(basketList)
+  // const basketList = [
+  //   {
+  //     id: 1,
+  //     title: "Skins",
+  //     quantity: 1,
+  //     price: 40500,
+  //   },
+  //   {
+  //     id: 2,
+  //     title: "Skins",
+  //     quantity: 1,
+  //     price: 40500,
+  //   },
+  //   {
+  //     id: 3,
+  //     title: "Skins",
+  //     quantity: 1,
+  //     price: 40500,
+  //   },
+  //   {
+  //     id: 4,
+  //     title: "Skins",
+  //     quantity: 1,
+  //     price: 40500,
+  //   },
+  //   {
+  //     id: 5,
+  //     title: "Skins",
+  //     quantity: 1,
+  //     price: 40500,
+  //   },
+  // ];
 
   let currentSum = 0;
   basketList.map((el) => {

@@ -18,9 +18,20 @@ import Preloader from "../errors/Preloader.js";
 const CardItemDetails = (props) => {
   const [item, setItem] = useState(false);
 
+  let tg = window.Telegram.WebApp;
+
+  let userId = "";
+
+  if (!tg.initDataUnsafe.user) {
+    userId = "703999322";
+  } else {
+    userId = tg.initDataUnsafe.user?.id;
+  }
+
   const [showRatings, setShowRatings] = useState(false);
   const [currentAmount, setCurrentAmount] = useState(0);
   const [currentSize, setCurrentSize] = useState("");
+  const [currentSizeId, setCurrentSizeId] = useState(null);
 
   const location = useLocation();
   const { state } = location;
@@ -34,19 +45,25 @@ const CardItemDetails = (props) => {
       .catch((error) => {
         console.error("Ошибка при получении JSON файла", error);
       });
-      
   }, []);
 
   if (!item) {
-    return <Preloader />
+    return <Preloader />;
   }
-
+  console.log(item);
+  console.log(currentSizeId);
   const changeShowRatingsHandler = () => {
     setShowRatings(!showRatings);
   };
 
   const increaseAmountHandler = () => {
-    setCurrentAmount(currentAmount + 1);
+    const selectedSize = item.sizes.find(
+      (s) => s.name.toLowerCase() === currentSize.toLowerCase()
+    );
+
+    if (selectedSize && currentAmount < selectedSize.count) {
+      setCurrentAmount(currentAmount + 1);
+    }
   };
 
   const decreaseAmountHandler = () => {
@@ -58,16 +75,17 @@ const CardItemDetails = (props) => {
     }
   };
 
-  const chooseCurrentSizeHandler = (size) => {
+  const chooseCurrentSizeHandler = (size, sizeId) => {
     if (currentSize === size) {
       setCurrentSize("");
+      setCurrentSizeId(null);
       setCurrentAmount(0);
     } else {
       setCurrentSize(size);
+      setCurrentSizeId(sizeId);
       if (currentAmount === 0) setCurrentAmount(1);
     }
   };
-
 
   return (
     <>
@@ -79,7 +97,9 @@ const CardItemDetails = (props) => {
               to={`/categories/${state.from}`}
               state={{
                 category: item.category.title,
-                pathTitle: item.category.title.toLowerCase().replace(/\s/g, "-"),
+                pathTitle: item.category.title
+                  .toLowerCase()
+                  .replace(/\s/g, "-"),
               }}
             >
               <div className="card-item-details-return-button flex justify-center items-center absolute left-[20px] top-[25px]">
@@ -145,6 +165,7 @@ const CardItemDetails = (props) => {
                         currentSize={currentSize}
                         chooseCurrentSizeHandler={chooseCurrentSizeHandler}
                         size={size.name.toUpperCase()}
+                        sizeId={size._id}
                         key={size._id}
                       />
                     ))}
@@ -153,10 +174,14 @@ const CardItemDetails = (props) => {
                 <div className="card-item-details-description ml-[20px] mr-[25px] mt-[25px] ">
                   {item.description}
                 </div>
+                
                 <CardItemDetailsBasketButton
                   increaseAmountHandler={increaseAmountHandler}
                   decreaseAmountHandler={decreaseAmountHandler}
                   currentAmount={currentAmount}
+                  itemId={item._id}
+                  telegramId={userId}
+                  sizeId={currentSizeId}
                 />{" "}
               </>
             ) : (
