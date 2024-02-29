@@ -8,6 +8,7 @@ const ItemSchema = new mongoose.Schema({
     category: {
         type: mongoose.Schema.Types.ObjectId,
         require: true,
+        ref: "Category"
     },
     photos: [
         {
@@ -31,7 +32,8 @@ const ItemSchema = new mongoose.Schema({
         {
             id: { 
                 type: mongoose.Schema.Types.ObjectId,
-                require: true
+                require: true,
+                ref: "Size"
             },
             count: {
                 type: Number,
@@ -44,9 +46,10 @@ const ItemSchema = new mongoose.Schema({
         require: true
     },
     reviews: [{
-        user: {
+        id: {
             type: mongoose.Schema.Types.ObjectId,
-            require: true
+            require: true,
+            ref: "Size"
         },
         ratingsCount: {
             type: Number,

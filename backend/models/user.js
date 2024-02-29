@@ -20,24 +20,29 @@ const UserSchema = new mongoose.Schema({
     },
     favourites: [{
         type: mongoose.Schema.Types.ObjectId,
+        ref: "Item"
     }],
     cart: [{
         itemId: {
-            type: mongoose.Schema.Types.ObjectId
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Item"
         },
         count: {
             type: Number, 
             require: true
         },
         size: {
-            type: mongoose.Schema.Types.ObjectId
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Size"
         }
     }],
     orders: [{
         type: mongoose.Schema.Types.ObjectId,
+        ref: "Order"
     }],
     especiallyForYou: [{
         type: mongoose.Schema.Types.ObjectId,
+        ref: "especiallyforyou"
     }],
     admin: {
         type: Boolean,

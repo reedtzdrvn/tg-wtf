@@ -171,6 +171,11 @@ export default class itemController {
     }
   };
 
+  static getItemReviews = async (req, res) => {
+    
+  }
+  
+
   static updateSize = async (req, res) => {};
 
   static deleteSize = async (req, res) => {};

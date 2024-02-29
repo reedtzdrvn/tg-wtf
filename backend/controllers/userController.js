@@ -1,4 +1,6 @@
 import UserSchema from "../models/user.js"
+import ItemSchema from "../models/item.js"
+import SizeSchema from "../models/size.js"
 
 export default class userController {
 
@@ -124,56 +126,46 @@ export default class userController {
 
     static getItemCartUser = async (req, res) => {
         try {
-            const telegramId = req.query.telegramId;
-
-            const user = await UserSchema.findOne({ telegramId });
-
+            const { telegramId } = req.query;
+    
+            const user = await UserSchema.findOne({ telegramId: telegramId }).populate({
+                path: 'cart.itemId',
+                populate: {
+                    path: 'category sizes.id',
+                    populate: {
+                        path: 'ref',
+                        options: { strictPopulate: false }
+                    }
+                }
+            });
+    
             if (!user) {
                 return res.status(404).json({ error: "Пользователь не найден" });
             }
     
-            const itemsInCart = await UserSchema.aggregate([
-                { $match: { telegramId } },
-                { $unwind: "$cart" },
-                {
-                    $lookup: {
-                        from: "items",
-                        localField: "cart.itemId",
-                        foreignField: "_id",
-                        as: "cartItems"
-                    }
-                },
-                {
-                    $lookup: {
-                        from: "sizes",
-                        localField: "cart.size",
-                        foreignField: "_id",
-                        as: "sizeInfo"
-                    }
-                },
-                {
-                    $addFields: {
-                        "cart.name": { $arrayElemAt: ["$cartItems.name", 0] },
-                        "cart.price": { $arrayElemAt: ["$cartItems.price", 0] },
-                        "cart.sale": { $arrayElemAt: ["$cartItems.sale", 0] },
-                        "cart.sizeInfo": { $arrayElemAt: ["$sizeInfo", 0] }
-                    }
-                },
-                {
-                    $group: {
-                        _id: "$cart.itemId",
-                        cart: { $push: "$cart" }
-                    }
-                },
-                {
-                    $project: {
-                        "_id": 0,
-                        "itemsInCart": "$cart"
-                    }
-                }
-            ]);
-    
-            return res.status(200).json({ itemsInCart });
+            
+            
+            const itemsInCartPromises = user.cart.map(async (item) => {
+                const size = await SizeSchema.findById(item.size);
+                return {
+                    itemId: item.itemId._id,
+                    name: item.itemId.name,
+                    category: item.itemId.category.name,
+                    price: item.itemId.price,
+                    sale: item.itemId.sale,
+                    chosenCount: item.count,
+                    chosenSize: size.name,
+                    sizes: item.itemId.sizes.map(size => ({
+                        id: size.id._id,
+                        name: size.id.name,
+                        count: size.count
+                    }))
+                };
+            });
+            
+            const itemsInCart = await Promise.all(itemsInCartPromises);
+            
+            return res.status(200).json(itemsInCart);
     
         } catch (err) {
             console.error(err);
@@ -181,6 +173,28 @@ export default class userController {
         }
     }
     
+    static addItemReview = async (req, res) => {
+
+        try {
+            const { telegramId, itemId, ratingsCount, textReview } = req.body;
+
+            const item = await ItemSchema.findOne({ _id: itemId });
+
+            if (!item) {
+                return res.status(404).json({ error: "Пользователь не найден" });
+            }
+
+            item.reviews.push({ telegramId: telegramId, ratingsCount: ratingsCount, textReview: textReview });
+    
+            await item.save();
+    
+            return res.status(200).json({ item });
+
+        } catch (err) {
+            console.error(err);
+            return res.status(500).json({ error: "Возникла ошибка" });
+        }
+    }
 }
     
 

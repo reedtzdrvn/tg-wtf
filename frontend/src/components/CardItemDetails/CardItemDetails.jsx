@@ -50,8 +50,6 @@ const CardItemDetails = (props) => {
   if (!item) {
     return <Preloader />;
   }
-  console.log(item);
-  console.log(currentSizeId);
   const changeShowRatingsHandler = () => {
     setShowRatings(!showRatings);
   };
@@ -138,7 +136,7 @@ const CardItemDetails = (props) => {
                       <div className="ml-[8px] mt-[2px]">
                         <span>{item.reviews.length} Ratings</span>
                         <span> | </span>
-                        <span>{113} Learners</span>
+                        <span>{item.reviews.length} Learners</span>
                       </div>
                     </div>
                   </div>
@@ -186,14 +184,14 @@ const CardItemDetails = (props) => {
               </>
             ) : (
               <CardItemDetailsRatings
-                title={item.title}
+                title={item.name}
                 deliveryTime={item.deliveryTime}
                 currentPrice={
                   currentAmount === 0 ? item.price : item.price * currentAmount
                 }
                 ratingsScore={0}
                 reviewsCount={item.reviews.length}
-              />
+              /> 
             )}
           </div>
         </div>

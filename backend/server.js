@@ -75,3 +75,5 @@ app.post('/updateuser', userController.updateUser)
 app.post('/especiallyforyou', espforyouController.addEspeciallyForYou)
 
 app.post('/additemcart', userController.addItemCartUser)
+
+app.post('/itemreview', userController.addItemReview)
