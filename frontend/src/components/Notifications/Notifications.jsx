@@ -1,6 +1,6 @@
 import NotificationsListItem from "./NotificationsListItem";
 import axios from '../../axios.js'
-import CheckAuth from "../errors/checkAuth.js";
+import Preloader from "../errors/Preloader.js";
 
 import './Notifications.css'
 import { useState, useEffect } from "react";
@@ -24,19 +24,18 @@ const Notifications = () => {
     axios.get(`/notifications`, { params: { telegramId: userId } })
         .then(response => {
           setNotifications(response.data.filter((el) => el.seen === false))
+          console.log(1)
         })
         .catch(error => {
             console.error('Ошибка при получении JSON файла', error);
         });
-  })
+  }, [])
   if (!notifications) {
-    return <CheckAuth/>
+    return <Preloader/>
   }
 
-  console.log(notifications)
-
   return (
-    <>
+    <div className="page">
       {notifications?.length>0? 
       <div>
         {notifications.map((el) => (
@@ -44,7 +43,7 @@ const Notifications = () => {
         ))}
       </div>
       : <div className="flex items-center justify-center mt-[100px]">Уведомлений нет!</div>}
-    </>
+    </div>
   );
 };
 

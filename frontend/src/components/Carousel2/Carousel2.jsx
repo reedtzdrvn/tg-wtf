@@ -1,22 +1,7 @@
 import { NavLink } from "react-router-dom";
 import CarouselSecondSlide from "./CarouselSecondISlide";
-import { useState, useEffect } from "react";
 
-import axios from '../../axios.js'
-
-const Carousel2 = () => {
-  const [caterogies, setCategories] = useState([]);
-
-  useEffect(() => {
-    axios
-      .get(`/categories`)
-      .then((response) => {
-        setCategories(response.data);
-      })
-      .catch((error) => {
-        console.error("Ошибка при получении JSON файла", error);
-      });
-  }, []);
+const Carousel2 = ({caterogies}) => {
 
   return (
     <>

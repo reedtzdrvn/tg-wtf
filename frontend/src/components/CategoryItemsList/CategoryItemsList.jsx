@@ -5,11 +5,13 @@ import CardItem from "../CardItem/CardItem";
 import axios from "../../axios.js";
 
 import { NavLink, useLocation } from "react-router-dom";
+import Preloader from "../errors/Preloader.js";
 
 const CategoryItemsList = (props) => {
   const location = useLocation();
   const { state } = location;
 
+  const [isItemsLoading, setIsItemsLoading] = useState(true)
   const [categoryId, setCategoryId] = useState(null);
   const [ItemsFromSelecterCategory, setItemsFromSelecterCategory] = useState(
     []
@@ -31,6 +33,7 @@ const CategoryItemsList = (props) => {
       .get(`/category-items`, { params: { categoryId: categoryId } })
       .then((response) => {
         setItemsFromSelecterCategory(response.data);
+        setIsItemsLoading(false)
       })
       .catch((error) => {
         console.error("Ошибка при получении JSON файла", error);
@@ -47,40 +50,9 @@ const CategoryItemsList = (props) => {
     }
   }, [categoryId]);
 
-  // const ItemsFromSelecterCategory = [
-  //   {
-  //     id: 1,
-  //     title: "Belt suit blazer",
-  //     price: 120,
-  //     image: Image1,
-  //     isFavorite: false,
-  //     isAvailable: true,
-  //   },
-  //   {
-  //     id: 2,
-  //     title: "Belt suit blazer",
-  //     price: 120,
-  //     image: Image1,
-  //     isFavorite: false,
-  //     isAvailable: true,
-  //   },
-  //   {
-  //     id: 3,
-  //     title: "Belt suit blazer",
-  //     price: 120,
-  //     image: Image1,
-  //     isFavorite: true,
-  //     isAvailable: true,
-  //   },
-  //   {
-  //     id: 4,
-  //     title: "Belt suit blazer",
-  //     price: 120,
-  //     image: Image1,
-  //     isFavorite: false,
-  //     isAvailable: true,
-  //   },
-  // ];
+  if (isItemsLoading) {
+    return <Preloader />
+  }
 
   return (
     <>

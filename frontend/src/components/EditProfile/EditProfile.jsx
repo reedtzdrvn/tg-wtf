@@ -5,7 +5,7 @@ import "./EditProfile.css";
 import { useState, useEffect } from "react";
 import axios from '../../axios.js'
 import { useNavigate } from 'react-router-dom';
-import CheckAuth from '../errors/checkAuth.js';
+import Preloader from '../errors/Preloader.js';
 
 const EditProfile = () => {
 
@@ -41,8 +41,8 @@ const EditProfile = () => {
             });
       }, []);
 
-      if (!firstname || !lastname || !email || !phonenumber) {
-        return <CheckAuth/>
+      if (!phonenumber) {
+        return <Preloader/>
       }
 
 

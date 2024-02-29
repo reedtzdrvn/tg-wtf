@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 import axios from '../../axios.js'
 
 import { NavLink } from "react-router-dom";
+import Preloader from "../errors/Preloader.js";
 
 const CategoriesList = () => {
   const [allCategories, setAllCategories] = useState([]);
@@ -22,43 +23,9 @@ const CategoriesList = () => {
       });
   }, []);
 
-  // const allCategories = [
-  //   {
-  //     id: 1,
-  //     title: "Hockey uniform",
-  //     image: slide,
-  //     isFavorite: false,
-  //     isAvailable: true,
-  //   },
-  //   {
-  //     id: 2,
-  //     title: "Football uniform",
-  //     image: slide,
-  //     isFavorite: false,
-  //     isAvailable: true,
-  //   },
-  //   {
-  //     id: 3,
-  //     title: "Streetwear",
-  //     image: slide,
-  //     isFavorite: false,
-  //     isAvailable: true,
-  //   },
-  //   {
-  //     id: 4,
-  //     title: "Casual",
-  //     image: slide,
-  //     isFavorite: false,
-  //     isAvailable: true,
-  //   },
-  //   {
-  //     id: 5,
-  //     title: "Techno",
-  //     image: slide,
-  //     isFavorite: false,
-  //     isAvailable: true,
-  //   },
-  // ];
+  if (allCategories.length === 0) {
+    return <Preloader />
+  }
 
   return (
     <>
