@@ -4,6 +4,8 @@ import { NavLink, useLocation } from "react-router-dom";
 import axios from "../../axios.js";
 
 import returnIcon from "../../images/return-button.svg";
+import hearticon from "../../images/favorite.svg"
+import hearticonActive from "../../images/favorite-active.svg"
 import CardItemCarousel from "./CardItemCarousel";
 import CardItemSizeButton from "./CardItemSizeButton";
 import CardItemDetailsBasketButton from "./CardItemDetailsBasketButton";
@@ -13,6 +15,7 @@ import CardItemDetailsRatings from "./CardItemDetailsRatings";
 import Preloader from "../errors/Preloader.js";
 
 const CardItemDetails = (props) => {
+  const [isActive, setIsActive] = useState(false);
   const [item, setItem] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -40,9 +43,23 @@ const CardItemDetails = (props) => {
     getUserData();
   }, []);
 
+
   const getItemData = () => {
     axios
       .get(`/size`, { params: { itemId: state.itemId } })
+      .then((response) => {
+        setItem(response.data);
+      })
+      .catch((error) => {
+        console.error("Ошибка при получении JSON файла", error);
+      });
+  };
+
+  
+
+  const postFavorite = () => {
+    axios
+      .post(`/favorite`, { params: { itemId: state.itemId, telegramId: userId } })
       .then((response) => {
         setItem(response.data);
       })
@@ -158,6 +175,17 @@ const CardItemDetails = (props) => {
               />
             </div>
           )}
+          <div
+              onClick = {() => setIsActive(!isActive)}
+              className="card-item-details-return-button flex justify-center items-center absolute right-[20px] top-[25px]"
+            >
+              <img
+                className="m-[10px]"
+                src={isActive ? hearticonActive : hearticon}
+                width={20}
+                height={20}
+              />
+            </div>
           <div className="card-item-details-wrapper absolute top-[55%] w-full">
             {!showRatings ? (
               <>
