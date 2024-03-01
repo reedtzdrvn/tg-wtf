@@ -17,7 +17,7 @@ import Preloader from "../errors/Preloader.js";
 
 const CardItemDetails = (props) => {
   const [item, setItem] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('')
+  const [errorMessage, setErrorMessage] = useState("");
 
   let tg = window.Telegram.WebApp;
 
@@ -75,6 +75,9 @@ const CardItemDetails = (props) => {
   };
 
   const chooseCurrentSizeHandler = (size, sizeId) => {
+    const selectedSize = item.sizes.find(
+      (s) => s.name.toLowerCase() === size.toLowerCase()
+    );
     if (currentSize === size) {
       setCurrentSize("");
       setCurrentSizeId(null);
@@ -83,25 +86,26 @@ const CardItemDetails = (props) => {
       setCurrentSize(size);
       setCurrentSizeId(sizeId);
       if (currentAmount === 0) setCurrentAmount(1);
+      else {
+        if (currentAmount > selectedSize.count) {
+          setCurrentAmount(selectedSize.count);
+        }
+      }
     }
   };
 
-    const calculateRating = (reviews) => {
-      if (reviews.length === 0) {
-          return 0;
-      }
+  const calculateRating = (reviews) => {
+    if (reviews.length === 0) {
+      return 0;
+    }
 
-      let totalRating = 0;
-      for (const review of reviews) {
-          totalRating += review.ratingsCount;
-      }
+    let totalRating = 0;
+    for (const review of reviews) {
+      totalRating += review.ratingsCount;
+    }
 
-      return totalRating / reviews.length;
+    return totalRating / reviews.length;
   };
-
-  
-
-
 
   return (
     <>
@@ -117,7 +121,7 @@ const CardItemDetails = (props) => {
                   .toLowerCase()
                   .replace(/\s/g, "-"),
               }}
-            > 
+            >
               <div className="card-item-details-return-button flex justify-center items-center absolute left-[20px] top-[25px]">
                 <img
                   className="m-[10px]"
@@ -150,7 +154,9 @@ const CardItemDetails = (props) => {
                       onClick={changeShowRatingsHandler}
                       className="card-item-details-title-ratings flex justify-start items-center"
                     >
-                      <CardItemStars starCount={Math.round(calculateRating(item.reviews))} />
+                      <CardItemStars
+                        starCount={Math.round(calculateRating(item.reviews))}
+                      />
                       <div className="ml-[8px] mt-[2px]">
                         <span>{item.reviews.length} Ratings</span>
                         <span> | </span>
@@ -193,7 +199,6 @@ const CardItemDetails = (props) => {
                 <div className="card-item-details-description ml-[20px] mr-[25px] mt-[25px] ">
                   {item.description}
                 </div>
-                
                 <CardItemDetailsBasketButton
                   increaseAmountHandler={increaseAmountHandler}
                   decreaseAmountHandler={decreaseAmountHandler}
@@ -213,8 +218,8 @@ const CardItemDetails = (props) => {
                 }
                 ratingsScore={calculateRating(item.reviews)}
                 reviewsCount={item.reviews.length}
-                reviews = {item.reviews}
-              /> 
+                reviews={item.reviews}
+              />
             )}
           </div>
         </div>

@@ -78,7 +78,6 @@ const BasketListItem = ({
   return (
     <>
       <div className="basket-list-item mt-[12px] flex justify-between items-center">
-        <span>{chosenSize}</span>
         <h3 className="font-bold w-3/12">{title}</h3>
         <BasketListButton
           quantity={curr}
