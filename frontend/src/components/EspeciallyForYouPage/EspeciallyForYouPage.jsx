@@ -9,7 +9,7 @@ const EspeciallyForYouPage = () => {
   const [address, setPresentAddress] = useState(null);
   const [information, setAdditionalInfo] = useState(null);
   let navigate = useNavigate();
-  let tg = window.Telegram.WebApp;
+  let tg = window.Telegram.WebApp; 
 
     let userId = ''
   

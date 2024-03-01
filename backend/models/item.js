@@ -51,6 +51,10 @@ const ItemSchema = new mongoose.Schema({
             require: true,
             ref: "Size"
         },
+        telegramId: {
+            type: String,
+            require: true
+        },
         ratingsCount: {
             type: Number,
             require: true

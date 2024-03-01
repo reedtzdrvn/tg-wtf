@@ -1,5 +1,6 @@
 import history from "../../images/history.svg"
 import "./history.css"
+import message from "../../images/message.svg"
 
 const History = () => {
     const doc = [
@@ -44,6 +45,7 @@ const History = () => {
                         <div className="textOrderHistory w-5/12">{obj.name}</div>
                         <div className="dateOrderHistory w-4/12">{obj.date}</div>
                         <div className="sumOrderHistory w-3/12">{obj.sum}</div>
+                        <div className="w-1/12 flex justify-center ml-[10px]"><img width = {45} src={message} alt="review" /></div>
                     </div>
                 ))}
             </div>
