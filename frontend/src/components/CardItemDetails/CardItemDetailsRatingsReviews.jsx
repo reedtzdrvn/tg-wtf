@@ -14,7 +14,7 @@ const CardItemDetailsRatingsReviews = ({ reviews }) => {
       <ul>
         {[5, 4, 3, 2, 1].map(rating => {
           const percentage = (ratingsCounts[rating] || 0) / totalReviews * 100;
-          const barWidth = `${percentage}%`;
+          const barWidth = `${percentage ? percentage : 10}%`;
 
           return (
             <li key={rating} className="flex items-center mb-[8px] relative">

@@ -3,9 +3,6 @@ import { NavLink, useLocation } from "react-router-dom";
 
 import axios from "../../axios.js";
 
-import slide1 from "../../images/detail-item-slide1.png";
-import slide2 from "../../images/detail-item-slide2.jpg";
-import slide3 from "../../images/detail-item-slide3.jpg";
 import returnIcon from "../../images/return-button.svg";
 import CardItemCarousel from "./CardItemCarousel";
 import CardItemSizeButton from "./CardItemSizeButton";
@@ -33,11 +30,17 @@ const CardItemDetails = (props) => {
   const [currentAmount, setCurrentAmount] = useState(0);
   const [currentSize, setCurrentSize] = useState("");
   const [currentSizeId, setCurrentSizeId] = useState(null);
+  const [user, setUser] = useState(null);
 
   const location = useLocation();
   const { state } = location;
 
   useEffect(() => {
+    getItemData();
+    getUserData();
+  }, []);
+
+  const getItemData = () => {
     axios
       .get(`/size`, { params: { itemId: state.itemId } })
       .then((response) => {
@@ -46,7 +49,18 @@ const CardItemDetails = (props) => {
       .catch((error) => {
         console.error("Ошибка при получении JSON файла", error);
       });
-  }, []);
+  };
+
+  const getUserData = () => {
+    axios
+      .get(`/user`, { params: { telegramId: userId } })
+      .then((response) => {
+        setUser(response.data);
+      })
+      .catch((error) => {
+        console.error("Ошибка при получении JSON файла", error);
+      });
+  };
 
   if (!item) {
     return <Preloader />;

@@ -52,7 +52,7 @@ const CardItemDetailsRatings = ({
         </div>
 
         <div className="card-item-details-ratings-reviews-elements mt-[30px]">
-          {!allReviewsOn ? (
+          {((!allReviewsOn) && (reviews.length !== 0)) ? (
           <>
           <div className="flex justify-between items-center">
                 <span className="card-item-details-ratings-reviews-title">
