@@ -17,6 +17,7 @@ import Preloader from "../errors/Preloader.js";
 
 const CardItemDetails = (props) => {
   const [item, setItem] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('')
 
   let tg = window.Telegram.WebApp;
 
@@ -185,6 +186,9 @@ const CardItemDetails = (props) => {
                       />
                     ))}
                   </div>
+                  <span className="card-item-details-error-wrapper text-red-500">
+                    {errorMessage}
+                  </span>
                 </div>
                 <div className="card-item-details-description ml-[20px] mr-[25px] mt-[25px] ">
                   {item.description}
@@ -197,6 +201,7 @@ const CardItemDetails = (props) => {
                   itemId={item._id}
                   telegramId={userId}
                   sizeId={currentSizeId}
+                  setErrorMessage={setErrorMessage}
                 />{" "}
               </>
             ) : (

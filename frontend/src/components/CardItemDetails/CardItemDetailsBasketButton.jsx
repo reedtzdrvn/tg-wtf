@@ -1,8 +1,9 @@
 import increaseAmountIcon from "../../images/increase-amount-icon.svg";
 import decreaseAmountIcon from "../../images/decrease-amount-icon.svg";
-import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-import axios from '../../axios.js'
+import axios from "../../axios.js";
+import { useState } from "react";
 
 const CardItemDetailsBasketButton = ({
   currentAmount,
@@ -11,7 +12,11 @@ const CardItemDetailsBasketButton = ({
   itemId,
   telegramId,
   sizeId,
+  setErrorMessage
 }) => {
+  let navigate = useNavigate();
+  
+
   const handleAddToBasket = () => {
     axios
       .post(`/additemcart`, {
@@ -19,9 +24,11 @@ const CardItemDetailsBasketButton = ({
         count: currentAmount,
         telegramId: telegramId,
         sizeId: sizeId,
+      }).then((response) => {
+        navigate("/basket");
       })
       .catch((error) => {
-        console.log(error);
+        setErrorMessage(error.response.data.error)
       });
   };
 
@@ -45,17 +52,13 @@ const CardItemDetailsBasketButton = ({
               <span className="amount-button-sign">-</span>
             </div>
           </div>
-          <div className="add-to-basket-button-wrapper">
-            <NavLink to={"/basket"}>
-              <button
-                onClick={() =>
-                  handleAddToBasket(itemId, currentAmount, telegramId, sizeId)
-                }
-                className="add-to-basket-button"
-              >
-                Add to Basket
-              </button>
-            </NavLink>
+          <div
+            className="add-to-basket-button-wrapper"
+            onClick={() =>
+              handleAddToBasket(itemId, currentAmount, telegramId, sizeId)
+            }
+          >
+            <button className="add-to-basket-button">Add to Basket</button>
           </div>
         </div>
       ) : (
