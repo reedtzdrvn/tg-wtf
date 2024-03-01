@@ -5,10 +5,11 @@ import { useNavigate } from 'react-router-dom';
 import Preloader from '../errors/Preloader.js';
 import "./Review.css";
 import ReviewStars from "./ReviewStars.jsx";
+import { selectedstars } from "./ReviewStars.jsx"
 
 const Review = () => {
 
-    const [rating, setRating] = useState(null)
+    const [selectedstars, setSelectedStars] =  useState(1)
     const [text, setText] = useState(null)
      
     let navigate = useNavigate();
@@ -27,10 +28,11 @@ const Review = () => {
     let itemid = '65de3044b0e358a0abd4402d'
 
 
+    
 
 
     const handlerConfirm = () => {
-        axios.post('/itemreview', {ratingsCount: rating, textReview: text, telegramId: userid, itemId: itemid})
+        axios.post('/itemreview', {ratingsCount: selectedstars, textReview: text, telegramId: userid, itemId: itemid})
             .then(response => {
                 navigate('/account/history');
             })
@@ -50,8 +52,8 @@ const Review = () => {
                 </div>
             </div>
             <div className="formOrderPlacingStage1 flex flex-col gap-[16px] mt-[20px]">
-                <div>
-                    <ReviewStars/>
+                <div className = "flex flex-col gap-[8px]">
+                    <ReviewStars selectedstars={selectedstars} setSelectedStars={setSelectedStars}/>
                 </div>    
                 <div className="textarea2 flex flex-col gap-[8px]">
                     <div>
