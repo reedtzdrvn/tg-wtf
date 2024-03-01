@@ -40,9 +40,6 @@ export default class userController {
         _id: { $in: favouriteItemIds },
       });
 
-      if (populatedFavourites.length === 0) {
-        return res.status(404).json({ message: "Ошибка получения информации" });
-      }
       const UserInfo = {
         id: userData._id,
         firstName: userData.firstName,

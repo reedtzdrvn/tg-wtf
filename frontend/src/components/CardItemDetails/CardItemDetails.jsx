@@ -4,8 +4,8 @@ import { NavLink, useLocation } from "react-router-dom";
 import axios from "../../axios.js";
 
 import returnIcon from "../../images/return-button.svg";
-import hearticon from "../../images/favorite.svg"
-import hearticonActive from "../../images/favorite-active.svg"
+import hearticon from "../../images/favorite.svg";
+import hearticonActive from "../../images/favorite-active.svg";
 import CardItemCarousel from "./CardItemCarousel";
 import CardItemSizeButton from "./CardItemSizeButton";
 import CardItemDetailsBasketButton from "./CardItemDetailsBasketButton";
@@ -41,13 +41,12 @@ const CardItemDetails = (props) => {
   useEffect(() => {
     getItemData();
     getUserData();
-  }, []); 
+  }, []);
 
   function postAnToggle() {
-    setIsActive(!isActive)
-    postFavorite()
+    setIsActive(!isActive);
+    postFavorite();
   }
-
 
   const getItemData = () => {
     axios
@@ -60,11 +59,23 @@ const CardItemDetails = (props) => {
       });
   };
 
-
   const postFavorite = () => {
     axios
-      .post(`/additemtofavorites`, { itemId: state.itemId, telegramId: userId } )
+      .post(`/additemtofavorites`, { itemId: state.itemId, telegramId: userId })
+      .then((response) => {})
+      .catch((error) => {
+        console.error("Ошибка при получении JSON файла", error);
+      });
+  };
+
+  const deleteFavorite = () => {
+    axios
+      .post(`/deleteFromFavorites`, {
+        telegramId: userId,
+        itemId: state.itemId,
+      })
       .then((response) => {
+        setIsActive(false)
       })
       .catch((error) => {
         console.error("Ошибка при получении JSON файла", error);
@@ -76,6 +87,11 @@ const CardItemDetails = (props) => {
       .get(`/user`, { params: { telegramId: userId } })
       .then((response) => {
         setUser(response.data);
+
+        console.log(response.data);
+        if (response.data[0].favourites.includes(state.itemId)) {
+          setIsActive(true);
+        }
       })
       .catch((error) => {
         console.error("Ошибка при получении JSON файла", error);
@@ -179,16 +195,16 @@ const CardItemDetails = (props) => {
             </div>
           )}
           <div
-              onClick = {postAnToggle}
-              className="card-item-details-return-button flex justify-center items-center absolute right-[20px] top-[25px]"
-            >
-              <img
-                className="m-[10px]"
-                src={isActive ? hearticonActive : hearticon}
-                width={20}
-                height={20}
-              />
-            </div>
+            onClick={isActive ? deleteFavorite : postAnToggle}
+            className="card-item-details-return-button flex justify-center items-center absolute right-[20px] top-[25px]"
+          >
+            <img
+              className="m-[10px]"
+              src={isActive ? hearticonActive : hearticon}
+              width={20}
+              height={20}
+            />
+          </div>
           <div className="card-item-details-wrapper absolute top-[55%] w-full">
             {!showRatings ? (
               <>
