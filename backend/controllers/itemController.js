@@ -1,5 +1,6 @@
 import ItemSchema from "../models/item.js";
 import SizeSchema from "../models/size.js";
+import user from "../models/user.js";
 import UserSchema from "../models/user.js";
 import mongoose from "mongoose";
 
@@ -88,8 +89,6 @@ export default class itemController {
       return res.status(400).json({ message: "Ошибка получения информации" });
     }
 
-    
-
     try {
       const userData = await UserSchema.findOneAndUpdate(
         { telegramId: telegramId },
@@ -108,6 +107,26 @@ export default class itemController {
       console.error("Ошибка при удалении товара из корзины:", error);
       return res.status(500).json({ message: "Внутренняя ошибка сервера" });
     }
+  };
+
+  static addToFavorites = async (req, res) => {
+    const { telegramId, itemId } = req.body;
+
+    if (!telegramId || !itemId) {
+      return res.status(400).json({ message: "Ошибка получения информации" });
+    }
+
+    const userData = await UserSchema.findOne({ telegramId: telegramId });
+
+    if (!userData) {
+      return res.status(404).json({ message: "Пользователь не найден" });
+    }
+
+    userData.favourites.push(itemId);
+
+    userData.save()
+
+    res.status(200).json({ userData });
   };
 
   static updateItemCart = async (req, res) => {

@@ -1,6 +1,7 @@
 import UserSchema from "../models/user.js";
 import ItemSchema from "../models/item.js";
 import SizeSchema from "../models/size.js";
+import CategorySchema from "../models/category.js";
 
 export default class userController {
   static getUser = async (req, res) => {
@@ -20,6 +21,60 @@ export default class userController {
     } catch (e) {
       console.log(e);
       res.status(500).json({ error: e, message: e.message });
+    }
+  };
+
+  static getUserWithFavourites = async (req, res) => {
+    try {
+      const { telegramId } = req.query;
+
+      if (!telegramId) {
+        return res.status(404).json({ message: "Ошибка получения информации" });
+      }
+
+      const userData = await UserSchema.findOne({ telegramId: telegramId });
+
+      const favouriteItemIds = userData.favourites;
+
+      const populatedFavourites = await ItemSchema.find({
+        _id: { $in: favouriteItemIds },
+      });
+
+      if (populatedFavourites.length === 0) {
+        return res.status(404).json({ message: "Ошибка получения информации" });
+      }
+      const UserInfo = {
+        id: userData._id,
+        firstName: userData.firstName,
+        lastName: userData.lastName,
+        phoneNumber: userData.phoneNumber,
+        admin: userData.admin,
+      };
+
+      const categoryPromises = populatedFavourites.map(async (item) => {
+        const category = await CategorySchema.findById(item.category);
+        return {
+          itemId: item._id,
+          itemName: item.name,
+          itemSizes: item.sizes,
+          itemPrice: item.price,
+          itemPhotos: item.photos,
+          itemCategoryId: item.category,
+          itemCategoryName: category.title, // Ensure category exists before accessing its name
+          itemSale: item.sale,
+        };
+      });
+      Promise.all(categoryPromises)
+        .then((userItemsInfo) => {
+          res.status(200).json({ UserInfo, userItemsInfo });
+        })
+        .catch((error) => {
+          console.error("Error fetching category details:", error);
+          res.status(500).json({ error: "Internal server error" });
+        });
+    } catch (err) {
+      console.error(err);
+      return res.status(500).json({ error: "Возникла ошибка" });
     }
   };
 
@@ -117,14 +172,11 @@ export default class userController {
       if (!existingItem) {
         user.cart.push({ itemId, count, size: sizeId });
       } else {
-        return res
-          .status(400)
-          .json({
-            error:
-              "Такой же товар с таким же размером уже есть у вас в корзине",
-          });
+        return res.status(400).json({
+          error: "Такой же товар с таким же размером уже есть у вас в корзине",
+        });
       }
-      
+
       await user.save();
 
       return res.status(200).json({ user });

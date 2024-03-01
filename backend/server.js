@@ -60,6 +60,8 @@ app.get('/especiallyforyou', espforyouController.getEspeciallyForYou)
 
 app.get('/getitemcart', userController.getItemCartUser)
 
+app.get('/getuserwithfavorites', userController.getUserWithFavourites)
+
 //POST
 
 app.post('/updateitemcart', itemController.updateItemCart)
@@ -81,6 +83,8 @@ app.post('/especiallyforyou', espforyouController.addEspeciallyForYou)
 app.post('/additemcart', userController.addItemCartUser)
 
 app.post('/itemreview', userController.addItemReview)
+
+app.post('/additemtofavorites', itemController.addToFavorites)
 
 // DELETE
 
