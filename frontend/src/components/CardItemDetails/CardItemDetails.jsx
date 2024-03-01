@@ -41,7 +41,12 @@ const CardItemDetails = (props) => {
   useEffect(() => {
     getItemData();
     getUserData();
-  }, []);
+  }, []); 
+
+  function postAnToggle() {
+    setIsActive(!isActive)
+    postFavorite()
+  }
 
 
   const getItemData = () => {
@@ -55,13 +60,11 @@ const CardItemDetails = (props) => {
       });
   };
 
-  
 
   const postFavorite = () => {
     axios
-      .post(`/favorite`, { params: { itemId: state.itemId, telegramId: userId } })
+      .post(`/additemtofavorites`, { itemId: state.itemId, telegramId: userId } )
       .then((response) => {
-        setItem(response.data);
       })
       .catch((error) => {
         console.error("Ошибка при получении JSON файла", error);
@@ -176,7 +179,7 @@ const CardItemDetails = (props) => {
             </div>
           )}
           <div
-              onClick = {() => setIsActive(!isActive)}
+              onClick = {postAnToggle}
               className="card-item-details-return-button flex justify-center items-center absolute right-[20px] top-[25px]"
             >
               <img
