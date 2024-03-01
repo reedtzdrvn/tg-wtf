@@ -21,18 +21,37 @@ const Favorites = () => {
 
 
   const [favoritesData, setFavoritesData] = useState([]);
+  const [availability, setAvailability] = useState([])
 
   useEffect(() => {
     axios
       .get(`/getuserwithfavorites`, { params: { telegramId: userId } })
       .then((response) => {
         setFavoritesData(response.data);
+
+        let temp = []
+        if (response.data.userItemsInfo.length != 0) {
+          let flag = null
+          response.data.userItemsInfo.map((el) => {
+            flag = true
+            for (let index = 0; index < el.itemSizes.length; index++) {
+              if (el.itemSizes[index].count > 0) {
+                flag = false
+                temp.push(true)
+                break;
+              }
+            }
+            if (flag) {
+              temp.push(false)
+            }
+          })
+        }
+        setAvailability(temp)
       })
       .catch((error) => {
         console.error("Ошибка при получении JSON файла", error);
       });
   }, []);
-
 
   return (
     <>
@@ -51,7 +70,7 @@ const Favorites = () => {
           </div>
 
           <div className="cards grid grid-cols-2 gap-[20px] mt-[15px]">
-            {favoritesData.userItemsInfo.map((el) => (
+            {favoritesData.userItemsInfo.map((el, index) => (
               <NavLink
                 to={
                   "/categories/item-details/" +
@@ -67,13 +86,14 @@ const Favorites = () => {
                   from: el.itemCategoryName.toLowerCase().replace(/\s/g, "-"),
                   itemId: el.itemId
                 }}
+                key={index}
               >
                 <CardItem
                   title={el.itemName}
                   price={el.itemPrice}
                   image={el.itemPhotos[0]}
                   isFavorite={true}
-                  isAvailable={true}
+                  isAvailable={availability[index]}
                   key={el.itemId}
                 />
               </NavLink>
