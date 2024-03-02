@@ -65,6 +65,8 @@ app.get('/getuserwithfavorites', userController.getUserWithFavourites)
 
 app.get('/getorders', orderController.getOrders)
 
+app.get('/getOrderAccountInfo', orderController.getOrderAccountInfo)
+
 //POST
 
 app.post('/updateitemcart', itemController.updateItemCart)
