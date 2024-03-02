@@ -41,7 +41,7 @@ export default class espforyouController {
             const esp_id = esp._id
             const tg_id = req.body.telegramId
 
-            const userData =  await UserSchema.findOneAndUpdate({telegramId: tg_id}, {especiallyForYou: esp_id}, {new: true});
+            const userData =  await UserSchema.findOneAndUpdate({telegramId: tg_id}, { $push: { especiallyForYou: esp_id } }, {new: true});
             
             return res.status(200).json({
             ...esp,

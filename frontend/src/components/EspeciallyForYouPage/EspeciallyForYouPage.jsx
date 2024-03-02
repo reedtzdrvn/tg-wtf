@@ -1,37 +1,42 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import background from "../../images/background.png";
 import { useNavigate } from "react-router-dom";
-import axios from '../../axios.js'
+import axios from "../../axios.js";
 import "./EspeciallyForYouPage.css";
 
 const EspeciallyForYouPage = () => {
-
   const [address, setPresentAddress] = useState(null);
   const [information, setAdditionalInfo] = useState(null);
+  const [isSending, setIsSending] = useState(false);
   let navigate = useNavigate();
-  let tg = window.Telegram.WebApp; 
+  let tg = window.Telegram.WebApp;
 
-    let userId = ''
-  
-    if (!tg.initDataUnsafe.user){
-      userId='703999322'
-    }
-    else{
-      userId=tg.initDataUnsafe.user?.id
-    }
+  let userId = "";
 
+  if (!tg.initDataUnsafe.user) {
+    userId = "703999322";
+  } else {
+    userId = tg.initDataUnsafe.user?.id;
+  }
 
   const handlerSubmit = async (e) => {
     e.preventDefault();
+    setIsSending(true);
 
-    axios.post('/especiallyforyou', {address: address, information: information, telegramId: userId})
-            .then(response => {
-                navigate('/');
-            })
+    axios
+      .post("/especiallyforyou", {
+        address: address,
+        information: information,
+        telegramId: userId,
+      })
+      .then((response) => {
+        setIsSending(false);
+        navigate("/");
+      })
 
-        .catch(error => {
-            console.error('Ошибка при получении JSON файла', error);
-        });
+      .catch((error) => {
+        console.error("Ошибка при получении JSON файла", error);
+      });
   };
 
   return (
@@ -46,7 +51,7 @@ const EspeciallyForYouPage = () => {
             </div>
           </div>
           <div className="input1 flex justify-center mt-[32px]">
-              <div className="w-[90%]">
+            <div className="w-[90%]">
               <label htmlFor="presentAddress">Present Address</label>
               <input
                 placeholder="San Jose, California, USA"
@@ -56,10 +61,10 @@ const EspeciallyForYouPage = () => {
                 onChange={(e) => setPresentAddress(e.target.value)}
                 required
               />
-              </div>
+            </div>
           </div>
           <div className="textarea1 flex justify-center mt-[46px]">
-              <div className="w-[90%]">
+            <div className="w-[90%]">
               <label htmlFor="additionalInfo">Additional Information</label>
               <textarea
                 placeholder="Please provide all necessary additional information related to your order."
@@ -68,12 +73,18 @@ const EspeciallyForYouPage = () => {
                 onChange={(e) => setAdditionalInfo(e.target.value)}
                 required
               />
-              </div>
+            </div>
           </div>
           <div className="flex justify-center items-center">
-          <button type="submit" className="bg-black text-white flex justify-center items-center buttonnextESP w-[70%]">
-            Confirm
-          </button>
+            <button
+              disabled={isSending}
+              type="submit"
+              className={`bg-black text-white flex justify-center items-center buttonnextESP ${
+                isSending ? "buttonnextESPdisbaled" : ""
+              } w-[70%]`}
+            >
+              Confirm
+            </button>
           </div>
         </div>
       </form>
