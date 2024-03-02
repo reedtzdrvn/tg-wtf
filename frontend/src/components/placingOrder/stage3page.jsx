@@ -16,6 +16,8 @@ const Stage3Page = (props) => {
 
     const basketList = props.cartList
 
+    console.log(basketList)
+
     let tg = window.Telegram.WebApp;
 
     let userId = ''
@@ -49,13 +51,14 @@ const Stage3Page = (props) => {
         const items = props.cartList.map(item => ({
             _id: item.chosenId,
             itemId: item.itemId,
+            size: item.chosenSize,
+            sizeId: item.chosenId,
             status: 1,
             track: "",
             approximateTime: new Date(Date.now() + parseInt(item.apoximateTime.split('-').pop()) * 24 * 60 * 60 * 1000) ,
             count: item.chosenCount
         }));
 
-        console.log(items)
 
         const fields = {
             reserveNumber: reserveNumber,

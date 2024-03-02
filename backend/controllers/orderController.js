@@ -4,8 +4,65 @@ import OrderSchema from "../models/order.js"
 export default class orderController {
 
     static getOrders = async (req, res) => {
+    try {
+        const { telegramId } = req.query;
 
+        const user = await UserSchema.findOne({ telegramId }).populate({
+            path: 'orders',
+            populate: {
+                path: 'items.itemId',
+                model: 'Item'
+            }
+        });
+
+        if (!user) {
+            return res.status(404).json({ error: "Пользователь не найден" });
+        }
+
+        const orders = user.orders.map(order => ({
+            orderId: order._id,
+            items: order.items.map(item => ({
+                _id: item._id,
+                itemId: {
+                    _id: item.itemId._id,
+                    name: item.itemId.name,
+                    category: item.itemId.category,
+                    photos: item.itemId.photos,
+                    price: item.itemId.price,
+                    sale: item.itemId.sale,
+                    deliveryTime: item.itemId.deliveryTime,
+                    description: item.itemId.description,
+                    reviews: item.itemId.reviews
+                },
+                status: item.status,
+                track: item.track,
+                approximateTime: item.approximateTime,
+                count: item.count,
+                sizeId: item.sizeId,
+                size: item.size
+            })),
+            name: order.name,
+            email: order.email,
+            phoneNumber: order.phoneNumber,
+            telegramLink: order.telegramLink,
+            dateOrder: order.dateOrder,
+            totalPrice: order.totalPrice,
+            country: order.country,
+            city: order.city,
+            reservePhoneNumber: order.reservePhoneNumber,
+            presentAdress: order.presentAdress,
+            apartmentNumber: order.apartmentNumber,
+            postalCode: order.postalCode,
+            postalCodeReserve: order.postalCodeReserve,
+            additionalInformation: order.additionalInformation
+        }));
+
+        return res.status(200).json(orders);
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({ error: "Возникла ошибка" });
     }
+}
 
     static getOrder = async (req, res) => {
 

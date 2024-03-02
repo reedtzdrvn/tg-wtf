@@ -10,6 +10,7 @@ const OrderSchema = new mongoose.Schema({
         itemId: {
             type: mongoose.Schema.Types.ObjectId,
             require: true,
+            ref: "Item"
         },
         status: {
             type: Number,
@@ -26,6 +27,15 @@ const OrderSchema = new mongoose.Schema({
         },
         count: {
             type: Number,
+            require: true
+        },
+        sizeId: {
+            type: mongoose.Schema.Types.ObjectId,
+            require: true,
+            ref: "Size"
+        },
+        size:{
+            type: String,
             require: true
         }
     }],
