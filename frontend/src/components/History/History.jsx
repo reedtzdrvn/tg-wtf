@@ -8,6 +8,7 @@ import { NavLink } from "react-router-dom";
 
 const History = () => {
   const [historyData, setHistoryData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true)
 
   let tg = window.Telegram.WebApp;
 
@@ -36,6 +37,7 @@ const History = () => {
       .get(`/getorders`, { params: { telegramId: userId } })
       .then((res) => {
         setHistoryData(res.data);
+        setIsLoading(false)
       })
       .catch((error) => {
         console.error("Ошибка при получении JSON файла", error);
@@ -45,7 +47,7 @@ const History = () => {
   
   return (
     <>
-      {!(historyData.length === 0) ? (
+      {!(isLoading) ? (
         <div className="mx-[8.5%] mt-[24px] page">
           <div className="flex gap-[10px] items-center">
             <div>
