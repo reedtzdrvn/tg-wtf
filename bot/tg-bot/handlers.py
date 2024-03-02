@@ -82,8 +82,7 @@ async def command_webview(message: Message):
                         InlineKeyboardButton(
                             text="Open Webview",
                             web_app=WebAppInfo(
-                                # url="https://aquamarine-dasik-75f62c.netlify.app"
-                                url="https://ae28-79-98-9-16.ngrok-free.app"
+                                url="https://aquamarine-dasik-75f62c.netlify.app"
                             ),
                         )
                     ]
