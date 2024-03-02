@@ -30,7 +30,7 @@ const StatusInfo = ({src, status, title, article, date, track}) => {
                     </div>
                 </div>
                 <div className=" statusPositions flex flex-col gap-[8px]">
-                    <div className="flex justify-between">
+                    <div className="flex lolkeklol">
 
                         <svg className={`w-[24px] h-[24px] ${statusNumber > 0 ? "lolgreen":""}`} xmlns="http://www.w3.org/2000/svg"  id="Outline" viewBox="0 0 24 24" width="512" height="512"><path d="M9,14h6a1,1,0,0,0,0-2H9a1,1,0,0,0,0,2Z"/><path d="M19,0H5A5.006,5.006,0,0,0,0,5V6A3,3,0,0,0,1,8.234V19a5.006,5.006,0,0,0,5,5H18a5.006,5.006,0,0,0,5-5V8.234A3,3,0,0,0,24,6V5A5.006,5.006,0,0,0,19,0ZM2,5A3,3,0,0,1,5,2H19a3,3,0,0,1,3,3V6a1,1,0,0,1-1,1H3A1,1,0,0,1,2,6ZM21,19a3,3,0,0,1-3,3H6a3,3,0,0,1-3-3V9H21Z"/></svg>
                         <svg className={`w-[24px] h-[24px] ${statusNumber > 1 ? "lolgreen":""}`} xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24" width="512" height="512"><path d="M21,10H17.693L13.446,1.563A3,3,0,0,0,10.812,0H7.13l2.9,10H6.4l-2.3-2.295A2.4,2.4,0,0,0,.327,8.2a2.38,2.38,0,0,0-.008,2.4L3.407,16h6.612l-3,8h3.793a2.97,2.97,0,0,0,2.605-1.513L17.464,16H24V13A3,3,0,0,0,21,10ZM9.792,2h1.02a.989.989,0,0,1,.863.491L15.455,10H12.11ZM22,14H16.354L11.69,21.479a1,1,0,0,1-.878.521H9.9l3-8H4.567L2.055,9.6A.4.4,0,0,1,2.406,9a.4.4,0,0,1,.285.118L5.573,12H21a1,1,0,0,1,1,1Z"/></svg>

@@ -56,6 +56,9 @@
     height: 44px !important;
     width: 44px !important;
 }
+.lolkeklol{
+    gap: 12px;
+}
 
 @media screen and (max-width: 425px) {
     .infoDiliveryDiv{
@@ -64,6 +67,9 @@
     }
     .statusPositions{
         width: 100%;
-        
+
+    }
+    .lolkeklol{
+        justify-content: space-between;
     }
 }
