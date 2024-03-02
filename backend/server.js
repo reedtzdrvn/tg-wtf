@@ -89,6 +89,8 @@ app.post('/additemtofavorites', itemController.addToFavorites)
 
 app.post('/addorder', orderController.addOrder)
 
+app.post('/deleteFromFavorites', itemController.deleteFromFavorites)
+
 // DELETE
 
 app.post('/deleteItemFromCart', itemController.deleteItemFromCart)

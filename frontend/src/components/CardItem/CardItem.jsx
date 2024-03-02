@@ -4,6 +4,7 @@ import LikeIcon from "../../images/liked-icon.svg";
 import { useState } from "react";
 
 const CardItem = ({ title, price, image, isFavorite, isAvailable }) => {
+
   return (
     <>
       <div className="card-item">

@@ -19,9 +19,8 @@ const Favorites = () => {
     userId = tg.initDataUnsafe.user?.id;
   }
 
-
   const [favoritesData, setFavoritesData] = useState([]);
-  const [availability, setAvailability] = useState([])
+  const [availability, setAvailability] = useState(null);
 
   useEffect(() => {
     axios
@@ -29,24 +28,24 @@ const Favorites = () => {
       .then((response) => {
         setFavoritesData(response.data);
 
-        let temp = []
+        let temp = [];
         if (response.data.userItemsInfo.length != 0) {
-          let flag = null
+          let flag = null;
           response.data.userItemsInfo.map((el) => {
-            flag = true
+            flag = true;
             for (let index = 0; index < el.itemSizes.length; index++) {
               if (el.itemSizes[index].count > 0) {
-                flag = false
-                temp.push(true)
+                flag = false;
+                temp.push(true);
                 break;
               }
             }
             if (flag) {
-              temp.push(false)
+              temp.push(false);
             }
-          })
+          });
         }
-        setAvailability(temp)
+        setAvailability(temp);
       })
       .catch((error) => {
         console.error("Ошибка при получении JSON файла", error);
@@ -55,7 +54,7 @@ const Favorites = () => {
 
   return (
     <>
-      {!(favoritesData.length === 0) ? (
+      {!(availability === null) ? (
         <div className="page cards-wrapper px-[8.5%]">
           <div className="fav-wrapper">
             <div className="flex items-center align-center mt-[5px]">
@@ -70,34 +69,42 @@ const Favorites = () => {
           </div>
 
           <div className="cards grid grid-cols-2 gap-[20px] mt-[15px]">
-            {favoritesData.userItemsInfo.map((el, index) => (
-              <NavLink
-                to={
-                  "/categories/item-details/" +
-                  el.itemCategoryName.toLowerCase().replace(/\s/g, "-") +
-                  "/" +
-                  el.itemId
-                }
-                state={{
-                  category: el.itemCategoryName,
-                  pathTitle: el.itemCategoryName
-                    .toLowerCase()
-                    .replace(/\s/g, "-"),
-                  from: el.itemCategoryName.toLowerCase().replace(/\s/g, "-"),
-                  itemId: el.itemId
-                }}
-                key={index}
-              >
-                <CardItem
-                  title={el.itemName}
-                  price={el.itemPrice}
-                  image={el.itemPhotos[0]}
-                  isFavorite={true}
-                  isAvailable={availability[index]}
-                  key={el.itemId}
-                />
-              </NavLink>
-            ))}
+            {!(favoritesData.userItemsInfo.length === 0) ? (
+              <>
+                {favoritesData.userItemsInfo.map((el, index) => (
+                  <NavLink
+                    to={
+                      "/categories/item-details/" +
+                      el.itemCategoryName.toLowerCase().replace(/\s/g, "-") +
+                      "/" +
+                      el.itemId
+                    }
+                    state={{
+                      category: el.itemCategoryName,
+                      pathTitle: el.itemCategoryName
+                        .toLowerCase()
+                        .replace(/\s/g, "-"),
+                      from: el.itemCategoryName
+                        .toLowerCase()
+                        .replace(/\s/g, "-"),
+                      itemId: el.itemId,
+                    }}
+                    key={index}
+                  >
+                    <CardItem
+                      title={el.itemName}
+                      price={el.itemPrice}
+                      image={el.itemPhotos[0]}
+                      isFavorite={true}
+                      isAvailable={availability[index]}
+                      key={el.itemId}
+                    />
+                  </NavLink>
+                ))}
+              </>
+            ) : (
+              ""
+            )}
           </div>
         </div>
       ) : (

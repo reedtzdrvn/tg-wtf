@@ -42,6 +42,7 @@ export default class itemController {
       const itemsFromSelectedCategoryData = await ItemSchema.find({
         category: categoryId,
       });
+      
 
       // if (itemsFromSelectedCategoryData.length === 0) {
       //   return res
@@ -110,23 +111,55 @@ export default class itemController {
   };
 
   static addToFavorites = async (req, res) => {
-    const { telegramId, itemId } = req.body;
+    try {
+      const { telegramId, itemId } = req.body;
 
-    if (!telegramId || !itemId) {
-      return res.status(400).json({ message: "Ошибка получения информации" });
+      if (!telegramId || !itemId) {
+        return res.status(400).json({ message: "Ошибка получения информации" });
+      }
+
+      const userData = await UserSchema.findOne({ telegramId: telegramId });
+
+      if (!userData) {
+        return res.status(404).json({ message: "Пользователь не найден" });
+      }
+
+      userData.favourites.push(itemId);
+
+      await userData.save();
+
+      res.status(200).json({ userData });
+    } catch (error) {
+      res.status(500).json({
+        error: "Возникла ошибка",
+      });
     }
+  };
 
-    const userData = await UserSchema.findOne({ telegramId: telegramId });
+  static deleteFromFavorites = async (req, res) => {
+    try {
+      const { telegramId, itemId } = req.body;
 
-    if (!userData) {
-      return res.status(404).json({ message: "Пользователь не найден" });
+      if (!telegramId || !itemId) {
+        return res.status(400).json({ message: "Ошибка получения информации" });
+      }
+
+      const userData = await UserSchema.findOne({ telegramId: telegramId });
+
+      if (!userData) {
+        return res.status(404).json({ message: "Пользователь не найден" });
+      }
+
+      userData.favourites = userData.favourites.filter((el) => String(el) !== String(itemId));
+      
+      await userData.save();
+
+      res.status(200).json({ userData });
+    } catch (error) {
+      res.status(500).json({
+        error: "Возникла ошибка",
+      });
     }
-
-    userData.favourites.push(itemId);
-
-    userData.save()
-
-    res.status(200).json({ userData });
   };
 
   static updateItemCart = async (req, res) => {
