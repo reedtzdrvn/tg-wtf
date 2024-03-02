@@ -15,6 +15,7 @@
 
 .stringinfo{
     border-top: solid 1px rgb(230, 239, 245);
+    border-bottom: solid 1px rgb(230, 239, 245);
 }
 .textOrderHistory{
     color: rgb(35, 35, 35);
@@ -35,4 +36,9 @@
     font-size: 14px;
     font-weight: 500;
     text-align: right;
+}
+
+.history-list-date-of-order {
+    font-family: Inter;
+    font-size: 14px;
 }

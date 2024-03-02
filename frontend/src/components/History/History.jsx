@@ -1,56 +1,94 @@
-import history from "../../images/history.svg"
-import "./history.css"
-import message from "../../images/message.svg"
+import history from "../../images/history.svg";
+import "./history.css";
+import message from "../../images/message.svg";
+import { useEffect, useState } from "react";
+import axios from "../../axios.js";
+import Preloader from "../errors/Preloader.js";
+import { NavLink } from "react-router-dom";
 
 const History = () => {
-    const doc = [
-        {
-            "name" : "Spotify Subscription",
-            "date" : "28 Jan, 12:30 AM",
-            "sum" : "-$2,500",
-        },
-        {
-            "name" : "Spotify",
-            "date" : "28 Jan, 12:30 AM",
-            "sum" : "-$2,500",
-        },
-        {
-            "name" : "alena bogdeiak",
-            "date" : "28 Jan, 12:30 AM",
-            "sum" : "-$2,500",
-        },
-        {
-            "name" : "ya wtf ",
-            "date" : "28 Jan, 12:30 AM",
-            "sum" : "-$2,500",
-        },
-        {
-            "name" : "hochu spat",
-            "date" : "28 Jan, 12:30 AM",
-            "sum" : "-$2,700",
-        },
-    ]
-    return ( 
+  const [historyData, setHistoryData] = useState([]);
+
+  let tg = window.Telegram.WebApp;
+
+  let userId = "";
+
+  if (!tg.initDataUnsafe.user) {
+    userId = "703999322";
+  } else {
+    userId = tg.initDataUnsafe.user?.id;
+  }
+
+  const formatDate = (dateString) => {
+    const options = {
+      month: "short",
+      day: "numeric",
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true,
+    };
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-US", options);
+  };
+
+  useEffect(() => {
+    axios
+      .get(`/getorders`, { params: { telegramId: userId } })
+      .then((res) => {
+        setHistoryData(res.data);
+      })
+      .catch((error) => {
+        console.error("Ошибка при получении JSON файла", error);
+      });
+  }, []);
+  console.log(historyData);
+  
+  return (
+    <>
+      {!(historyData.length === 0) ? (
         <div className="mx-[8.5%] mt-[24px] page">
-            <div className="flex gap-[10px] items-center">
-                <div><img src={history} alt="1" className="w-[30px] h-[30px]"/></div>
-                <div className="HistoryText1 flex flex-col -mb-[2px]">
-                    <div className="HistoryTitle1 flex items-center">History</div>
-                    <div className="HistoryArtitle1 flex items-center">12 transactions</div>
-                </div>
+          <div className="flex gap-[10px] items-center">
+            <div>
+              <img src={history} alt="1" className="w-[30px] h-[30px]" />
             </div>
-            <div className="mt-[48px] flex flex-col">
-                {doc.map((obj) => (
-                    <div className="stringinfo flex justify-between items-center py-[12px] px-[6px]">
-                        <div className="textOrderHistory w-5/12">{obj.name}</div>
-                        <div className="dateOrderHistory w-4/12">{obj.date}</div>
-                        <div className="sumOrderHistory w-3/12">{obj.sum}</div>
-                        <div className="w-1/12 flex justify-center ml-[10px]"><img width = {45} src={message} alt="review" /></div>
+            <div className="HistoryText1 flex flex-col -mb-[2px]">
+              <div className="HistoryTitle1 flex items-center">History</div>
+              <div className="HistoryArtitle1 flex items-center">
+                12 transactions
+              </div>
+            </div>
+          </div>
+          <div className="mt-[18px] flex flex-col">
+            {historyData.map((el) => (
+              <div className="mt-[30px]">
+                <span className="history-list-date-of-order font-bold text-gray-500">{formatDate(el.dateOrder)}</span>
+                {el.items.map((obj) => (
+                  <div className="stringinfo flex justify-between items-center py-[12px] px-[6px]">
+                    <div className="textOrderHistory w-4/12">
+                      {obj.itemId.name}
                     </div>
+                    <div className="dateOrderHistory w-3/12 ">
+                      {formatDate(obj.approximateTime)}
+                    </div>
+                    <div className="sumOrderHistory w-4/12 flex justify-center items-center">
+                      -${(obj.itemId.price * obj.count).toLocaleString("en-US")}
+                    </div>
+                    <div className="w-1/12 flex justify-center ml-[10px]">
+                      <NavLink to={"/account/history/review"} state={{itemId: obj.itemId._id}}>
+                        <img width={45} src={message} alt="review" />
+                      </NavLink>
+                    </div>
+                  </div>
                 ))}
-            </div>
+              </div>
+            ))}
+          </div>
         </div>
-    );
-}
- 
+      ) : (
+        <Preloader />
+      )}
+    </>
+  );
+};
+
 export default History;
