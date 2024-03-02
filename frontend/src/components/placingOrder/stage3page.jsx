@@ -7,43 +7,90 @@ import information from "../../images/information.svg"
 import "./placingorder.css"
 import basket from "../../images/basket-active.svg";
 import { NavLink } from "react-router-dom"
+import axios from "../../axios.js"
+import { useNavigate } from "react-router-dom"
 
 const Stage3Page = (props) => {
 
-    const basketList = [
-        {
-          id: 1,
-          title: "Skins",
-          quantity: 1,
-          price: 40500,
-        },
-        {
-          id: 2,
-          title: "No Skins",
-          quantity: 1,
-          price: 40500,
-        },
-        {
-          id: 3,
-          title: "Phone",
-          quantity: 1,
-          price: 40500,
-        },
-        {
-          id: 4,
-          title: "Table",
-          quantity: 1,
-          price: 40500,
-        },
-        {
-          id: 5,
-          title: "Headphones",
-          quantity: 1,
-          price: 40500,
-        },
-      ];
+    const navigate = useNavigate()
+
+    const basketList = props.cartList
+
+    let tg = window.Telegram.WebApp;
+
+    let userId = ''
+
+    if (!tg.initDataUnsafe.user){
+        userId='703999322'
+    }
+    else{
+        userId=tg.initDataUnsafe.user?.id
+    }
+
+
+    const addOrderUser = (event) => {
+        event.preventDefault();
+
+        const reserveNumber = props.value2
+        const email = props.email
+        const country = props.country
+        const city = props.city
+        const presentAdress = props.address
+        const apartmentNumber = props.appNumber
+        const postalCode = props.postcode1
+        const postalCodeReserve = props.postcode2
+        const additionalInformation = props.information
+        const dateOrder = new Date()
+        const totalPrice = currentSum
+        const name = props.name
+        const phoneNumber = props.value
+        const telegramLink = props.telegramName
+
+        const items = props.cartList.map(item => ({
+            _id: item.chosenId,
+            itemId: item.itemId,
+            status: 1,
+            track: "",
+            approximateTime: new Date(Date.now() + parseInt(item.apoximateTime.split('-').pop()) * 24 * 60 * 60 * 1000) ,
+            count: item.chosenCount
+        }));
+
+        console.log(items)
+
+        const fields = {
+            reserveNumber: reserveNumber,
+            email: email,
+            country: country,
+            city: city,
+            presentAdress: presentAdress,
+            apartmentNumber: apartmentNumber,
+            postalCode:postalCode,
+            postalCodeReserve: postalCodeReserve,
+            additionalInformation: additionalInformation,
+            dateOrder: dateOrder,
+            totalPrice: totalPrice,
+            items: items,
+            telegramId: userId,
+            name: name,
+            phoneNumber: phoneNumber,
+            telegramLink: telegramLink,
+        }
+
+        console.log(fields)
+        
+
+        axios.post('/addorder', fields)
+        .then((response) => {
+            alert('Заказ успешно оформлен!')
+            navigate('/account/status')
+        })
+        .catch((error) => {
+            alert('Заказ не оформлен(')
+            console.error("Ошибка при получении JSON файла", error);
+        });
+    }
     
-      let currentSum = basketList.reduce((sum, el) => sum + el.price, 0);
+    let currentSum = basketList.reduce((sum, el) => sum + el.price * el.chosenCount, 0);
     return ( 
         <div className="flex flex-col gap-[40px] mt-[40px]"> 
             <div className="flex flex-col">
@@ -68,19 +115,19 @@ const Stage3Page = (props) => {
                     <div className="flex flex-col">
 
                         {basketList.map((el) => (
-                            <div className="flex justify-between texttableorder2 w-full"><div className="w-4/12">{el.title}</div><div className="w-4/12 flex justify-center"><div>{el.quantity}</div></div><div className="w-4/12 ddfftt">${el.quantity*el.price}</div></div>
+                            <div className="flex justify-between texttableorder2 w-full"><div className="w-4/12">{el.name} - {el.chosenSize}</div><div className="w-4/12 flex justify-center"><div>{el.chosenCount}</div></div><div className="w-4/12 ddfftt">${el.chosenCount*el.price}</div></div>
                         ))}
 
                     </div>
-                    <div className="flex justify-end totalpriceinfo mt-[16px] flex gap-[4px]">
+                    <div className="justify-end totalpriceinfo mt-[16px] flex gap-[4px]">
                         Total price: <span className="pricetotalsunorder">${currentSum}</span>
                     </div>
                 </div>
             </div>
             <div className="flex justify-center items-center mt-[44px]">
-                <NavLink to={'/basket/payment'} state={currentSum} className="cursor-pointer nextPageButton w-[75%] flex items-center justify-center">
+                <button state={currentSum} onClick={addOrderUser} className="cursor-pointer nextPageButton w-[75%] flex items-center justify-center">
                     Go to the payment
-                </NavLink>
+                </button>
             </div>
         </div>
      );

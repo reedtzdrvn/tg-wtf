@@ -26,6 +26,7 @@ const BasketListItem = ({
   const [currPrice, setCurrPrice] = useState(price);
   const [categoryName, setCategoryName] = useState("");
 
+
   useEffect(() => {
     axios
       .get("/categoryNameFromItemId", { params: { itemId: itemId } })
@@ -78,7 +79,7 @@ const BasketListItem = ({
   return (
     <>
       <div className="basket-list-item mt-[12px] flex justify-between items-center">
-        <h3 className="font-bold w-3/12">{title}</h3>
+        <h3 className="font-bold w-3/12">{title} - {chosenSize}</h3>
         <BasketListButton
           quantity={curr}
           increaseCurrentQuantity={increaseCurrentQuantity}
@@ -87,7 +88,7 @@ const BasketListItem = ({
         <h3 className="w-3/12 flex justify-center">
           ${currPrice.toLocaleString("en-US")}
         </h3>
-        <div className="basket-list-item-action-wrapper flex items-center w-3/12 flex justify-end">
+        <div className="basket-list-item-action-wrapper flex items-center w-3/12 justify-end">
           <NavLink
             to={`/categories/item-details/${categoryName
               .toLowerCase()

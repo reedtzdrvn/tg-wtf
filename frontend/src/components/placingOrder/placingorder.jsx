@@ -37,17 +37,30 @@ const PlacingOrder = () => {
     const [postcode2, setPostcode2] = useState('')
     const [information, setInformation] = useState('')
 
+    const [cartList, setCartList] = useState([])
+
+    const [orderStatus, setOrderStatus] = useState('')
+
     useEffect(() => {
         axios.get(`/user`, { params: { telegramId: userId } })
             .then(response => {
-                const {firstName, lastName, phoneNumber, userName} = response.data[0]
+                const {firstName, lastName, phoneNumber, userName, email} = response.data[0]
                 let fullName = `${firstName} ${lastName}`.trim()
                 setName(fullName)
                 setValueNumber1(phoneNumber)
                 setTelegramName(`@${userName}`)
+                setEmail(email)
             })
             .catch(error => {
                 console.error('Ошибка при получении JSON файла', error);
+            });
+        axios
+            .get(`/getitemcart`, { params: { telegramId: userId } })
+            .then((response) => {
+                setCartList(response.data);
+            })
+            .catch((error) => {
+              console.error("Ошибка при получении JSON файла", error);
             });
       }, []);
 
@@ -108,6 +121,11 @@ const PlacingOrder = () => {
                         city={city}
                         postcode1={postcode1}
                         postcode2={postcode2}
+                        cartList = {cartList}
+                        setOrderStatus = {setOrderStatus}
+                        orderStatus={orderStatus}
+                        information={information}
+                        appNumber={appNumber}
                     /> : "Ошибка формы"
                 }
             </form>

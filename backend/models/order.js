@@ -7,21 +7,44 @@ const OrderSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             require: true,
         },
+        itemId: {
+            type: mongoose.Schema.Types.ObjectId,
+            require: true,
+        },
         status: {
             type: Number,
             require: true,
+            default: 1
         },
         track: {
             type: String,
+            default: ""
         },
         approximateTime: {
             type: mongoose.Schema.Types.Date,
+            require: true,
         },
         count: {
             type: Number,
             require: true
         }
     }],
+    name:{
+        type: String,
+        require: true,
+    },
+    email:{
+        type: String,
+        require: true,
+    },
+    phoneNumber:{
+        type: String,
+        require: true
+    },
+    telegramLink:{
+        type: String,
+        require: true
+    },
     dateOrder: {
         type: mongoose.Schema.Types.Date,
         require: true
@@ -38,11 +61,7 @@ const OrderSchema = new mongoose.Schema({
         type: String,
         require: true
     },
-    reserveNumber: {
-        type: String,
-        require: true
-    },
-    country: {
+    reservePhoneNumber: {
         type: String,
         require: true
     },
@@ -51,15 +70,15 @@ const OrderSchema = new mongoose.Schema({
         require: true
     },
     apartmentNumber: {
-        type: Number,
+        type: String,
         require: true
     },
     postalCode:{
-        type: Number,
+        type: String,
         require: true
     },
     postalCodeReserve:{
-        type: Number,
+        type: String,
     },
     additionalInformation: {
         type: String

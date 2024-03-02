@@ -8,6 +8,7 @@ import itemController from './controllers/itemController.js';
 import {wakeServer} from './utils/ping.js'
 import adminController from './controllers/adminController.js';
 import espforyouController from './controllers/espforyouController.js';
+import orderController from './controllers/orderController.js';
 
 dotenvConfig();
 
@@ -85,6 +86,8 @@ app.post('/additemcart', userController.addItemCartUser)
 app.post('/itemreview', userController.addItemReview)
 
 app.post('/additemtofavorites', itemController.addToFavorites)
+
+app.post('/addorder', orderController.addOrder)
 
 // DELETE
 
