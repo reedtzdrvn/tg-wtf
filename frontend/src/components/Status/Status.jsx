@@ -107,13 +107,23 @@ const Status = () => {
                     </div>
                 ): ""}
             </div>
-            <div className="flex flex-col gap-[28px] ">
-                
-                {doc.map((obj) => (
-                    <StatusInfo src={obj.src} status={obj.status} title={obj.title} article={obj.article} date={formatDate(obj.date)} track={obj.track}/>
-                ))}
-                
-            </div>
+            <div className="flex flex-col gap-[28px]">
+                {doc.length === 0 ? (
+                    <div className="flex justify-center mt-[48px] text-2xl">Заказов не было!</div>
+                ) : (
+                    doc.map((obj) => (
+                    <StatusInfo
+                        key={obj.id}
+                        src={obj.src}
+                        status={obj.status}
+                        title={obj.title}
+                        article={obj.article}
+                        date={formatDate(obj.date)}
+                        track={obj.track}
+                    />
+                    ))
+                )}
+                </div>
             
         </div>
     );
