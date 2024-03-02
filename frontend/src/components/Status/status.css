@@ -52,3 +52,18 @@
 .hidden {
     display: none;
 }
+.lolkakek{
+    height: 44px !important;
+    width: 44px !important;
+}
+
+@media screen and (max-width: 425px) {
+    .infoDiliveryDiv{
+        flex-direction: column;
+        gap: 24px
+    }
+    .statusPositions{
+        width: 100%;
+        
+    }
+}

@@ -11,7 +11,11 @@ export default class orderController {
             path: 'orders',
             populate: {
                 path: 'items.itemId',
-                model: 'Item'
+                model: 'Item',
+                populate : {
+                    path: 'category',
+                    model: 'Category'
+                }
             }
         });
 
@@ -26,7 +30,10 @@ export default class orderController {
                 itemId: {
                     _id: item.itemId._id,
                     name: item.itemId.name,
-                    category: item.itemId.category,
+                    category: {
+                        _id: item.itemId.category._id, // Добавляем информацию о категории товара
+                        title: item.itemId.category.title // Добавляем информацию о категории товара
+                    },
                     photos: item.itemId.photos,
                     price: item.itemId.price,
                     sale: item.itemId.sale,
@@ -69,7 +76,35 @@ export default class orderController {
     }
 
     static updateStatusOrder = async (req, res) => {
-
+        try {
+            const { orderId, status, itemId } = req.body;
+    
+            const order = await OrderSchema.findOne({ _id: orderId });
+    
+            if (!order) {
+                return res.status(404).json({ error: "Заказ не найден" });
+            }
+    
+            let itemFound = false;
+            for (let i = 0; i < order.items.length; i++) {
+                if (order.items[i]._id.toString() === itemId) {
+                    order.items[i].status = status;
+                    itemFound = true;
+                    break;
+                }
+            }
+    
+            if (!itemFound) {
+                return res.status(404).json({ error: "Товар в заказе не найден" });
+            }
+    
+            await order.save();
+    
+            return res.status(200).json(order);
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json({ error: "Возникла ошибка" });
+        }
     }
 
     static addOrder = async (req, res) => {

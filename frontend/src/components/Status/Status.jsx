@@ -3,8 +3,23 @@ import info from "../../images/info.svg"
 import StatusInfo from "./StatusInfo"
 import "./status.css"
 import { useState, useRef, useEffect } from "react"
+import Preloader from "../errors/Preloader"
+import axios from "../../axios.js"
 
 const Status = () => {
+
+    const [orders, setOrders] = useState()
+
+    let tg = window.Telegram.WebApp;
+
+    let userId = ''
+
+    if (!tg.initDataUnsafe.user){
+        userId='703999322'
+    }
+    else{
+        userId=tg.initDataUnsafe.user?.id
+    }
 
     const [showStatusInfo, setShowStatusInfo] = useState(false);
     const statusInfoRef = useRef(null);
@@ -26,40 +41,49 @@ const Status = () => {
         };
     }, []);
 
-    const doc = [
-        {
-            "src" : "https://static.vecteezy.com/system/resources/previews/010/994/232/non_2x/nike-logo-black-clothes-design-icon-abstract-football-illustration-with-white-background-free-vector.jpg",
-            "status" : "3", 
-            "title" : "Nike",
-            "article" : "Dress", 
-            "date" : "17th February, 2023", 
-            "track" : "XT-- --- 00 -- --- --USY"
-        },
-        {
-            "src" : "https://static.vecteezy.com/system/resources/previews/022/076/746/non_2x/puma-logo-and-art-free-vector.jpg",
-            "status" : "2", 
-            "title" : "Puma",
-            "article" : "Dress", 
-            "date" : "17th February, 2023", 
-            "track" : "XT-- --- 00 -- --- --USY"
-        },
-        {
-            "src" : "https://static.vecteezy.com/system/resources/previews/010/994/232/non_2x/nike-logo-black-clothes-design-icon-abstract-football-illustration-with-white-background-free-vector.jpg",
-            "status" : "5", 
-            "title" : "Nike",
-            "article" : "Dress", 
-            "date" : "17th February, 2023", 
-            "track" : "XT-- --- 00 -- --- --USY"
-        },
-        {
-            "src" : "https://static.vecteezy.com/system/resources/previews/022/076/746/non_2x/puma-logo-and-art-free-vector.jpg",
-            "status" : "0", 
-            "title" : "Puma",
-            "article" : "Dress", 
-            "date" : "17th February, 2023", 
-            "track" : "XT-- --- 00 -- --- --USY"
-        },
-    ]
+    useEffect(() => {
+        axios.get('/getorders', {params: { telegramId: userId }})
+        .then((response) => {
+            setOrders(response.data);
+        })
+        .catch((error) => {
+          console.error("Ошибка при получении JSON файла", error);
+        });
+    }, [])
+
+    if (!orders){
+        return <Preloader/>
+    }
+
+    const formatDate = (dateString) => {
+        const options = {
+          month: "short",
+          day: "numeric",
+          hour: "numeric",
+          minute: "2-digit",
+          hour12: true,
+        };
+        const date = new Date(dateString);
+        return date.toLocaleDateString("en-US", options);
+      };
+
+    const doc = [];
+
+    orders.forEach(order => {
+        order.items.forEach(item => {
+            const newItem = {
+                src: item.itemId.photos[0], // первая фотография товара
+                status: item.status,
+                title: item.itemId.name, // название товара
+                article: item.itemId.category.title, // категория товара
+                date: item.approximateTime, // дата заказа
+                track: item.track === '' ? 'wait...' : item.track
+            };
+            doc.push(newItem);
+        });
+    });
+
+    console.log(doc);
 
     return ( 
         <div className="mx-[8.5%] mt-[24px] page">
@@ -86,7 +110,7 @@ const Status = () => {
             <div className="flex flex-col gap-[28px] ">
                 
                 {doc.map((obj) => (
-                    <StatusInfo src={obj.src} status={obj.status} title={obj.title} article={obj.article} date={obj.date} track={obj.track}/>
+                    <StatusInfo src={obj.src} status={obj.status} title={obj.title} article={obj.article} date={formatDate(obj.date)} track={obj.track}/>
                 ))}
                 
             </div>

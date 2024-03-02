@@ -97,3 +97,5 @@ app.post('/deleteFromFavorites', itemController.deleteFromFavorites)
 
 app.post('/deleteItemFromCart', itemController.deleteItemFromCart)
 
+app.post('/updatestatusorder', orderController.updateStatusOrder)
+
