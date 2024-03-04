@@ -5,6 +5,7 @@ import "./status.css"
 import { useState, useRef, useEffect } from "react"
 import Preloader from "../errors/Preloader"
 import axios from "../../axios.js"
+import { useLocation } from "react-router-dom"
 
 const Status = () => {
 
@@ -20,6 +21,9 @@ const Status = () => {
     else{
         userId=tg.initDataUnsafe.user?.id
     }
+
+    let location = useLocation()
+    const {state} = location
 
     const [showStatusInfo, setShowStatusInfo] = useState(false);
     const statusInfoRef = useRef(null);
@@ -92,7 +96,7 @@ const Status = () => {
                     <div className="" ><img  src={spinner} alt="1" className=" w-[30px] h-[30px]"/></div>
                     <div className="HistoryText1 flex flex-col -mb-[2px]">
                         <div className="HistoryTitle1 flex items-center">Status <img onClick={toggleStatusInfo} className=" cursor-pointer -mt-[16px] ml-[3px]" src={info} alt="" /></div>
-                        <div className="HistoryArtitle1 flex items-center">2 position</div>
+                        <div className="HistoryArtitle1 flex items-center">{state.amount} position</div>
                     </div>
                 </div>
                 {showStatusInfo ? (

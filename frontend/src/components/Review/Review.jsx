@@ -8,6 +8,7 @@ import ReviewStars from "./ReviewStars.jsx";
 import { selectedstars } from "./ReviewStars.jsx";
 
 const Review = (props) => {
+  const [isSending, setIsSending] = useState(false);
   const [selectedstars, setSelectedStars] = useState(1);
   const [text, setText] = useState(null);
 
@@ -26,6 +27,7 @@ const Review = (props) => {
   }
 
   const handlerConfirm = () => {
+    setIsSending(true);
     axios
       .post("/itemreview", {
         ratingsCount: selectedstars,
@@ -34,7 +36,8 @@ const Review = (props) => {
         itemId: state.itemId,
       })
       .then((response) => {
-        navigate("/account/history");
+        setIsSending(false);
+        navigate("/account/history", {state: {amount:state.amount}});
       })
 
       .catch((error) => {
@@ -75,8 +78,11 @@ const Review = (props) => {
         </div>
         <div className="flex justify-center items-center mt-[60px]">
           <div
+            disabled={isSending}
             onClick={handlerConfirm}
-            className="cursor-pointer nextPageButton w-[75%] flex items-center justify-center"
+            className={`cursor-pointer nextPageButton w-[75%] flex items-center justify-center ${
+              isSending ? "buttonnextESPdisbaled" : ""
+            } `}
           >
             Confirm
           </div>

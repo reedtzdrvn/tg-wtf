@@ -4,7 +4,7 @@ import message from "../../images/message.svg";
 import { useEffect, useState } from "react";
 import axios from "../../axios.js";
 import Preloader from "../errors/Preloader.js";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 
 const History = () => {
   const [historyData, setHistoryData] = useState([]);
@@ -19,6 +19,9 @@ const History = () => {
   } else {
     userId = tg.initDataUnsafe.user?.id;
   }
+
+  let location = useLocation()
+  const {state} = location
 
   const formatDate = (dateString) => {
     const options = {
@@ -56,7 +59,7 @@ const History = () => {
             <div className="HistoryText1 flex flex-col -mb-[2px]">
               <div className="HistoryTitle1 flex items-center">History</div>
               <div className="HistoryArtitle1 flex items-center">
-                12 transactions
+                {state.amount} transactions
               </div>
             </div>
           </div>
@@ -76,7 +79,7 @@ const History = () => {
                       -${(obj.itemId.price * obj.count).toLocaleString("en-US")}
                     </div>
                     <div className="w-1/12 flex justify-center ml-[10px]">
-                      <NavLink to={"/account/history/review"} state={{itemId: obj.itemId._id}}>
+                      <NavLink to={"/account/history/review"} state={{itemId: obj.itemId._id, amount: state.amount}}>
                         <img width={45} src={message} alt="review" />
                       </NavLink>
                     </div>

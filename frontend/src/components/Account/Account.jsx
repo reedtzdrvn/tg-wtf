@@ -99,6 +99,7 @@ const Account = () => {
         <NavLink
           to="/account/history"
           className="px-[20px] h-[72px] stringLink flex justify-between items-center"
+          state={{amount: transactionsAmount}}
         >
           <div className="flex gap-[12px] items-center">
             <div>
@@ -116,6 +117,7 @@ const Account = () => {
         <NavLink
           to="/account/status"
           className="px-[20px] h-[72px] stringLink flex justify-between items-center"
+          state={{amount: transactionsAmount}}
         >
           <div className="flex gap-[12px] items-center">
             <div>
