@@ -1,0 +1,40 @@
+.titleOfNav {
+  font-family: Poppins;
+  font-size: 26px;
+  font-weight: 600;
+  line-height: 39px;
+  letter-spacing: 0.01em;
+  text-align: left;
+}
+
+.version {
+  font-family: Poppins;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 15px;
+  letter-spacing: -0.01em;
+  text-align: left;
+  color: rgba(131, 131, 131, 1);
+}
+
+.navButton {
+  font-family: Poppins;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 21px;
+  letter-spacing: -0.01em;
+  text-align: left;
+  border-radius: 8px;
+}
+
+.navButtonActive {
+  background-color: rgba(89, 50, 234, 1);
+  color: white;
+  font-family: Poppins;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 21px;
+  letter-spacing: -0.01em;
+  text-align: left;
+  border-radius: 8px;
+}
