@@ -67,6 +67,8 @@ app.get('/getorders', orderController.getOrders)
 
 app.get('/getOrderAccountInfo', orderController.getOrderAccountInfo)
 
+app.get('/users', userController.getAllUsers)
+
 //POST
 
 app.post('/updateitemcart', itemController.updateItemCart)

@@ -4,6 +4,17 @@ import SizeSchema from "../models/size.js";
 import CategorySchema from "../models/category.js";
 
 export default class userController {
+  static getAllUsers = async (req, res) => {
+    try {
+      const users = await UserSchema.find()
+
+      res.status(200).json(users);
+    } catch (e) {
+      console.log(e);
+      res.status(500).json({ error: e, message: e.message });
+    }
+  }
+
   static getUser = async (req, res) => {
     try {
       const telegram = req.query.telegramId;

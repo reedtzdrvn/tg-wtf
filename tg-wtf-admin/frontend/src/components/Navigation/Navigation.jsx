@@ -10,7 +10,7 @@ const Navigation = () => {
     const {pathname} = location
 
   return (
-    <div className={`w-1/5 h-[100vh] !bg-white px-[28px]`}>
+    <div className={`w-1/5 h-[100vh] !bg-white px-[28px] sticky top-0 left-0`}>
       <NavLink to={'/'}>
       <div className="flex items-center mt-[36px] mb-[53px]">
         <img className="mr-[8px]" src={settingIcon} alt="setting" />
