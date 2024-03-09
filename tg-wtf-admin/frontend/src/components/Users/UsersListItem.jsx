@@ -1,9 +1,37 @@
+import { useState } from "react";
+
 import module from "./Users.module.css";
 
 import userIcon from "../../images/user-square.svg";
 import arrowIcon from "../../images/arrow.svg";
+import { useEffect } from "react";
+import axios from "../../axios";
 
-const UsersListItem = ({user}) => {
+const UsersListItem = ({ user }) => {
+  const [itemsInProcess, setItemsInProcess] = useState(0);
+
+  useEffect(() => {
+    if (user.orders && user.orders.length > 0) {
+      axios
+        .get("/getOrderAccountInfo", { params: { orderIds: user.orders } })
+        .then((response) => {
+          let counter = 0;
+          for (let i = 0; i < response.data.length; i++) {
+            for (let j = 0; j < response.data[i].items?.length; j++) {
+              if (response.data[i]?.items[j]?.status !== 5) {
+                counter++;
+              }
+            }
+          }
+          setItemsInProcess(counter);
+        })
+        .catch((error) => {
+          console.error(error.message);
+        });
+    }
+  }, [user.orders]);
+  
+
   return (
     <div
       className={`${module.UserItemsWrapper} w-full px-[30px] py-[30px] cursor-pointer`}
@@ -49,8 +77,8 @@ const UsersListItem = ({user}) => {
             </div>
 
             <div>
-              <span className="font-bold mr-[5px]">Orders in process:</span>
-              <span>0</span>
+              <span className="font-bold mr-[5px]">Items in process:</span>
+              <span>{itemsInProcess}</span>
             </div>
 
             <div>

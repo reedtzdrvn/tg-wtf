@@ -51,8 +51,8 @@ const Users = () => {
         </div>
       </div>
 
-      {usersByTelegramId.map((user) => (
-        <UsersListItem user={user} />
+      {usersByTelegramId.map((user, index) => (
+        <UsersListItem user={user} key={index} />
       ))}
     </div>
   );

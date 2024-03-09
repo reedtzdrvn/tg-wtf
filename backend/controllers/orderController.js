@@ -5,7 +5,6 @@ export default class orderController {
   static getOrderAccountInfo = async (req, res) => {
     try {
       const { orderIds } = req.query;
-
       let orders = [];
       
       for (const id of orderIds) {
