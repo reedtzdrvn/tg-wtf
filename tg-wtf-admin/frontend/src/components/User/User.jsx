@@ -58,12 +58,12 @@ const User = () => {
   return (
     <>
       {!isLoading && userData ? (
-        <div className="w-4/5 mx-auto my-8 p-8  rounded-lg font-[Montserrat]">
+        <div className="xl:w-4/5 mx-auto xl:my-8 p-8 h-full rounded-lg font-[Montserrat]">
           <h2 className="text-2xl font-bold mb-4">
             {userData.firstName} {userData.lastName}
           </h2>
-          <div className="flex">
-            <div className="w-3/5">
+          <div className="flex flex-col xl:flex-row">
+            <div className="xl:w-3/5 w-full">
               <div className="mb-4">
                 <label className="block text-sm font-semibold mb-1">
                   First Name:
@@ -73,7 +73,7 @@ const User = () => {
                   name="firstName"
                   value={updatedData.firstName}
                   onChange={handleInputChange}
-                  className="border border-gray-300 rounded px-3 py-2 w-4/5"
+                  className="border border-gray-300 rounded px-3 py-2 w-full xl:w-4/5"
                 />
               </div>
               <div className="mb-4">
@@ -85,7 +85,7 @@ const User = () => {
                   name="lastName"
                   value={updatedData.lastName}
                   onChange={handleInputChange}
-                  className="border border-gray-300 rounded px-3 py-2 w-4/5"
+                  className="border border-gray-300 rounded px-3 py-2 w-full xl:w-4/5"
                 />
               </div>
               <div className="mb-4">
@@ -97,7 +97,7 @@ const User = () => {
                   name="email"
                   value={updatedData.email}
                   onChange={handleInputChange}
-                  className="border border-gray-300 rounded px-3 py-2 w-4/5"
+                  className="border border-gray-300 rounded px-3 py-2 w-full xl:w-4/5"
                 />
               </div>
               <div className="mb-4">
@@ -109,7 +109,7 @@ const User = () => {
                   name="userName"
                   value={updatedData.userName}
                   onChange={handleInputChange}
-                  className="border border-gray-300 rounded px-3 py-2 w-4/5"
+                  className="border border-gray-300 rounded px-3 py-2 w-full xl:w-4/5"
                 />
               </div>
               <div className="mb-4">
@@ -121,33 +121,35 @@ const User = () => {
                   name="phoneNumber"
                   value={updatedData.phoneNumber}
                   onChange={handleInputChange}
-                  className="border border-gray-300 rounded px-3 py-2 w-4/5"
+                  className="border border-gray-300 rounded px-3 py-2 w-full xl:w-4/5"
                 />
               </div>
+              <div className="flex justify-center xl:block">
               <button
                 onClick={handleSubmit}
                 className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
               >
                 Update
               </button>
+              </div>
               {showSuccessMessage && (
-                <div className={`absolute top-3 right-1/2 bg-green-500 text-white p-4 rounded ${module.fadeOut}`}>
+                <div className={`absolute top-3 mx-auto bg-green-500 text-white p-4 rounded ${module.fadeOut}`}>
                   Data saved successfully!
                 </div>
               )}
             </div>
 
-            <div className="flex flex-col justify-between items-center w-2/5">
-              <div className="bg-white cursor-pointer rounded-xl px-[80px] py-[50px]">
+            <div className="flex xl:flex-col flex-row justify-around xl:mt-[0] mt-[50px] items-center xl:w-2/5 w-full">
+              <div className="bg-white cursor-pointer rounded-xl px-[30px] py-[10px] lg:px-[50px] lg:py-[25px] xl:px-[80px] xl:py-[50px]">
                 <div className="flex justify-center items-center flex-col">
-                  <img width={60} src={cartIcon} alt="cart" />
+                  <img className="lg:w-[60px] md:w-[40px] w-[20px]" src={cartIcon} alt="cart" />
                   <span className="block text-sm font-semibold mb-1">Cart</span>
                   <span>{userData.cart.length} items</span>
                 </div>
               </div>
-              <div className="bg-white cursor-pointer rounded-xl px-[80px] py-[50px]">
+              <div className="bg-white cursor-pointer rounded-xl px-[30px] py-[10px] lg:px-[50px] lg:py-[25px] xl:px-[80px] xl:py-[50px]">
                 <div className="flex justify-center items-center flex-col">
-                  <img width={60} src={ordersIcon} alt="orders" />
+                  <img className="lg:w-[60px] md:w-[40px] w-[20px]" src={ordersIcon} alt="orders" />
                   <span className="block text-sm font-semibold mb-1">
                     Orders
                   </span>
@@ -158,7 +160,7 @@ const User = () => {
           </div>
         </div>
       ) : (
-        <div className="w-4/5 flex justify-center items-center">
+        <div className="xl:w-4/5 w-full min-h-screen flex justify-center items-center">
           <Preloader />
         </div>
       )}

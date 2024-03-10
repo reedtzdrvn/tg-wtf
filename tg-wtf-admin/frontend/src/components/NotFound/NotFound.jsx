@@ -2,7 +2,7 @@ import module from "./errors.module.css"
 
 const NotFound = () => {
     return(
-        <div className={`${module.error} w-4/5`}>
+        <div className={`${module.error} h-[100vh] xl:w-4/5`}>
             <title>404</title>
             <article style={{textAlign: "center"}}>Ошибка 404</article>
             <article className="-mt-[24px]" style={{textAlign: "center"}}>Страница не найдена!</article>

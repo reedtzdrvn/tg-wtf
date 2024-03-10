@@ -10,10 +10,6 @@
     padding-bottom: 64px;
 }
 
-.error svg {
-    scale: 2;
-}
-
 .ldsring {
     display: inline-block;
     position: relative;

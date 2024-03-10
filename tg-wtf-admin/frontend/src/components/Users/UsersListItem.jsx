@@ -48,17 +48,17 @@ const UsersListItem = ({ user, setIsLoading }) => {
   };
 
   return (
-    <div className={`${module.UserItemsWrapper} w-full px-[30px] py-[30px] cursor-pointer`}>
+    <div className={`${module.UserItemsWrapper} w-full xl:px-[30px] px-6 xl:py-[30px] py-4 cursor-pointer`}>
       <div>
         <div className="flex justify-between">
-          <div className={`${module.userNameAndSurname} flex items-center`}>
-            <img className="mr-[18px]" src={userIcon} alt="account icon" />
+          <div className={`${module.userNameAndSurname} xl:leading-[39px] leading-6 xl:text-[26px] text-[14px] flex items-center`}>
+            <img className="xl:mr-[18px] mr-[8px]" src={userIcon} alt="account icon" />
             <span>{user.firstName}</span>
-            <span className="ml-[8px]">{user.lastName}</span>
+            <span className="xl:ml-[8px] ml-[4px]">{user.lastName}</span>
           </div>
           <img width={30} src={arrowIcon} alt="go" />
         </div>
-        <div className={`${module.userInfoWrapper} flex justify-between items-center  w-full px-[40px]`}>
+        <div className={`${module.userInfoWrapper} xl:text-[18px] text-[12px] xl:leading-[39px] leading-6 flex xl:justify-between xl:items-center xl:flex-row flex-col w-full px-[8px] xl:px-[40px]`}>
           <div>
             <div>
               <span className="font-bold mr-[5px]">Номер телефона:</span>

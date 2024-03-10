@@ -36,15 +36,15 @@ const Users = () => {
   return (
     <>
       {isLoading ? ( // Show Preloader if isLoading is true
-        <div className="w-4/5 flex justify-center items-center">
+        <div className="xl:w-4/5 min-h-screen flex justify-center items-center">
           <Preloader />
         </div>
       ) : (
-        <div className="w-4/5 px-[40px] py-[20px]">
+        <div className="xl:w-4/5 w-full h-full px-[40px] py-[20px]">
           <div
-            className={`${module.titleWrapper} flex items-center justify-between box-border pb-[8px] border-b-2 mb-6`}
+            className={`${module.titleWrapper} text-[14px] xl:text-[26px] xl:leading-[39px] leading-3 flex xl:items-center justify-between xl:flex-row flex-col pb-[8px] border-b-2 mb-6`}
           >
-            <div className="flex items-center">
+            <div className="flex items-center xl:mb-0 mb-[10px]">
               <img src={userIcon} alt="account icon" />
               <span className={`${module.usersTitle} ml-[12px]`}>
                 Список всех пользователей
@@ -54,7 +54,7 @@ const Users = () => {
               <input
                 type="text"
                 value={telegramId}
-                className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:border-blue-500"
+                className="border border-gray-300 rounded-md px-3 py-2 xl:!text-[16px] xl:!leading-3 focus:outline-none focus:border-blue-500"
                 onChange={(e) => setTelegramId(e.target.value)}
                 placeholder="Введите Telegram ID"
               />
