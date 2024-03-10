@@ -1,14 +1,12 @@
-import { useState } from "react";
-
+import React, { useState, useEffect } from "react";
+import axios from "../../axios";
 import module from "./Users.module.css";
-
 import userIcon from "../../images/user-square.svg";
 import arrowIcon from "../../images/arrow.svg";
-import { useEffect } from "react";
-import axios from "../../axios";
 
-const UsersListItem = ({ user }) => {
+const UsersListItem = ({ user, setIsLoading }) => {
   const [itemsInProcess, setItemsInProcess] = useState(0);
+  const [, setLoading] = useState(true);
 
   useEffect(() => {
     if (user.orders && user.orders.length > 0) {
@@ -27,10 +25,17 @@ const UsersListItem = ({ user }) => {
         })
         .catch((error) => {
           console.error(error.message);
+        })
+        .finally(() => {
+          setLoading(false);
+          setIsLoading(false);
         });
+    } else {
+      setIsLoading(false);
+      setLoading(false);
     }
   }, [user.orders]);
-  
+
   const formatPhoneNumber = (phoneNumber) => {
     const cleaned = ("" + phoneNumber).replace(/\D/g, "");
 
@@ -43,9 +48,7 @@ const UsersListItem = ({ user }) => {
   };
 
   return (
-    <div
-      className={`${module.UserItemsWrapper} w-full px-[30px] py-[30px] cursor-pointer`}
-    >
+    <div className={`${module.UserItemsWrapper} w-full px-[30px] py-[30px] cursor-pointer`}>
       <div>
         <div className="flex justify-between">
           <div className={`${module.userNameAndSurname} flex items-center`}>
@@ -55,9 +58,7 @@ const UsersListItem = ({ user }) => {
           </div>
           <img width={30} src={arrowIcon} alt="go" />
         </div>
-        <div
-          className={`${module.userInfoWrapper} flex justify-between items-center  w-full px-[40px]`}
-        >
+        <div className={`${module.userInfoWrapper} flex justify-between items-center  w-full px-[40px]`}>
           <div>
             <div>
               <span className="font-bold mr-[5px]">Номер телефона:</span>
@@ -66,10 +67,7 @@ const UsersListItem = ({ user }) => {
 
             <div>
               <span className="font-bold mr-[5px]">Telegram username:</span>
-              <a
-                className={`${module.telegramLink}`}
-                href={`https://t.me/${user.userName}`}
-              >
+              <a className={`${module.telegramLink}`} href={`https://t.me/${user.userName}`}>
                 @{user.userName}
               </a>
             </div>
@@ -97,9 +95,7 @@ const UsersListItem = ({ user }) => {
             </div>
 
             <div>
-              <span className="font-bold mr-[5px]">
-                Especially for you count:
-              </span>
+              <span className="font-bold mr-[5px]">Especially for you count:</span>
               <span>{user.especiallyForYou?.length}</span>
             </div>
           </div>
