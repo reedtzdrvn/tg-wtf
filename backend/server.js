@@ -57,6 +57,10 @@ app.get('/notifications', userController.getNotifications)
 
 app.get('/size', itemController.getSize)
 
+app.get('/especiallyforyouadmin', espforyouController.getAllEsp)
+
+app.get('/sizes', itemController.getAllSizes)
+
 app.get('/especiallyforyou', espforyouController.getEspeciallyForYou)
 
 app.get('/getitemcart', userController.getItemCartUser)
@@ -68,6 +72,8 @@ app.get('/getorders', orderController.getOrders)
 app.get('/getOrderAccountInfo', orderController.getOrderAccountInfo)
 
 app.get('/users', userController.getAllUsers)
+
+app.get('/items', itemController.getAllItems)
 
 //POST
 

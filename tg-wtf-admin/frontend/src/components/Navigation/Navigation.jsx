@@ -61,6 +61,48 @@ const Navigation = () => {
             </div>
           </NavLink>
 
+          <NavLink to={"/items"}>
+            <div
+              className={`${
+                !pathname.includes("/items")
+                  ? module.navButton
+                  : module.navButtonActive
+              } cursor-pointer flex justify-between items-center p-[11px]`}
+            >
+              <div className="flex justify-center items-center">
+                <img width={24} src={userIcon} alt="user" />
+                <span className="ml-[14px]">Items</span>
+              </div>
+              <img
+                className={`${!pathname.includes("/items") ? "" : "hidden"}`}
+                width={16}
+                src={arrowIcon}
+                alt="arrow"
+              />
+            </div>
+          </NavLink>
+
+          <NavLink to={"/sizes"}>
+            <div
+              className={`${
+                !pathname.includes("/sizes")
+                  ? module.navButton
+                  : module.navButtonActive
+              } cursor-pointer flex justify-between items-center p-[11px]`}
+            >
+              <div className="flex justify-center items-center">
+                <img width={24} src={userIcon} alt="user" />
+                <span className="ml-[14px]">Sizes</span>
+              </div>
+              <img
+                className={`${!pathname.includes("/sizes") ? "" : "hidden"}`}
+                width={16}
+                src={arrowIcon}
+                alt="arrow"
+              />
+            </div>
+          </NavLink>
+
           <NavLink to={"/orders"}>
             <div
               className={`${
@@ -82,10 +124,10 @@ const Navigation = () => {
             </div>
           </NavLink>
 
-          <NavLink to={"/especially-for-you"}>
+          <NavLink to={"/espforyou"}>
             <div
               className={`${
-                !pathname.includes("/especially-for-you")
+                !pathname.includes("/espforyou")
                   ? module.navButton
                   : module.navButtonActive
               } cursor-pointer flex justify-between items-center p-[11px]`}
@@ -96,7 +138,7 @@ const Navigation = () => {
               </div>
               <img
                 className={`${
-                  !pathname.includes("/especially-for-you") ? "" : "hidden"
+                  !pathname.includes("/espforyou") ? "" : "hidden"
                 }`}
                 width={16}
                 src={arrowIcon}

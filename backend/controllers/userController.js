@@ -108,32 +108,34 @@ export default class userController {
 
   static seenNotification = async (req, res) => {
     try {
-      const { notificationId, telegramId } = req.body;
+        const { notificationId, telegramId } = req.body;
 
-      const user = await UserSchema.findOne({ telegramId });
+        const user = await UserSchema.findOne({ telegramId });
 
-      if (!user) {
-        return res.status(404).json({ error: "Пользователь не найден" });
-      }
+        if (!user) {
+            return res.status(404).json({ error: "Пользователь не найден" });
+        }
 
-      const notification = user.notifications.find(
-        (notification) => notification._id == notificationId
-      );
+        // Find the index of the notification to be deleted
+        const notificationIndex = user.notifications.findIndex(
+            (notification) => notification._id.toString() === notificationId
+        );
 
-      if (!notification) {
-        return res.status(404).json({ error: "Уведомление не найдено" });
-      }
+        if (notificationIndex === -1) {
+            return res.status(404).json({ error: "Уведомление не найдено" });
+        }
 
-      notification.seen = true;
+        // Remove the notification from the array
+        user.notifications.splice(notificationIndex, 1);
 
-      await user.save();
+        await user.save();
 
-      return res.status(200).json({ notification });
+        return res.status(200).json({ message: "Уведомление удалено" });
     } catch (err) {
-      console.error(err);
-      return res.status(500).json({ error: "Возникла ошибка" });
+        console.error(err);
+        return res.status(500).json({ error: "Возникла ошибка" });
     }
-  };
+};
 
   static updateUser = async (req, res) => {
     try {

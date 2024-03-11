@@ -5,7 +5,17 @@ import UserSchema from "../models/user.js";
 import mongoose from "mongoose";
 
 export default class itemController {
-  static getItems = async (req, res) => {};
+
+  static getAllItems = async (req, res) => {
+    try {
+      const items = await ItemSchema.find()
+
+      res.status(200).json(items);
+    } catch (e) {
+      console.log(e);
+      res.status(500).json({ error: e, message: e.message });
+    }
+  };
 
   static getItem = async (req, res) => {
     try {
@@ -191,6 +201,17 @@ export default class itemController {
     }
   };
 
+  static getAllSizes = async (req, res) => {
+    try {
+      const sizes = await SizeSchema.find()
+
+      res.status(200).json(sizes);
+    } catch (e) {
+      console.log(e);
+      res.status(500).json({ error: e, message: e.message });
+    }
+  };
+
   static updateItem = async (req, res) => {};
 
   static getSize = async (req, res) => {
@@ -295,5 +316,7 @@ export default class itemController {
 
   static updateSize = async (req, res) => {};
 
-  static deleteSize = async (req, res) => {};
+  static deleteSize = async (req, res) => {
+    
+  };
 }
