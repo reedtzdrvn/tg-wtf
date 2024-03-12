@@ -56,8 +56,26 @@ export default class espforyouController {
 
     static getAllEsp = async (req, res) => {
       try {
-        const esp = await EspeciallyForYouSchema.find()
-        console.log(esp)
+        const especiallyForYou = await EspeciallyForYouSchema.find();
+    
+        const esp = [];
+        for (const item of especiallyForYou) {
+          const user = await UserSchema.findOne({ especiallyForYou: item._id });
+          esp.push({
+            address: item.address,
+            information: item.information,
+            date: item.date,
+            user: user ? {
+              firstName: user.firstName,
+              lastName: user.lastName,
+              phoneNumber: user.phoneNumber,
+              email: user.email,
+              userName: user.userName
+            } : null
+          });
+        }
+    
+        console.log(esp);
         res.status(200).json(esp);
       } catch (e) {
         console.log(e);

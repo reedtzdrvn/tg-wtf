@@ -9,13 +9,20 @@ import module from "./EspForYou.module.css";
 const EspForYou = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [esps, setEsps] = useState([]);
-  const [espName, setEspName] = useState("");
+  const [espUserName, setEspUserName] = useState("");
+  const [espsByTelegram, setEspsByTelegram] = useState([]);
+  
+  useEffect(() => {
+      setEspsByTelegram(esps.filter(esp => esp.user.userName.toUpperCase().startsWith(espUserName.toUpperCase())))
+     
+  }, [espUserName, esps]);
 
   useEffect(() => {
     axios
       .get(`/especiallyforyouadmin`)
       .then((response) => {
         setEsps(response.data);
+        setEspsByTelegram(response.data);
       })
       .catch((error) => {
         console.error(error.message);
@@ -46,21 +53,19 @@ const EspForYou = () => {
             <div>
               <input
                 type="text"
-                value={espName}
+                value={espUserName}
                 className="border border-gray-300 rounded-md px-3 py-2 xl:!text-[16px] xl:!leading-3 focus:outline-none focus:border-blue-500"
-                onChange={(e) => setEspName(e.target.value)}
+                onChange={(e) => setEspUserName(e.target.value)}
                 placeholder="Введите username tg"
               />
             </div>
           </div>
-          {esps.map((esp, index) => (
-            <NavLink to={`/espforyou/${esp._id}`}>
+          {espsByTelegram.map((esp, index) => (       
               <EspForYouListItem
               key={index}
               esp={esp}
               setIsLoading={setIsLoading}
             />
-            </NavLink>
           ))}
         </div>
       )}
