@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 
 import Navigation from "./components/Navigation/Navigation";
 import Orders from "./components/Orders/Orders";
+import Order from "./components/Order/Order";
 import Users from "./components/Users/Users";
 import NotFound from "./components/NotFound/NotFound";
 import User from './components/User/User'
@@ -23,6 +24,7 @@ const App = () => {
           <Route exact path="/user/*" element={<User />} />
           <Route exact path="/sizes" element={<Sizes />} />
           <Route exact path="/espforyou" element={<EspForYou />} />
+          <Route exact path="/order/*" element={<Order />} />
           <Route exact path="/item/*" element={<Item />} />
           <Route exact path="/*" element={<NotFound />} />
         </Routes>

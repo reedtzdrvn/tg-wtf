@@ -69,6 +69,8 @@ app.get('/getuserwithfavorites', userController.getUserWithFavourites)
 
 app.get('/getorders', orderController.getOrders)
 
+app.get('/orders', orderController.getAllOrders)
+
 app.get('/getOrderAccountInfo', orderController.getOrderAccountInfo)
 
 app.get('/users', userController.getAllUsers)

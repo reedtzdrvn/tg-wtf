@@ -82,7 +82,19 @@ export default class orderController {
       console.error(err);
       return res.status(500).json({ error: "Возникла ошибка" });
     }
-  };
+  }; 
+
+
+  static getAllOrders = async (req, res) => {
+    try {
+      const orders = await OrderSchema.find()
+
+      res.status(200).json(orders);
+    } catch (e) {
+      console.log(e);
+      res.status(500).json({ error: e, message: e.message });
+    }
+  }
 
   static getOrder = async (req, res) => {};
 
