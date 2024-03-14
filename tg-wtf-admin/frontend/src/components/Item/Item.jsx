@@ -2,161 +2,252 @@ import axios from "../../axios";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import Preloader from "../Preloader/Preloader";
+import ItemRanges from "./ItemRanges";
 
-import module from './Item.module.css'
-
-import cartIcon from "../../images/basket-active.svg";
-import ordersIcon from "../../images/moneybag.svg";
+import module from "./Item.module.css";
+import ItemImage from "./ItemImage";
 
 const Item = () => {
-  const [userData, setItemData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [updatedData, setUpdatedData] = useState(null);
-  const [showSuccessMessage, setShowSuccessMessage] = useState(false); // State for success message
+  const [itemData, setItemData] = useState({});
+  const [categories, setCategories] = useState([]);
+  const [name, setName] = useState(itemData?.name ? itemData.name : "");
+  const [selectedCategory, setSelectedCategory] = useState(
+    itemData?.category?.title || ""
+  );
+  const [itemSizeCount, setItemSizeCount] = useState({});
+  const [cost, setCost] = useState(itemData?.price || 0);
+  const [discount, setDiscount] = useState(itemData?.sale || 0);
+  const [delivery, setDelivery] = useState(itemData?.deliveryTime || 0);
+  const [description, setDescription] = useState(itemData?.description || ""); // Добавляем стейт для описания
+    const [sizes, setSizes] = useState(itemData?.sizes || [])
+
   const location = useLocation();
   const { pathname } = location;
 
-  const telegramId = pathname.split("/").pop();
+  const itemId = pathname.split("/").pop();
 
   useEffect(() => {
     axios
-      .get(`/user`, { params: { telegramId } })
+      .get("/size", { params: { itemId } })
       .then((response) => {
-        setItemData(response.data[0]);
-        setUpdatedData(response.data[0]); // Set initial values for updatedData
+        setItemData(response.data);
+        setName(response.data.name);
+        setSelectedCategory(response.data.category?.id); // Установить начальное значение категории в виде id
+        setDescription(response.data.description); // Устанавливаем описание
+        setSizes(response.data.sizes)
+        setIsLoading(false);
+
+        axios
+          .get("/categories")
+          .then((response) => {
+            setCategories(response.data);
+          })
+          .catch((error) => {
+            console.error(error.message);
+          });
       })
       .catch((error) => {
         console.error(error.message);
-      })
-      .finally(() => {
-        setIsLoading(false);
       });
   }, []);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setUpdatedData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+  useEffect(() => {
+    if (itemData.category && itemData.category.title) {
+      setSelectedCategory(itemData.category.title);
+      setCost(itemData.price);
+      setDiscount(itemData.sale);
+      setDelivery(itemData.deliveryTime);
+      setDescription(itemData.description);
+
+      const tmp = {};
+      itemData?.sizes.map((el) => {
+        tmp[el._id] = el.count;
+      });
+      setItemSizeCount(tmp);
+      // Обновляем описание при изменении данных о товаре
+    }
+  }, [itemData]);
+
+  const handleNameChange = (event) => {
+    setName(event.target.value);
   };
 
-  const handleSubmit = () => {
-    axios
-      .post(`/updateuser`, updatedData)
+  // Обработчик изменения выбранной категории
+  const handleCategoryChange = (event) => {
+    setSelectedCategory(event.target.value);
+  };
+
+  const handleCostChange = (event) => {
+    setCost(event.target.value);
+  };
+
+  const handleDiscountChange = (event) => {
+    setDiscount(event.target.value);
+  };
+
+  const handleDeliveryChange = (event) => {
+    setDelivery(event.target.value);
+  };
+
+  const handleDescriptionChange = (event) => {
+    setDescription(event.target.value);
+  };
+
+  const handleAddNewImage = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      console.log(file);
+    }
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log(selectedCategory);
+    const selectedCategoryObject = categories.find(
+      (val) => val.title === selectedCategory
+    );
+    const categoryId = selectedCategoryObject
+      ? selectedCategoryObject._id
+      : null;
+
+    const dataToSend = {
+      name: name,
+      categoryId: categoryId,
+      description: description,
+      sizesData: itemSizeCount,
+      sale: discount,
+      delivery: delivery,
+      description: description,
+      itemId: itemId // Включаем описание в отправляемые данные
+    };
+    // console.log("Data to send:", dataToSend);
+
+    axios.put("/updateItemDetails", dataToSend)
       .then((response) => {
-        setShowSuccessMessage(true); // Show success message
-        setTimeout(() => {
-          setShowSuccessMessage(false); // Hide success message after 2 seconds
-        }, 3000);
+        console.log(response.data)
       })
       .catch((error) => {
-        console.error("Error updating data:", error);
+        console.error(error.message);
       });
   };
 
   return (
     <>
-      {!isLoading && userData ? (
-        <div className="xl:w-4/5 mx-auto xl:my-8 p-8 h-full rounded-lg font-[Montserrat]">
-          <h2 className="text-2xl font-bold mb-4">
-            {userData.firstName} {userData.lastName}
-          </h2>
-          <div className="flex flex-col xl:flex-row">
-            <div className="xl:w-3/5 w-full">
-              <div className="mb-4">
-                <label className="block text-sm font-semibold mb-1">
-                  First Name:
-                </label>
-                <input
-                  type="text"
-                  name="firstName"
-                  value={updatedData.firstName}
-                  onChange={handleInputChange}
-                  className="border border-gray-300 rounded px-3 py-2 w-full xl:w-4/5"
-                />
-              </div>
-              <div className="mb-4">
-                <label className="block text-sm font-semibold mb-1">
-                  Last Name:
-                </label>
-                <input
-                  type="text"
-                  name="lastName"
-                  value={updatedData.lastName}
-                  onChange={handleInputChange}
-                  className="border border-gray-300 rounded px-3 py-2 w-full xl:w-4/5"
-                />
-              </div>
-              <div className="mb-4">
-                <label className="block text-sm font-semibold mb-1">
-                  Email:
-                </label>
-                <input
-                  type="text"
-                  name="email"
-                  value={updatedData.email}
-                  onChange={handleInputChange}
-                  className="border border-gray-300 rounded px-3 py-2 w-full xl:w-4/5"
-                />
-              </div>
-              <div className="mb-4">
-                <label className="block text-sm font-semibold mb-1">
-                  Itemname:
-                </label>
-                <input
-                  type="text"
-                  name="userName"
-                  value={updatedData.userName}
-                  onChange={handleInputChange}
-                  className="border border-gray-300 rounded px-3 py-2 w-full xl:w-4/5"
-                />
-              </div>
-              <div className="mb-4">
-                <label className="block text-sm font-semibold mb-1">
-                  Phone Number:
-                </label>
-                <input
-                  type="text"
-                  name="phoneNumber"
-                  value={updatedData.phoneNumber}
-                  onChange={handleInputChange}
-                  className="border border-gray-300 rounded px-3 py-2 w-full xl:w-4/5"
-                />
-              </div>
-              <div className="flex justify-center xl:block">
-              <button
-                onClick={handleSubmit}
-                className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-              >
-                Update
-              </button>
-              </div>
-              {showSuccessMessage && (
-                <div className={`absolute top-3 mx-auto bg-green-500 text-white p-4 rounded ${module.fadeOut}`}>
-                  Data saved successfully!
+      {!isLoading ? (
+        <div className="xl:w-4/5 xl:my-8 p-8 h-full rounded-lg font-[Montserrat]">
+          <form onSubmit={handleSubmit}>
+            <div className="flex items-center">
+              <div className="w-full">
+                <div className="flex justify-between">
+                  <input
+                    type="text"
+                    value={name}
+                    onChange={handleNameChange}
+                    placeholder="Enter Name"
+                    className="border border-gray-300 rounded px-3 py-1 w-full mr-2"
+                  />
+                  <select
+                    value={selectedCategory}
+                    onChange={handleCategoryChange}
+                    className="border border-gray-300 rounded px-3 py-1"
+                  >
+                    <option hidden={true} value={itemData.category.title}>
+                      {itemData.category.title}
+                    </option>
+                    {categories.map((category, index) => (
+                      <option key={index} value={category.id}>
+                        {category.title}
+                      </option>
+                    ))}
+                  </select>
                 </div>
-              )}
+
+                <textarea
+                  value={description}
+                  onChange={handleDescriptionChange}
+                  placeholder="Enter Description"
+                  className="border border-gray-300 rounded px-3 py-1 w-full mr-2 mt-4" // добавляем стили
+                />
+
+                <div className="mt-[20px] flex xl:flex-row ">
+                  <div className="mr-[15px]">
+                    <label>Стоимость</label>
+                    <input
+                      type="number"
+                      value={cost}
+                      onChange={handleCostChange}
+                      placeholder="500"
+                      className="border border-gray-300 rounded px-3 py-1 w-full mr-2"
+                    />
+                  </div>
+                  <div className="mr-[15px]">
+                    <label>Скидка</label>
+
+                    <input
+                      type="number"
+                      value={discount}
+                      onChange={handleDiscountChange}
+                      placeholder="0"
+                      className="border border-gray-300 rounded px-3 py-1 w-full mr-2"
+                    />
+                  </div>
+
+                  <div>
+                    <label>Доставка</label>
+                    <input
+                      type="text"
+                      value={delivery}
+                      onChange={handleDeliveryChange}
+                      placeholder="1-2"
+                      className="border border-gray-300 rounded px-3 py-1 w-full mr-2"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="w-2/5 flex justify-center">
+                <ItemImage image={itemData?.photos[0]} />
+              </div>
             </div>
 
-            <div className="flex xl:flex-col flex-row justify-around xl:mt-[0] mt-[50px] items-center xl:w-2/5 w-full">
-              <div className="bg-white cursor-pointer rounded-xl px-[30px] py-[10px] lg:px-[50px] lg:py-[25px] xl:px-[80px] xl:py-[50px]">
-                <div className="flex justify-center items-center flex-col">
-                  <img className="lg:w-[60px] md:w-[40px] w-[20px]" src={cartIcon} alt="cart" />
-                  <span className="block text-sm font-semibold mb-1">Cart</span>
-                  <span>{userData.cart.length} items</span>
-                </div>
-              </div>
-              <div className="bg-white cursor-pointer rounded-xl px-[30px] py-[10px] lg:px-[50px] lg:py-[25px] xl:px-[80px] xl:py-[50px]">
-                <div className="flex justify-center items-center flex-col">
-                  <img className="lg:w-[60px] md:w-[40px] w-[20px]" src={ordersIcon} alt="orders" />
-                  <span className="block text-sm font-semibold mb-1">
-                    Orders
-                  </span>
-                  <span>{userData.orders.length} orders</span>
-                </div>
-              </div>
+            <div>
+              <ItemRanges
+                setItemSizeCount={setItemSizeCount}
+                itemSizeCount={itemSizeCount}
+                sizes={sizes}
+                setSizes={setSizes}
+              />
             </div>
+
+            <button
+              type="submit"
+              className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            >
+              Save
+            </button>
+          </form>
+
+          <div className="mt-[30px] flex items-center gap-8">
+            <div>
+              <label htmlFor="add-image">
+                <div className="text-[24px] px-[20px] py-[10px] bg-white cursor-pointer">
+                  +
+                </div>
+              </label>
+              <input
+                id="add-image"
+                type="file"
+                className="hidden"
+                onChange={handleAddNewImage}
+              />
+            </div>
+            {itemData?.photos?.length > 1 &&
+              itemData?.photos.slice(1).map((img) => (
+                <div>
+                  <ItemImage image={img} />
+                </div>
+              ))}
           </div>
         </div>
       ) : (

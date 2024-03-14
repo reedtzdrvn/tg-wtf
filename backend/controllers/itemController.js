@@ -5,10 +5,9 @@ import UserSchema from "../models/user.js";
 import mongoose from "mongoose";
 
 export default class itemController {
-
   static getAllItems = async (req, res) => {
     try {
-      const items = await ItemSchema.find()
+      const items = await ItemSchema.find();
 
       res.status(200).json(items);
     } catch (e) {
@@ -52,7 +51,6 @@ export default class itemController {
       const itemsFromSelectedCategoryData = await ItemSchema.find({
         category: categoryId,
       });
-      
 
       // if (itemsFromSelectedCategoryData.length === 0) {
       //   return res
@@ -160,8 +158,10 @@ export default class itemController {
         return res.status(404).json({ message: "Пользователь не найден" });
       }
 
-      userData.favourites = userData.favourites.filter((el) => String(el) !== String(itemId));
-      
+      userData.favourites = userData.favourites.filter(
+        (el) => String(el) !== String(itemId)
+      );
+
       await userData.save();
 
       res.status(200).json({ userData });
@@ -203,7 +203,7 @@ export default class itemController {
 
   static getAllSizes = async (req, res) => {
     try {
-      const sizes = await SizeSchema.find()
+      const sizes = await SizeSchema.find();
 
       res.status(200).json(sizes);
     } catch (e) {
@@ -211,8 +211,47 @@ export default class itemController {
       res.status(500).json({ error: e, message: e.message });
     }
   };
+  // Импортируем модель товара
 
-  static updateItem = async (req, res) => {};
+  static updateItem = async (req, res) => {
+    try {
+      const {
+        name,
+        categoryId,
+        description,
+        sizesData,
+        sale,
+        delivery,
+        itemId,
+      } = req.body;
+      console.log(itemId)
+      // Обновляем товар по itemId
+      const updatedItem = await ItemSchema.findByIdAndUpdate(
+        itemId,
+        {
+          name: name,
+          category: categoryId,
+          description: description,
+          sale: sale,
+          deliveryTime: delivery,
+          sizes: Object.entries(sizesData).map(([sizeId, count]) => ({
+            id: sizeId,
+            count: count,
+          })),
+        },
+        { new: true }
+      );
+
+      if (!updatedItem) {
+        return res.status(404).json({ message: "Товар не найден" });
+      }
+
+      res.status(200).json(updatedItem);
+    } catch (e) {
+      console.log(e);
+      res.status(500).json({ error: e, message: e.message });
+    }
+  };
 
   static getSize = async (req, res) => {
     try {
@@ -316,7 +355,5 @@ export default class itemController {
 
   static updateSize = async (req, res) => {};
 
-  static deleteSize = async (req, res) => {
-    
-  };
+  static deleteSize = async (req, res) => {};
 }
