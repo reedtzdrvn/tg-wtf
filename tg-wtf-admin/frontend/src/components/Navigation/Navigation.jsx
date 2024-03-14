@@ -18,7 +18,7 @@ const Navigation = () => {
 
   return (
     <div
-      className={`xl:w-1/5 fixed bottom-2 left-5 xl:!bg-white xl:px-[28px] xl:sticky xl:top-0 xl:left-0`}
+      className={`xl:w-1/5 fixed bottom-2 left-5 xl:!bg-white xl:px-[28px] xl:fixed xl:top-0 xl:left-0`}
     >
       <div className="xl:hidden">
         <button

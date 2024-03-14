@@ -15,7 +15,7 @@ import module from './App.module.css'
 const App = () => {
   return (
     <>
-      <div className={`xl:flex min-h-screen w-full ${module.container}`}>
+      <div className={`xl:flex min-h-screen w-full xl:justify-end ${module.container}`}>
       <Navigation />
         <Routes>
           <Route exact path="/users" element={<Users />} />

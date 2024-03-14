@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {NavLink} from 'react-router-dom'
+import { NavLink, useLocation } from "react-router-dom";
 import axios from "../../axios";
 import EspForYouListItem from "./EspForYouListItem";
 import userIcon from "../../images/user-square.svg";
@@ -7,14 +7,23 @@ import Preloader from "../Preloader/Preloader";
 import module from "./EspForYou.module.css";
 
 const EspForYou = () => {
+  const location = useLocation();
+
+  const { state } = location;
+
   const [isLoading, setIsLoading] = useState(true);
   const [esps, setEsps] = useState([]);
-  const [espUserName, setEspUserName] = useState("");
+  const [espUserName, setEspUserName] = useState(
+    state?.telegramLink ? state?.telegramLink : ""
+  );
   const [espsByTelegram, setEspsByTelegram] = useState([]);
-  
+
   useEffect(() => {
-      setEspsByTelegram(esps.filter(esp => esp.user.userName.toUpperCase().startsWith(espUserName.toUpperCase())))
-     
+    setEspsByTelegram(
+      esps.filter((esp) =>
+        esp.user.userName.toUpperCase().startsWith(espUserName.toUpperCase())
+      )
+    );
   }, [espUserName, esps]);
 
   useEffect(() => {
@@ -31,7 +40,6 @@ const EspForYou = () => {
         setIsLoading(false);
       });
   }, []);
-
 
   return (
     <>
@@ -60,8 +68,8 @@ const EspForYou = () => {
               />
             </div>
           </div>
-          {espsByTelegram.map((esp, index) => (       
-              <EspForYouListItem
+          {espsByTelegram.map((esp, index) => (
+            <EspForYouListItem
               key={index}
               esp={esp}
               setIsLoading={setIsLoading}

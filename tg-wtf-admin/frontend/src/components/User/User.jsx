@@ -1,6 +1,6 @@
 import axios from "../../axios";
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import Preloader from "../Preloader/Preloader";
 
 import module from './User.module.css'
@@ -58,7 +58,7 @@ const User = () => {
   return (
     <>
       {!isLoading && userData ? (
-        <div className="xl:w-4/5 mx-auto xl:my-8 p-8 h-full rounded-lg font-[Montserrat]">
+        <div className="xl:w-4/5 xl:my-8 p-8 h-full rounded-lg font-[Montserrat]">
           <h2 className="text-2xl font-bold mb-4">
             {userData.firstName} {userData.lastName}
           </h2>
@@ -139,15 +139,16 @@ const User = () => {
               )}
             </div>
 
-            <div className="flex xl:flex-col flex-row justify-around xl:mt-[0] mt-[50px] items-center xl:w-2/5 w-full">
-              <div className="bg-white cursor-pointer rounded-xl px-[30px] py-[10px] lg:px-[50px] lg:py-[25px] xl:px-[80px] xl:py-[50px]">
+            <div className="flex xl:flex-col max-sm:grid max-sm:grid-cols-2 max-sm:gap-4 lg:flex-row justify-around xl:mt-[0] mt-[50px] items-center xl:w-2/5 w-full">
+              <div className="bg-white xl:w-[250px] cursor-pointer rounded-xl px-[30px] py-[10px] lg:px-[50px] lg:py-[25px] xl:px-[80px] xl:py-[50px]">
                 <div className="flex justify-center items-center flex-col">
                   <img className="lg:w-[60px] md:w-[40px] w-[20px]" src={cartIcon} alt="cart" />
                   <span className="block text-sm font-semibold mb-1">Cart</span>
                   <span>{userData.cart.length} items</span>
                 </div>
               </div>
-              <div className="bg-white cursor-pointer rounded-xl px-[30px] py-[10px] lg:px-[50px] lg:py-[25px] xl:px-[80px] xl:py-[50px]">
+              <div className="bg-white xl:w-[250px] cursor-pointer rounded-xl xl:mt-[20px] px-[30px] py-[10px] lg:px-[50px] lg:py-[25px] xl:px-[80px] xl:py-[50px]">
+                <NavLink to={'/orders'} state={{telegramLink: `@${updatedData.userName}`}}>
                 <div className="flex justify-center items-center flex-col">
                   <img className="lg:w-[60px] md:w-[40px] w-[20px]" src={ordersIcon} alt="orders" />
                   <span className="block text-sm font-semibold mb-1">
@@ -155,6 +156,19 @@ const User = () => {
                   </span>
                   <span>{userData.orders.length} orders</span>
                 </div>
+                </NavLink>
+              </div>
+
+              <div className="bg-white xl:w-[250px] cursor-pointer rounded-xl xl:mt-[20px] px-[30px] py-[10px] lg:px-[50px] lg:py-[25px] xl:px-[80px] xl:py-[50px]">
+                <NavLink to={'/espforyou'} state={{telegramLink: `${updatedData.userName}`}}>
+                <div className="flex justify-center items-center flex-col">
+                  <img className="lg:w-[60px] md:w-[40px] w-[20px]" src={ordersIcon} alt="orders" />
+                  <span className="block text-[12px] font-semibold mb-1">
+                    Esp for you
+                  </span>
+                  <span>{userData.especiallyForYou.length} items</span>
+                </div>
+                </NavLink>
               </div>
             </div>
           </div>

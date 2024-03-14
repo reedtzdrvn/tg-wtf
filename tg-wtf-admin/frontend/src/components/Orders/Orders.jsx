@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {NavLink} from 'react-router-dom'
+import { NavLink, useLocation } from "react-router-dom";
 import axios from "../../axios";
 import OrdersListItem from "./OrdersListItem";
 import userIcon from "../../images/user-square.svg";
@@ -7,10 +7,16 @@ import Preloader from "../Preloader/Preloader";
 import module from "./Orders.module.css";
 
 const Orders = () => {
+  const location = useLocation();
+
+  const { state } = location;
+
   const [isLoading, setIsLoading] = useState(true);
   const [orders, setOrders] = useState([]);
   const [ordersByTelegramLink, setOrdersByTelegramLink] = useState([]);
-  const [telegramLink, setTelegramLink] = useState("");
+  const [telegramLink, setTelegramLink] = useState(
+    state?.telegramLink ? state.telegramLink : ""
+  );
 
   useEffect(() => {
     axios
@@ -63,10 +69,10 @@ const Orders = () => {
           {ordersByTelegramLink.map((order, index) => (
             <NavLink to={`/order/${order.telegramLink}`}>
               <OrdersListItem
-              key={index}
-              order={order}
-              setIsLoading={setIsLoading}
-            />
+                key={index}
+                order={order}
+                setIsLoading={setIsLoading}
+              />
             </NavLink>
           ))}
         </div>

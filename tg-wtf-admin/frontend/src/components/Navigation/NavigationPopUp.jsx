@@ -35,29 +35,43 @@ const NavigationPopUp = ({ handleMenuToggle }) => {
             </span>
           </div>
         </div>
-        <ul className="mt-[60px] flex justify-around items-center flex-col">
-          <div className="flex justify-center border-b-2 pb-[10px] border-gray-300 w-full">
+        <ul className="mt-[5%] md:mt-[30px] flex justify-around items-center flex-col">
+          <div className="flex mt-[5%] md:mt-0 justify-center border-b-2 pb-[10px] border-gray-300 w-full">
             <li>
               <NavLink to={"/users"} onClick={handleMenuToggle}>
                 Users
               </NavLink>
             </li>
           </div>
-          <div className="mt-[12.5%] flex justify-center border-b-2 pb-[10px] border-gray-300 w-full">
+          <div className="flex mt-[5%] justify-center border-b-2 pb-[10px] border-gray-300 w-full">
+            <li>
+              <NavLink to={"/items"} onClick={handleMenuToggle}>
+                Items
+              </NavLink>
+            </li>
+          </div>
+          <div className="flex mt-[5%] justify-center border-b-2 pb-[10px] border-gray-300 w-full">
+            <li>
+              <NavLink to={"/sizes"} onClick={handleMenuToggle}>
+                Sizes
+              </NavLink>
+            </li>
+          </div>
+          <div className="flex mt-[5%] justify-center border-b-2 pb-[10px] border-gray-300 w-full">
             <li>
               <NavLink to={"/orders"} onClick={handleMenuToggle}>
                 Orders
               </NavLink>
             </li>
           </div>
-          <div className="flex justify-center mt-[12.5%] border-b-2 pb-[10px] border-gray-300 w-full">
+          <div className="flex mt-[5%] justify-center border-b-2 pb-[10px] border-gray-300 w-full">
             <li>
-              <NavLink to={"/especially-for-you"} onClick={handleMenuToggle}>
+              <NavLink to={"/espforyou"} onClick={handleMenuToggle}>
                 Esp for you
               </NavLink>
             </li>
           </div>
-          <div className="flex justify-center mt-[12.5%] border-b-2 pb-[10px] border-gray-300 w-full">
+          <div className="flex mt-[5%] justify-center border-b-2 pb-[10px] border-gray-300 w-full">
             <li>
               <NavLink to={"/notifications"} onClick={handleMenuToggle}>
                 Notifications
