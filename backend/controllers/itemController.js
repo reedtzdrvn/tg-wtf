@@ -327,6 +327,23 @@ export default class itemController {
     }
   };
 
+  static updatePhotoOfItem = async (req, res) => {
+    try {
+      const { file, body } = req;
+
+      // Формируем URL для доступа к загруженному изображению
+      const imageUrl = req.protocol + '://' + req.get('host') + '/' + file.filename;
+      console.log(imageUrl);
+
+      return res.status(200).json({});
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({
+        error: "Возникла ошибка",
+      });
+    }
+};
+
   static addSize = async (req, res) => {
     try {
       const sizeData = await SizeSchema.find({ name: req.body.name });

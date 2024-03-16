@@ -1,14 +1,27 @@
+import axios from "../../axios.js";
 import React, { useState, useRef } from "react";
 
-const ItemImage = ({ image, onUpload }) => {
+const ItemImage = ({ image, itemId, photoIndex }) => {
   const [hovered, setHovered] = useState(false);
   const inputRef = useRef(null);
 
-  const handleUpload = (event) => {
+  const handleUpload = async (event) => {
     const file = event.target.files[0];
     if (file) {
-      console.log(file)
-    //   onUpload(file);
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('itemId', itemId);
+      formData.append('photoIndex', photoIndex);
+      
+      try {
+        await axios.post("/updateItemPhoto", formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        });
+      } catch (error) {
+        console.error(error.message);
+      }
     }
   };
 
@@ -23,7 +36,7 @@ const ItemImage = ({ image, onUpload }) => {
         <div className="absolute top-0 right-0 mt-2 mr-2">
           <label htmlFor="file-input">
             <svg
-            className="cursor-pointer"
+              className="cursor-pointer"
               xmlns="http://www.w3.org/2000/svg"
               width="24"
               height="24"

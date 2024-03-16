@@ -207,7 +207,7 @@ const Item = () => {
               </div>
 
               <div className="w-2/5 flex justify-center">
-                <ItemImage image={itemData?.photos[0]} />
+                <ItemImage itemId={itemData._id} photoIndex={0} image={itemData?.photos[0]} />
               </div>
             </div>
 
@@ -243,9 +243,9 @@ const Item = () => {
               />
             </div>
             {itemData?.photos?.length > 1 &&
-              itemData?.photos.slice(1).map((img) => (
+              itemData?.photos.slice(1).map((img, index) => (
                 <div>
-                  <ItemImage image={img} />
+                  <ItemImage itemId={itemData._id} photoIndex={index + 1} image={img} />
                 </div>
               ))}
           </div>
