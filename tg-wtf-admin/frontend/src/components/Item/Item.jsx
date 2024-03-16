@@ -94,10 +94,28 @@ const Item = () => {
     setDescription(event.target.value);
   };
 
-  const handleAddNewImage = (event) => {
+  const handleAddNewImage = async (event) => {
     const file = event.target.files[0];
     if (file) {
-      console.log(file);
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("itemId", itemId);
+
+      try {
+        const response = await axios.post("/addImageOfItem", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+
+        // Обновляем ссылку в состоянии itemData после успешного запроса
+        const updatedItemData = { ...itemData };
+        console.log(itemData);
+        updatedItemData.photos.push(response.data.imageUrl);
+        setItemData(updatedItemData);
+      } catch (error) {
+        console.error(error.message);
+      }
     }
   };
 

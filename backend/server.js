@@ -133,6 +133,8 @@ app.post('/updateItemPhoto', upload.single('file'), itemController.updatePhotoOf
 
 app.post('/deleteImageOfItem', itemController.deleteImageOfItem)
 
+app.post('/addImageOfItem', itemController.addPhotoOfItem)
+
 // DELETE
 
 app.post('/deleteItemFromCart', itemController.deleteItemFromCart)
