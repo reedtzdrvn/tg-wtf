@@ -11,7 +11,6 @@ import espforyouController from './controllers/espforyouController.js';
 import orderController from './controllers/orderController.js';
 import multer from 'multer'
 import path from 'path'
-import fs from 'fs'
 import { fileURLToPath } from 'url';
 
 dotenvConfig();
@@ -99,6 +98,8 @@ app.get('/getOrderAccountInfo', orderController.getOrderAccountInfo)
 
 app.get('/users', userController.getAllUsers)
 
+app.get('/getAllAdmins', adminController.getAllAdmins)
+
 app.get('/items', itemController.getAllItems)
 
 //POST
@@ -134,6 +135,8 @@ app.post('/updateItemPhoto', upload.single('file'), itemController.updatePhotoOf
 app.post('/deleteImageOfItem', itemController.deleteImageOfItem)
 
 app.post('/addImageOfItem', upload.single('file'), itemController.addPhotoOfItem)
+
+app.post('/loginUser', adminController.loginUser)
 
 // DELETE
 
