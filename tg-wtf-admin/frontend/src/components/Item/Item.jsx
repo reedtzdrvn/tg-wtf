@@ -50,7 +50,7 @@ const Item = () => {
       .catch((error) => {
         console.error(error.message);
       });
-  }, [itemData]);
+  }, []);
 
   useEffect(() => {
     if (itemData.category && itemData.category.title) {
@@ -59,7 +59,6 @@ const Item = () => {
       setDiscount(itemData.sale);
       setDelivery(itemData.deliveryTime);
       setDescription(itemData.description);
-
       const tmp = {};
       itemData?.sizes.map((el) => {
         tmp[el._id] = el.count;

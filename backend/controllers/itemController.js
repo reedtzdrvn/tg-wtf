@@ -348,7 +348,7 @@ export default class itemController {
         await item.save();
         return res
           .status(200)
-          .json({ success: true, message: "Ссылка на фотографию обновлена" });
+          .json({ success: true, message: "Ссылка на фотографию обновлена", imageUrl: imageUrl });
       } else {
         return res.status(400).json({ error: "Неверный индекс фотографии" });
       }
