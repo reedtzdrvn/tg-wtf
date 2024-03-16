@@ -20,7 +20,7 @@ const Item = () => {
   const [discount, setDiscount] = useState(itemData?.sale || 0);
   const [delivery, setDelivery] = useState(itemData?.deliveryTime || 0);
   const [description, setDescription] = useState(itemData?.description || ""); // Добавляем стейт для описания
-    const [sizes, setSizes] = useState(itemData?.sizes || [])
+  const [sizes, setSizes] = useState(itemData?.sizes || []);
 
   const location = useLocation();
   const { pathname } = location;
@@ -35,7 +35,7 @@ const Item = () => {
         setName(response.data.name);
         setSelectedCategory(response.data.category?.id); // Установить начальное значение категории в виде id
         setDescription(response.data.description); // Устанавливаем описание
-        setSizes(response.data.sizes)
+        setSizes(response.data.sizes);
         setIsLoading(false);
 
         axios
@@ -50,7 +50,7 @@ const Item = () => {
       .catch((error) => {
         console.error(error.message);
       });
-  }, []);
+  }, [itemData]);
 
   useEffect(() => {
     if (itemData.category && itemData.category.title) {
@@ -119,13 +119,14 @@ const Item = () => {
       sale: discount,
       delivery: delivery,
       description: description,
-      itemId: itemId // Включаем описание в отправляемые данные
+      itemId: itemId, // Включаем описание в отправляемые данные
     };
     // console.log("Data to send:", dataToSend);
 
-    axios.put("/updateItemDetails", dataToSend)
+    axios
+      .put("/updateItemDetails", dataToSend)
       .then((response) => {
-        console.log(response.data)
+        console.log(response.data);
       })
       .catch((error) => {
         console.error(error.message);
@@ -207,7 +208,13 @@ const Item = () => {
               </div>
 
               <div className="w-2/5 flex justify-center">
-                <ItemImage itemId={itemData._id} photoIndex={0} image={itemData?.photos[0]} />
+                <ItemImage
+                  itemData={itemData}
+                  setItemData={setItemData}
+                  itemId={itemData._id}
+                  photoIndex={0}
+                  image={itemData?.photos[0]}
+                />
               </div>
             </div>
 
@@ -245,7 +252,13 @@ const Item = () => {
             {itemData?.photos?.length > 1 &&
               itemData?.photos.slice(1).map((img, index) => (
                 <div>
-                  <ItemImage itemId={itemData._id} photoIndex={index + 1} image={img} />
+                  <ItemImage
+                    itemData={itemData}
+                    setItemData={setItemData}
+                    itemId={itemData._id}
+                    photoIndex={index + 1}
+                    image={img}
+                  />
                 </div>
               ))}
           </div>

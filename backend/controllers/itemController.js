@@ -358,6 +358,42 @@ export default class itemController {
     }
   };
 
+  static deleteImageOfItem = async (req, res) => {
+    try {
+      const { itemId, photoIndex } = req.body;
+
+      if (!itemId || !photoIndex) {
+        return res.status(404).json({ error: "Невозможно найти" });
+      }
+
+      // Находим элемент в базе данных
+      const item = await ItemSchema.findById(itemId);
+      if (!item) {
+        return res.status(404).json({ error: "Элемент не найден" });
+      }
+
+      // Проверяем наличие фотографии с указанным индексом
+      if (!item.photos || item.photos.length <= photoIndex) {
+        return res.status(404).json({ error: "Фотография не найдена" });
+      }
+
+      // Удаляем ссылку из массива photos
+      item.photos.splice(photoIndex, 1);
+
+      // Сохраняем обновленные данные элемента
+      await item.save();
+
+      return res
+        .status(200)
+        .json({ success: true, message: "Ссылка на фотографию удалена" });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({
+        error: "Возникла ошибка",
+      });
+    }
+  };
+
   static addSize = async (req, res) => {
     try {
       const sizeData = await SizeSchema.find({ name: req.body.name });

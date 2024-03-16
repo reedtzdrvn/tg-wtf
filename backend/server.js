@@ -131,6 +131,8 @@ app.post('/deleteFromFavorites', itemController.deleteFromFavorites)
 
 app.post('/updateItemPhoto', upload.single('file'), itemController.updatePhotoOfItem)
 
+app.post('/deleteImageOfItem', itemController.deleteImageOfItem)
+
 // DELETE
 
 app.post('/deleteItemFromCart', itemController.deleteItemFromCart)
