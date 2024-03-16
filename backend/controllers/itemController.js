@@ -224,7 +224,7 @@ export default class itemController {
         delivery,
         itemId,
       } = req.body;
-      console.log(itemId)
+      console.log(itemId);
       // Обновляем товар по itemId
       const updatedItem = await ItemSchema.findByIdAndUpdate(
         itemId,
@@ -329,20 +329,34 @@ export default class itemController {
 
   static updatePhotoOfItem = async (req, res) => {
     try {
-      const { file, body } = req;
+      const { file } = req;
+      const { itemId, photoIndex } = req.body;
 
       // Формируем URL для доступа к загруженному изображению
-      const imageUrl = req.protocol + '://' + req.get('host') + '/' + file.filename;
+      const imageUrl = "https://" + req.get("host") + "/" + file.filename;
       console.log(imageUrl);
 
-      return res.status(200).json({});
+      // Найдем и обновим элемент в базе данных
+      const item = await ItemSchema.findById(itemId);
+      if (!item) {
+        return res.status(404).json({ error: "Элемент не найден" });
+      }
+
+      // Обновляем ссылку на фотографию
+      if (item.photos && item.photos.length > photoIndex) {
+        item.photos[photoIndex] = imageUrl;
+        await item.save();
+        return res
+          .status(200)
+          .json({ success: true, message: "Ссылка на фотографию обновлена" });
+      } else {
+        return res.status(400).json({ error: "Неверный индекс фотографии" });
+      }
     } catch (err) {
       console.error(err);
-      res.status(500).json({
-        error: "Возникла ошибка",
-      });
+      res.status(500).json({ error: "Возникла ошибка" });
     }
-};
+  };
 
   static addSize = async (req, res) => {
     try {
