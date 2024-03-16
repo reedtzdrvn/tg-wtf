@@ -10,6 +10,7 @@ import Items from "./components/Items/Items";
 import Item from "./components/Item/Item";
 import Sizes from "./components/Sizes/Sizes";
 import EspForYou from "./components/EspForYou/EspForYou";
+import Notifications from "./components/Notifications/Notifications";
 import module from './App.module.css'
 
 const App = () => {
@@ -19,6 +20,7 @@ const App = () => {
       <Navigation />
         <Routes>
           <Route exact path="/users" element={<Users />} />
+          <Route exact path="/notifications" element={<Notifications />} />
           <Route exact path="/items" element={<Items />} />
           <Route exact path="/orders" element={<Orders />} />
           <Route exact path="/user/*" element={<User />} />
