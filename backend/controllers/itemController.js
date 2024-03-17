@@ -224,7 +224,7 @@ export default class itemController {
         delivery,
         itemId,
       } = req.body;
-      console.log(itemId)
+      console.log(itemId);
       // Обновляем товар по itemId
       const updatedItem = await ItemSchema.findByIdAndUpdate(
         itemId,
@@ -324,6 +324,107 @@ export default class itemController {
     } catch (error) {
       console.error("Error in getSize:", error);
       res.status(500).json({ error: "Internal Server Error" });
+    }
+  };
+
+  static updatePhotoOfItem = async (req, res) => {
+    try {
+      const { file } = req;
+      const { itemId, photoIndex } = req.body;
+
+      // Формируем URL для доступа к загруженному изображению
+      const imageUrl = "https://" + req.get("host") + "/" + file.filename;
+      console.log(imageUrl);
+
+      // Найдем и обновим элемент в базе данных
+      const item = await ItemSchema.findById(itemId);
+      if (!item) {
+        return res.status(404).json({ error: "Элемент не найден" });
+      }
+
+      // Обновляем ссылку на фотографию
+      if (item.photos && item.photos.length > photoIndex) {
+        item.photos[photoIndex] = imageUrl;
+        await item.save();
+        return res
+          .status(200)
+          .json({ success: true, message: "Ссылка на фотографию обновлена", imageUrl: imageUrl });
+      } else {
+        return res.status(400).json({ error: "Неверный индекс фотографии" });
+      }
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: "Возникла ошибка" });
+    }
+  };
+
+  static addPhotoOfItem = async (req, res) => {
+    try {
+      const { file } = req;
+      const { itemId } = req.body;
+
+      // Формируем URL для доступа к загруженному изображению
+      const imageUrl = "https://" + req.get("host") + "/" + file.filename;
+      console.log(imageUrl);
+
+      // Найдем и обновим элемент в базе данных
+      const item = await ItemSchema.findById(itemId);
+      if (!item) {
+        return res.status(404).json({ error: "Элемент не найден" });
+      }
+
+      // Добавляем новую ссылку на фотографию в конец массива photos
+      item.photos.push(imageUrl);
+
+      // Сохраняем обновленные данные элемента
+      await item.save();
+
+      return res
+        .status(200)
+        .json({
+          success: true,
+          message: "Ссылка на фотографию добавлена в конец массива",
+          imageUrl: imageUrl
+        });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: "Возникла ошибка" });
+    }
+  };
+
+  static deleteImageOfItem = async (req, res) => {
+    try {
+      const { itemId, photoIndex } = req.body;
+
+      if (!itemId || !photoIndex) {
+        return res.status(404).json({ error: "Невозможно найти" });
+      }
+
+      // Находим элемент в базе данных
+      const item = await ItemSchema.findById(itemId);
+      if (!item) {
+        return res.status(404).json({ error: "Элемент не найден" });
+      }
+
+      // Проверяем наличие фотографии с указанным индексом
+      if (!item.photos || item.photos.length <= photoIndex) {
+        return res.status(404).json({ error: "Фотография не найдена" });
+      }
+
+      // Удаляем ссылку из массива photos
+      item.photos.splice(photoIndex, 1);
+
+      // Сохраняем обновленные данные элемента
+      await item.save();
+
+      return res
+        .status(200)
+        .json({ success: true, message: "Ссылка на фотографию удалена" });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({
+        error: "Возникла ошибка",
+      });
     }
   };
 

@@ -9,11 +9,35 @@ import {wakeServer} from './utils/ping.js'
 import adminController from './controllers/adminController.js';
 import espforyouController from './controllers/espforyouController.js';
 import orderController from './controllers/orderController.js';
+import multer from 'multer'
+import path from 'path'
+import { fileURLToPath } from 'url';
 
 dotenvConfig();
 
 const app = express();
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        // Указываем директорию, куда сохранять файлы
+        cb(null, 'media/');
+    },
+    filename: function (req, file, cb) {
+        // Формируем уникальное имя файла
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        // Добавляем к имени файла оригинальное расширение
+        cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname));
+    }
+});
+  
+const upload = multer({ storage: storage })
+
+console.log(__dirname)
+
+app.use(express.static('media'));
 app.use(express.json());
 app.use(cors());
 wakeServer();
@@ -32,7 +56,6 @@ app.listen(PORT, (err) => {
     }
     console.log('Server is running');
 });
-
 
 
 //GET
@@ -75,6 +98,8 @@ app.get('/getOrderAccountInfo', orderController.getOrderAccountInfo)
 
 app.get('/users', userController.getAllUsers)
 
+app.get('/getAllAdmins', adminController.getAllAdmins)
+
 app.get('/items', itemController.getAllItems)
 
 //POST
@@ -104,6 +129,14 @@ app.post('/additemtofavorites', itemController.addToFavorites)
 app.post('/addorder', orderController.addOrder)
 
 app.post('/deleteFromFavorites', itemController.deleteFromFavorites)
+
+app.post('/updateItemPhoto', upload.single('file'), itemController.updatePhotoOfItem)
+
+app.post('/deleteImageOfItem', itemController.deleteImageOfItem)
+
+app.post('/addImageOfItem', upload.single('file'), itemController.addPhotoOfItem)
+
+app.post('/loginUser', adminController.loginUser)
 
 // DELETE
 
