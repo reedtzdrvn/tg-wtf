@@ -67,7 +67,7 @@ const Orders = () => {
             </div>
           </div>
           {ordersByTelegramLink.map((order, index) => (
-            <NavLink to={`/order/${order.telegramLink}`}>
+            <NavLink to={`/order/${order._id}`}>
               <OrdersListItem
                 key={index}
                 order={order}

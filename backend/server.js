@@ -102,6 +102,8 @@ app.get('/getAllAdmins', adminController.getAllAdmins)
 
 app.get('/items', itemController.getAllItems)
 
+app.get('/getOrderById', orderController.getOrderById)
+
 //POST
 
 app.post('/updateitemcart', itemController.updateItemCart)

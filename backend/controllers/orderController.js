@@ -6,7 +6,7 @@ export default class orderController {
     try {
       const { orderIds } = req.query;
       let orders = [];
-      
+
       for (const id of orderIds) {
         let order = await OrderSchema.findOne({ _id: id });
         orders.push(order);
@@ -82,19 +82,47 @@ export default class orderController {
       console.error(err);
       return res.status(500).json({ error: "Возникла ошибка" });
     }
-  }; 
+  };
 
+  static getOrderById = async (req, res) => {
+    try {
+      const orderId = req.query.orderId; // Получаем orderId из query string
+      // Проверяем, был ли передан orderId
+      if (!orderId) {
+        return res
+          .status(400)
+          .json({ error: "Необходимо предоставить orderId в query string" });
+      }
+
+      // Ищем ордер в базе данных по orderId
+      const order = await OrderSchema.findOne({ _id: orderId });
+
+      // Проверяем, найден ли ордер
+      if (!order) {
+        return res
+          .status(404)
+          .json({ error: "Ордер с указанным orderId не найден" });
+      }
+
+      // Отправляем найденный ордер в качестве ответа
+      res.status(200).json(order);
+    } catch (error) {
+      // Обрабатываем возможные ошибки
+      console.error("Ошибка при получении ордера:", error);
+      res.status(500).json({ error: "Произошла ошибка при получении ордера" });
+    }
+  };
 
   static getAllOrders = async (req, res) => {
     try {
-      const orders = await OrderSchema.find()
+      const orders = await OrderSchema.find();
 
       res.status(200).json(orders);
     } catch (e) {
       console.log(e);
       res.status(500).json({ error: e, message: e.message });
     }
-  }
+  };
 
   static getOrder = async (req, res) => {};
 
