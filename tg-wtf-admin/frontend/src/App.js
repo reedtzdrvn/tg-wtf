@@ -11,6 +11,7 @@ import Items from "./components/Items/Items";
 import Item from "./components/Item/Item";
 import Sizes from "./components/Sizes/Sizes";
 import EspForYou from "./components/EspForYou/EspForYou";
+import Notifications from "./components/Notifications/Notifications";
 import module from "./App.module.css";
 import Login from "./components/Login/Login";
 import useIsAuthenticated from "react-auth-kit/hooks/useIsAuthenticated";
@@ -28,6 +29,7 @@ const App = () => {
         <Routes>
           <Route element={<AuthOutlet fallbackPath="/login" />}>
             <Route exact path="/users" element={<Users />} />
+            <Route exact path="/notifications" element={<Notifications />} />
             <Route exact path="/items" element={<Items />} />
             <Route exact path="/orders" element={<Orders />} />
             <Route exact path="/user/*" element={<User />} />
