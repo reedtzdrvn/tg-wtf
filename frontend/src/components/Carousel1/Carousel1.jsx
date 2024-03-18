@@ -1,13 +1,25 @@
 import React, { useState, useEffect } from "react";
-import banner1 from "../../images/banner1.png";
-import banner2 from "../../images/background.png";
+
+import axios from "../../axios.js";
 
 const Carousel1 = () => {
+  const [slides, setSlides] = useState([]);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [touchStartX, setTouchStartX] = useState(0);
   const [touchEndX, setTouchEndX] = useState(0);
   const [intervalId, setIntervalId] = useState(null);
   const [isSwiping, setIsSwiping] = useState(false);
+
+  useEffect(() => {
+    axios
+      .get("/getAllImagesFirstSlider")
+      .then((response) => {
+        setSlides(response.data);
+      })
+      .catch((error) => {
+        console.error(error.message);
+      });
+  }, []);
 
   useEffect(() => {
     const id = setInterval(() => {
@@ -40,15 +52,18 @@ const Carousel1 = () => {
 
   const handleSwipe = () => {
     const difference = touchEndX - touchStartX;
-    if (Math.abs(difference) > 50 && parseInt(Math.abs(difference))!==Math.abs(difference) ) {
+    if (
+      Math.abs(difference) > 50 &&
+      parseInt(Math.abs(difference)) !== Math.abs(difference)
+    ) {
       if (difference > 0) {
-        setCurrentSlide((prevSlide) => (prevSlide === 0 ? 3 : prevSlide - 1));
+        setCurrentSlide((prevSlide) => (prevSlide === 0 ? (slides.length - 1) : prevSlide - 1));
       } else {
-        setCurrentSlide((prevSlide) => (prevSlide === 3 ? 0 : prevSlide + 1));
+        setCurrentSlide((prevSlide) => (prevSlide === (slides.length - 1) ? 0 : prevSlide + 1));
       }
       clearInterval(intervalId);
       const newId = setInterval(() => {
-        setCurrentSlide((prevSlide) => (prevSlide === 3 ? 0 : prevSlide + 1));
+        setCurrentSlide((prevSlide) => (prevSlide === (slides.length - 1) ? 0 : prevSlide + 1));
       }, 10000);
       setIntervalId(newId);
     }
@@ -58,17 +73,19 @@ const Carousel1 = () => {
     <div className="carouselFirst flex flex-col gap-[16px] mt-[16px] mx-[8.5%]">
       <div className="buttonsCarouselFirst flex justify-center">
         <div className="gap-[4px] flex justify-center w-[84%]">
-          {[0, 1, 2, 3].map((index) => (
-            <div key={index} className="buttonCarouselFirst">
-              <div
-                className="fill"
-                style={{
-                  width: currentSlide === index ? "100%" : "0",
-                  transition: currentSlide === index ? "width 10s" : "none",
-                }}
-              ></div>
-            </div>
-          ))}
+          {Array.from({ length: slides.length }, (_, index) => index).map(
+            (index) => (
+              <div key={index} className="buttonCarouselFirst">
+                <div
+                  className="fill"
+                  style={{
+                    width: currentSlide === index ? "100%" : "0",
+                    transition: currentSlide === index ? "width 10s" : "none",
+                  }}
+                ></div>
+              </div>
+            )
+          )}
         </div>
       </div>
       <div
@@ -80,13 +97,15 @@ const Carousel1 = () => {
         onTouchMove={(e) => handleMove(e.touches[0].clientX)}
         onTouchEnd={handleEnd}
       >
-        <div
-          className="slideCarouselFirst"
-          style={{ display: currentSlide === 0 ? "block" : "none" }}
-        >
-          <img src={banner1} alt="1" />
-        </div>
-        <div
+        {slides.map((slide, index) => (
+          <div
+            className="slideCarouselFirst"
+            style={{ display: currentSlide === index ? "block" : "none" }}
+          >
+            <img src={slide.imageUrl} alt="1" />
+          </div>
+        ))}
+        {/* <div
           className="slideCarouselFirst"
           style={{ display: currentSlide === 1 ? "block" : "none" }}
         >
@@ -103,7 +122,7 @@ const Carousel1 = () => {
           style={{ display: currentSlide === 3 ? "block" : "none" }}
         >
           <img src={banner2} alt="4" />
-        </div>
+        </div> */}
       </div>
     </div>
   );

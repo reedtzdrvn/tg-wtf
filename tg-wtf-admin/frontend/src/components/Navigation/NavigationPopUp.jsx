@@ -73,8 +73,8 @@ const NavigationPopUp = ({ handleMenuToggle }) => {
           </div>
           <div className="flex mt-[5%] justify-center border-b-2 pb-[10px] border-gray-300 w-full">
             <li>
-              <NavLink to={"/notifications"} onClick={handleMenuToggle}>
-                Notifications
+              <NavLink to={"/first-slider"} onClick={handleMenuToggle}>
+                First Slider
               </NavLink>
             </li>
           </div>

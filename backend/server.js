@@ -9,6 +9,7 @@ import {wakeServer} from './utils/ping.js'
 import adminController from './controllers/adminController.js';
 import espforyouController from './controllers/espforyouController.js';
 import orderController from './controllers/orderController.js';
+import firstSliderController from './controllers/firstSliderController.js'
 import multer from 'multer'
 import path from 'path'
 import { fileURLToPath } from 'url';
@@ -104,6 +105,8 @@ app.get('/items', itemController.getAllItems)
 
 app.get('/getOrderById', orderController.getOrderById)
 
+app.get('/getAllImagesFirstSlider', firstSliderController.getAllImages)
+
 //POST
 
 app.post('/updateitemcart', itemController.updateItemCart)
@@ -139,6 +142,12 @@ app.post('/deleteImageOfItem', itemController.deleteImageOfItem)
 app.post('/addImageOfItem', upload.single('file'), itemController.addPhotoOfItem)
 
 app.post('/loginUser', adminController.loginUser)
+
+app.post('/addImageToFirstSlider', upload.single('file'), firstSliderController.addImage)
+
+app.post('/updateImageFirstSlider', upload.single('file'), firstSliderController.updateImageFirstSlider)
+
+app.post('/deleteImageFromFirstSlider', firstSliderController.deleteImageFromFirstSlider)
 
 // DELETE
 

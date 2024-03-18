@@ -147,6 +147,29 @@ const Navigation = () => {
             </div>
           </NavLink>
 
+          <NavLink to={"/first-slider"}>
+            <div
+              className={`${
+                !pathname.includes("/first-slider")
+                  ? module.navButton
+                  : module.navButtonActive
+              } cursor-pointer flex justify-between items-center p-[11px]`}
+            >
+              <div className="flex justify-center items-center">
+                <img width={24} src={userIcon} alt="user" />
+                <span className="ml-[14px]">First slider</span>
+              </div>
+              <img
+                className={`${
+                  !pathname.includes("/first-slider") ? "" : "hidden"
+                }`}
+                width={16}
+                src={arrowIcon}
+                alt="arrow"
+              />
+            </div>
+          </NavLink>
+
         </div>
       </div>
 
