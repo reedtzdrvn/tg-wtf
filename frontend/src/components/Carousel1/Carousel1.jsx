@@ -23,7 +23,7 @@ const Carousel1 = () => {
 
   useEffect(() => {
     const id = setInterval(() => {
-      setCurrentSlide((prevSlide) => (prevSlide === 3 ? 0 : prevSlide + 1));
+      setCurrentSlide((prevSlide) => (prevSlide === (slides.length - 1) ? 0 : prevSlide + 1));
     }, 10000);
     setIntervalId(id);
 
@@ -105,24 +105,6 @@ const Carousel1 = () => {
             <img src={slide.imageUrl} alt="1" />
           </div>
         ))}
-        {/* <div
-          className="slideCarouselFirst"
-          style={{ display: currentSlide === 1 ? "block" : "none" }}
-        >
-          <img src={banner2} alt="2" />
-        </div>
-        <div
-          className="slideCarouselFirst"
-          style={{ display: currentSlide === 2 ? "block" : "none" }}
-        >
-          <img src={banner1} alt="3" />
-        </div>
-        <div
-          className="slideCarouselFirst"
-          style={{ display: currentSlide === 3 ? "block" : "none" }}
-        >
-          <img src={banner2} alt="4" />
-        </div> */}
       </div>
     </div>
   );
