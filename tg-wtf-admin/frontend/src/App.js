@@ -16,6 +16,7 @@ import module from "./App.module.css";
 import Login from "./components/Login/Login";
 import useIsAuthenticated from "react-auth-kit/hooks/useIsAuthenticated";
 import AuthOutlet from "@auth-kit/react-router/AuthOutlet";
+import OrderDetails from "./components/OrderDetails/OrderDetails";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(useIsAuthenticated())
@@ -37,6 +38,7 @@ const App = () => {
             <Route exact path="/espforyou" element={<EspForYou />} />
             <Route exact path="/order/*" element={<UserOrdersItems />} />
             <Route exact path="/item/*" element={<Item />} />
+            <Route exact path="/order/:orderId/:itemId" element={<OrderDetails />} />
             <Route exact path="/*" element={<NotFound />} />
           </Route>
           <Route exact path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />

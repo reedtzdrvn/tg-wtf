@@ -124,6 +124,34 @@ export default class orderController {
     }
   };
 
+  static updateItemInOrder = async (req, res) => {
+    try {
+      const { orderId, itemId, track, status } = req.body;
+
+      const order = await OrderSchema.findOne({ _id: orderId });
+
+      if (!order) {
+        return res.status(404).json({ error: "Order not found" });
+      }
+
+      const itemToUpdate = order.items.find((item) => item.itemId.toString() === itemId.toString());
+
+      if (!itemToUpdate) {
+        return res.status(404).json({ error: "Item not found in the order" });
+      }
+
+      itemToUpdate.track = track;
+      itemToUpdate.status = status;
+
+      await order.save();
+
+      res.status(200).json(order);
+    } catch (e) {
+      console.log(e);
+      res.status(500).json({ error: e, message: e.message });
+    }
+  };
+
   static getOrder = async (req, res) => {};
 
   static updateStatusOrder = async (req, res) => {

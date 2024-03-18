@@ -50,7 +50,7 @@ const OrdersListItem = ({ order, setIsLoading }) => {
 
             <div>
               <span className="font-bold mr-[5px]">Дата:</span>
-              <span>{order.dateOrder}</span>
+              <span>{new Date(order.dateOrder).toLocaleDateString('en-US').toLowerCase()}</span>
             </div>
 
             <div>

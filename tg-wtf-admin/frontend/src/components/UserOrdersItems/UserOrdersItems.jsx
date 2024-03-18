@@ -29,8 +29,6 @@ const UserOrdersItems = () => {
       });
   }, []);
 
-  console.log(orderData)
-
   return (
     <>
       {isLoading ? ( // Show Preloader if isLoading is true

@@ -147,3 +147,5 @@ app.post('/deleteItemFromCart', itemController.deleteItemFromCart)
 app.post('/updatestatusorder', orderController.updateStatusOrder)
 
 app.put('/updateItemDetails', itemController.updateItem)
+
+app.put('/updateItemInOrder', orderController.updateItemInOrder)
