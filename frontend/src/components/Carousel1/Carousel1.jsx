@@ -28,7 +28,7 @@ const Carousel1 = () => {
     setIntervalId(id);
 
     return () => clearInterval(id);
-  }, []);
+  }, [slides.length]);
 
   const handleStart = (clientX) => {
     setTouchStartX(clientX);
@@ -100,7 +100,7 @@ const Carousel1 = () => {
         {slides.map((slide, index) => (
           <div
             className="slideCarouselFirst"
-            style={{ display: currentSlide === index ? "block" : "none" }}
+            style={{ display: currentSlide === index ? "block" : "none" }} key={slide._id}
           >
             <img src={slide.imageUrl} alt="1" />
           </div>
