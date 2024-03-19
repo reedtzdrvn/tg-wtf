@@ -18,6 +18,7 @@ import useIsAuthenticated from "react-auth-kit/hooks/useIsAuthenticated";
 import AuthOutlet from "@auth-kit/react-router/AuthOutlet";
 import OrderDetails from "./components/OrderDetails/OrderDetails";
 import FirstSlider from "./components/FirstSlider/FirstSlider";
+import Categories from "./components/Categories/Categories";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(useIsAuthenticated())
@@ -41,6 +42,7 @@ const App = () => {
             <Route exact path="/item/*" element={<Item />} />
             <Route exact path="/order/:orderId/:itemId" element={<OrderDetails />} />
             <Route exact path="/first-slider" element={<FirstSlider />} />
+            <Route exact path="/categories" element={<Categories />} />
             <Route exact path="/*" element={<NotFound />} />
           </Route>
           <Route exact path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />

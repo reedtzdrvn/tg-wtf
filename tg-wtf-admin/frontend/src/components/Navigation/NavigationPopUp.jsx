@@ -78,6 +78,13 @@ const NavigationPopUp = ({ handleMenuToggle }) => {
               </NavLink>
             </li>
           </div>
+          <div className="flex mt-[5%] justify-center border-b-2 pb-[10px] border-gray-300 w-full">
+            <li>
+              <NavLink to={"/categories"} onClick={handleMenuToggle}>
+                Categories
+              </NavLink>
+            </li>
+          </div>
         </ul>
       </div>
     </div>

@@ -170,6 +170,29 @@ const Navigation = () => {
             </div>
           </NavLink>
 
+          <NavLink to={"/categories"}>
+            <div
+              className={`${
+                !pathname.includes("/categories")
+                  ? module.navButton
+                  : module.navButtonActive
+              } cursor-pointer flex justify-between items-center p-[11px]`}
+            >
+              <div className="flex justify-center items-center">
+                <img width={24} src={userIcon} alt="user" />
+                <span className="ml-[14px]">Categories</span>
+              </div>
+              <img
+                className={`${
+                  !pathname.includes("/categories") ? "" : "hidden"
+                }`}
+                width={16}
+                src={arrowIcon}
+                alt="arrow"
+              />
+            </div>
+          </NavLink>
+
         </div>
       </div>
 

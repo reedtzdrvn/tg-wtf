@@ -111,7 +111,7 @@ app.get('/getAllImagesFirstSlider', firstSliderController.getAllImages)
 
 app.post('/updateitemcart', itemController.updateItemCart)
 
-app.post('/category', categoryController.addCategory)
+app.post('/category', upload.single('file'), categoryController.addCategory)
 
 app.post('/size', itemController.addSize)
 
@@ -151,6 +151,8 @@ app.post('/deleteImageFromFirstSlider', firstSliderController.deleteImageFromFir
 
 // DELETE
 
+app.post('/deleteCategoryAndItems', categoryController.deleteCategory)
+
 app.post('/deleteItemFromCart', itemController.deleteItemFromCart)
 
 app.post('/updatestatusorder', orderController.updateStatusOrder)
@@ -158,3 +160,5 @@ app.post('/updatestatusorder', orderController.updateStatusOrder)
 app.put('/updateItemDetails', itemController.updateItem)
 
 app.put('/updateItemInOrder', orderController.updateItemInOrder)
+
+app.put('/updateCategoryImage', upload.single('file'), categoryController.updateImageCategory)
