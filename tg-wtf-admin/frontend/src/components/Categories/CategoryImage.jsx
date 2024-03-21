@@ -1,8 +1,6 @@
 import axios from "../../axios.js";
 import React, { useState, useRef } from "react";
 
-import cross from "../../images/cross.svg";
-
 const ItemImage = ({ image, categoryId, itemData, setItemData }) => {
   const [hovered, setHovered] = useState(false);
   const inputRef = useRef(null);

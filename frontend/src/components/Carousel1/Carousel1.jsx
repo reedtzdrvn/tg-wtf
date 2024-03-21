@@ -2,24 +2,13 @@ import React, { useState, useEffect } from "react";
 
 import axios from "../../axios.js";
 
-const Carousel1 = () => {
-  const [slides, setSlides] = useState([]);
+const Carousel1 = ({slides}) => {
+  
   const [currentSlide, setCurrentSlide] = useState(0);
   const [touchStartX, setTouchStartX] = useState(0);
   const [touchEndX, setTouchEndX] = useState(0);
   const [intervalId, setIntervalId] = useState(null);
   const [isSwiping, setIsSwiping] = useState(false);
-
-  useEffect(() => {
-    axios
-      .get("/getAllImagesFirstSlider")
-      .then((response) => {
-        setSlides(response.data);
-      })
-      .catch((error) => {
-        console.error(error.message);
-      });
-  }, []);
 
   useEffect(() => {
     const id = setInterval(() => {

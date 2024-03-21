@@ -5,10 +5,10 @@ import background from "../../images/background.png";
 import { NavLink } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Preloader from "../errors/Preloader";
-import axios from '../../axios.js'
+import axios from "../../axios.js";
 
 const Home = () => {
-
+  const [slides, setSlides] = useState([]);
   const [caterogies, setCategories] = useState([]);
 
   useEffect(() => {
@@ -16,6 +16,15 @@ const Home = () => {
       .get(`/categories`)
       .then((response) => {
         setCategories(response.data);
+
+        axios
+          .get("/getAllImagesFirstSlider")
+          .then((response) => {
+            setSlides(response.data);
+          })
+          .catch((error) => {
+            console.error(error.message);
+          });
       })
       .catch((error) => {
         console.error("Ошибка при получении JSON файла", error);
@@ -24,10 +33,12 @@ const Home = () => {
 
   return (
     <>
-    {caterogies.length===0 ? <Preloader/> : 
+      {(caterogies.length === 0) || (slides.length === 0) ? (
+        <Preloader />
+      ) : (
         <div className="page">
-          <Carousel1 />
-          <Carousel2 caterogies={caterogies}/>
+          <Carousel1 slides={slides} />
+          <Carousel2 caterogies={caterogies} />
           <div className="mx-[8.5%] mt-[32px] relative">
             <img src={background} alt="1" className="imghomepage" />
             <div className="absolute top-0 w-full text-white px-[10%] h-[152px] py-[20px]">
@@ -50,8 +61,7 @@ const Home = () => {
             catalog, you can always place a special order.
           </div>
         </div>
-    }
-
+      )}
     </>
   );
 };

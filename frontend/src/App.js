@@ -21,13 +21,12 @@ import PlacingOrder from "./components/placingOrder/placingorder";
 import EditProfile from "./components/EditProfile/EditProfile";
 import NotFound from "./components/errors/notFound";
 import Review from "./components/Review/Review";
+import Search from "./components/Search/Search";
 
 let tg = window.Telegram.WebApp;
 tg.expand();
 
-
 function App() {
-
   const location = useLocation();
   const { pathname } = location;
 
@@ -39,13 +38,7 @@ function App() {
         <Route exact path="/notifications" element={<Notifications />} />
         <Route exact path="/favorites" element={<Favorites />} />
         <Route exact path="/basket" element={<Basket />} />
-        <Route
-          exact
-          path="/account"
-          element={
-            <Account />
-          }
-        />
+        <Route exact path="/account" element={<Account />} />
         <Route exact path="/categories/*" element={<CategoryItemsList />} />
         <Route exact path="/categories" element={<CategoriesList />} />
         <Route
@@ -64,6 +57,7 @@ function App() {
         />
         <Route exact path="/basket/payment" element={<Pay />} />
         <Route exact path="/basket/placingorder" element={<PlacingOrder />} />
+        <Route exact path="/search" element={<Search />} />
         <Route exact path="/*" element={<NotFound />} />
       </Routes>
       {!pathname.includes("/categories/item-details/") ? <Footer /> : ""}
