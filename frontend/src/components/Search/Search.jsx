@@ -3,12 +3,14 @@ import { useEffect, useState } from "react";
 import axios from "../../axios.js";
 import CardItem from "../CardItem/CardItem";
 import Preloader from "../errors/Preloader.js";
+import { NavLink } from "react-router-dom";
 
 const Search = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [items, setItems] = useState([]);
   const [itemsBySearchTerm, setItemsBySearchTerm] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [allCategories, setAllCategories] = useState([]);
 
   useEffect(() => {
     setItemsBySearchTerm(
@@ -20,15 +22,29 @@ const Search = () => {
     axios
       .get("/items")
       .then((response) => {
-        console.log(response.data);
         setItems(response.data);
         setItemsBySearchTerm(response.data);
-        setIsLoading(false);
+
+        axios
+          .get("/categories")
+          .then((response) => {
+            setAllCategories(response.data);
+            setIsLoading(false);
+          })
+          .catch((error) => {
+            console.error(error.message);
+          });
       })
       .catch((error) => {
         console.error(error.message);
       });
   }, []);
+
+  const getPathTitle = (id) => {
+    const pathTitle = allCategories.find((el) => el._id === id);
+    console.log(pathTitle)
+    return pathTitle.title.toLowerCase().replace(/\s/g, "-")
+  };
 
   return (
     <>
@@ -57,15 +73,21 @@ const Search = () => {
           >
             {!(itemsBySearchTerm.length === 0) ? (
               itemsBySearchTerm.map((el) => (
-                <CardItem
-                  itemId={el._id}
-                  title={el.name}
-                  price={el.price}
-                  image={el.photos[0]}
-                  //   isFavorite={favorites[index]}
-                  isAvailable={el.sizes.length === 0 ? false : true}
+                <NavLink
+                  to={`/categories/item-details/` + getPathTitle(el.category) + "/" + el._id}
+                  state={{ from: getPathTitle(el.category), itemId: el._id }}
                   key={el._id}
-                />
+                >
+                  <CardItem
+                    itemId={el._id}
+                    title={el.name}
+                    price={el.price}
+                    image={el.photos[0]}
+                    //   isFavorite={favorites[index]}
+                    isAvailable={el.sizes.length === 0 ? false : true}
+                    key={el._id}
+                  />
+                </NavLink>
               ))
             ) : (
               <div className="ml-[20px] font-[Manrope] font-light text-gray-400 text-[22px]">
