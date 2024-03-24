@@ -88,7 +88,7 @@ const Sizes = () => {
                   </button>
                 </>
               ) : (
-                  <button className="bg-green-500 hover:bg-green-800 text-white px-2 font-bold rounded pb-[4px] py-[1px]">
+                  <button onClick={handleAddSize} className="bg-green-500 hover:bg-green-800 text-white px-2 font-bold rounded pb-[4px] py-[1px]">
                     <div>Добавить</div>
                   </button>
               

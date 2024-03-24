@@ -36,7 +36,22 @@ export default class adminController {
     }
   };
 
-  static deleteNotification = async (req, res) => {};
+  static deleteNotification = async (req, res) => {
+    const { telegramId, notificationId } = req.body;
+    
+    try {
+      // Найти пользователя по telegramId и удалить уведомление с указанным ID
+      await UserSchema.updateOne(
+        { telegramId: telegramId },
+        { $pull: { notifications: { _id: notificationId } } }
+      );
+      console.log(telegramId, notificationId)
+      res.status(200).json({ success: true, message: "Уведомление удалено" });
+    } catch (error) {
+      console.error("Ошибка при удалении уведомления:", error);
+      res.status(500).json({ error: "Ошибка при удалении уведомления" });
+    }
+  };
 
   static loginUser = async (req, res) => {
     try {

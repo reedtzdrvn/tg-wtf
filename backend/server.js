@@ -137,8 +137,6 @@ app.post('/deleteFromFavorites', itemController.deleteFromFavorites)
 
 app.post('/updateItemPhoto', upload.single('file'), itemController.updatePhotoOfItem)
 
-app.post('/deleteImageOfItem', itemController.deleteImageOfItem)
-
 app.post('/addImageOfItem', upload.single('file'), itemController.addPhotoOfItem)
 
 app.post('/loginUser', adminController.loginUser)
@@ -162,3 +160,7 @@ app.put('/updateItemDetails', itemController.updateItem)
 app.put('/updateItemInOrder', orderController.updateItemInOrder)
 
 app.put('/updateCategoryImage', upload.single('file'), categoryController.updateImageCategory)
+
+app.post('/deleteImageOfItem', itemController.deleteImageOfItem)
+
+app.post('/deleteNotification', adminController.deleteNotification)

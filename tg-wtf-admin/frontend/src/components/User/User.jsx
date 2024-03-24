@@ -172,7 +172,7 @@ const User = () => {
               </div>
 
               <div className="bg-white xl:w-[250px] cursor-pointer rounded-xl xl:mt-[20px] px-[30px] py-[10px] lg:px-[50px] lg:py-[25px] xl:px-[80px] xl:py-[50px]">
-                <NavLink to={'/notifications'} state={{telegramId: `${updatedData.telegramId}`}}>
+                <NavLink to={`/notifications/${telegramId}`} state={{telegramId: `${updatedData.telegramId}`}}>
                 <div className="flex justify-center items-center flex-col">
                   <img className="lg:w-[60px] md:w-[40px] w-[20px]" src={ordersIcon} alt="orders" />
                   <span className="block text-[12px] font-semibold mb-1">

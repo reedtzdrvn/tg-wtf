@@ -32,7 +32,7 @@ const App = () => {
         <Routes>
           <Route element={<AuthOutlet fallbackPath="/login" />}>
             <Route exact path="/users" element={<Users />} />
-            <Route exact path="/notifications" element={<Notifications />} />
+            <Route exact path="/notifications/*" element={<Notifications />} />
             <Route exact path="/items" element={<Items />} />
             <Route exact path="/orders" element={<Orders />} />
             <Route exact path="/user/*" element={<User />} />

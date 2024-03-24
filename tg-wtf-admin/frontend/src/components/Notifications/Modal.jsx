@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './Notifications.module.css'; // Убедитесь, что путь к файлу стилей правильный
 
-const Modal = ({ isOpen, onClose, onSubmit }) => {
+const Modal = ({ isOpen, onClose, onSubmit}) => {
   const [notificationText, setNotificationText] = useState('');
 
   const handleTextChange = (e) => {

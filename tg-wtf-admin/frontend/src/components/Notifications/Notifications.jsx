@@ -52,8 +52,8 @@ const Notifications = () => {
       })
       .then(response => {
         console.log('Уведомление добавлено', response.data);
-        setShowModal(false); // Закрыть модальное окно после успешной отправки
-        // Обновить список уведомлений, если необходимо
+        setShowModal(false); 
+        setNotificationsByTelegramId(prev => [...prev, response.data.notification])
       })
       .catch(error => {
         console.error('Ошибка добавления уведомления', error);
@@ -91,7 +91,10 @@ const Notifications = () => {
           {notificationsByTelegramId.map((notification, index) => (
             <NotificationsListItem
               key={index}
+              notificationsByTelegramId={notificationsByTelegramId}
+              setNotificationsByTelegramId={setNotificationsByTelegramId}
               notification={notification}
+              telegramId={telegramId} // Используйте правильное имя свойства
               setIsLoading={setIsLoading}
             />
           ))}
