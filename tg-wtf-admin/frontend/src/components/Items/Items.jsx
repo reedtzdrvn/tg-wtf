@@ -12,6 +12,17 @@ const Items = () => {
   const [itemsByName, setItemsByName] = useState([]);
   const [itemName, setItemName] = useState("");
 
+  const handleAddNewItem = () => {
+    axios
+      .post(`/addItemAdmin`)
+      .then((response) => {
+        setItems((prevItems) => prevItems.concat(response.data));
+      })
+      .catch((error) => {
+        console.error(error.message);
+      });
+  };
+
   useEffect(() => {
     axios
       .get(`/items`)
@@ -60,6 +71,12 @@ const Items = () => {
               />
             </div>
           </div>
+          <div className="flex justify-center">
+            <div to="/itemadd" className="bg-lime-600 py-[6px] px-[48px] rounded-3xl flex justify-center items-center mb-[24px] cursor-pointer" onClick={handleAddNewItem}>
+              Добавить товар
+            </div>
+          </div>
+          
           {itemsByName.map((item, index) => (
             <NavLink to={`/item/${item._id}`}>
               <ItemsListItem

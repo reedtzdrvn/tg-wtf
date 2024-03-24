@@ -31,6 +31,7 @@ const Item = () => {
     axios
       .get("/size", { params: { itemId } })
       .then((response) => {
+        console.log(response.data)
         setItemData(response.data);
         setName(response.data.name);
         setSelectedCategory(response.data.category?.id); // Установить начальное значение категории в виде id
@@ -170,12 +171,12 @@ const Item = () => {
                     onChange={handleCategoryChange}
                     className="border border-gray-300 rounded px-3 py-1"
                   >
-                    <option hidden={true} value={itemData.category.title}>
-                      {itemData.category.title}
+                    <option hidden={true} value={itemData.category?.title}>
+                      {itemData.category?.title}
                     </option>
-                    {categories.map((category, index) => (
-                      <option key={index} value={category.id}>
-                        {category.title}
+                    {categories?.map((category, index) => (
+                      <option key={index} value={category?.id}>
+                        {category?.title}
                       </option>
                     ))}
                   </select>
@@ -230,7 +231,7 @@ const Item = () => {
                   setItemData={setItemData}
                   itemId={itemData._id}
                   photoIndex={0}
-                  image={itemData?.photos[0]}
+                  image={itemData?.photos?.[0]}
                 />
               </div>
             </div>
