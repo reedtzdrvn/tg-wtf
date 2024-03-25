@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {NavLink} from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import axios from "../../axios";
 import ItemsListItem from "./ItemsListItem";
 import userIcon from "../../images/user-square.svg";
@@ -25,11 +25,23 @@ const Items = () => {
       .finally(() => {
         setIsLoading(false);
       });
-  }, []);
+  }, [items]);
+
+  const handleAddNewItem = () => {
+    axios
+      .post(`/addItemAdmin`)
+      .then((response) => {
+        setItems((prevItems) => [response.data, ...prevItems]);
+      })
+      .catch((error) => {
+        console.error(error.message);
+      });
+  };
+
 
   useEffect(() => {
     setItemsByName(
-      items.filter((item) => item.name.toUpperCase().startsWith(itemName.toUpperCase()))
+      items.filter((item) => item.name && item.name.toUpperCase().startsWith(itemName.toUpperCase()))
     );
   }, [itemName, items]);
 
@@ -60,15 +72,20 @@ const Items = () => {
               />
             </div>
           </div>
-          {itemsByName.map((item, index) => (
-            <NavLink to={`/item/${item._id}`}>
-              <ItemsListItem
-              key={index}
-              item={item}
-              setIsLoading={setIsLoading}
-            />
-            </NavLink>
-          ))}
+          <div className="flex justify-center">
+            <div to="/itemadd" className="bg-lime-600 py-[6px] px-[48px] rounded-3xl flex justify-center items-center mb-[24px] cursor-pointer" onClick={handleAddNewItem}>
+              Добавить товар
+            </div>
+          </div>
+          {itemsByName
+            .sort((a, b) => {
+              return a.name.localeCompare(b.name);
+            })
+            .map((item, index) => (
+              <NavLink to={`/item/${item._id}`} key={index}>
+                <ItemsListItem item={item} setIsLoading={setIsLoading} />
+              </NavLink>
+            ))}
         </div>
       )}
     </>

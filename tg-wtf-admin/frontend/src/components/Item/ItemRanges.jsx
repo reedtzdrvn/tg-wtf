@@ -45,11 +45,17 @@ const ItemRanges = ({ sizes,  setSizes, setItemSizeCount, itemSizeCount }) => {
   };
 
   const handleRemoveSize = (sizeId) => {
-    // Удаляем размер из состояния sizes и itemSizeCount
-    setSizes(sizes.filter(size => size._id !== sizeId));
-    setItemSizeCount(prevQuantities => {
+    setSizes((prevSizes) => {
+      const newSizes = [...prevSizes];
+      if (sizeId >= 0 && sizeId < newSizes.length) {
+        newSizes[sizeId].count = 0;
+      }
+      return newSizes;
+    });
+  
+    setItemSizeCount((prevQuantities) => {
       const newSizeCount = { ...prevQuantities };
-      delete newSizeCount[sizeId];
+      newSizeCount[sizeId] = 0;
       return newSizeCount;
     });
   };
@@ -62,7 +68,7 @@ const ItemRanges = ({ sizes,  setSizes, setItemSizeCount, itemSizeCount }) => {
           <input
             className="border w-4/5 border-gray-300 rounded-md py-1 px-2"
             type="number"
-            value={itemSizeCount[sizeObj._id] || ""}
+            value={itemSizeCount[sizeObj._id]}
             onChange={(e) => handleQuantityChange(sizeObj._id, e)}
           />
           <img src={cross} className="ml-2 h-[20px] cursor-pointer" onClick={() => handleRemoveSize(sizeObj._id)} />

@@ -35,6 +35,7 @@ const Item = () => {
         setName(response.data.name);
         setSelectedCategory(response.data.category?.id); // Установить начальное значение категории в виде id
         setDescription(response.data.description); // Устанавливаем описание
+        console.log(response.data.sizes)
         setSizes(response.data.sizes);
         setIsLoading(false);
 
@@ -170,8 +171,8 @@ const Item = () => {
                     onChange={handleCategoryChange}
                     className="border border-gray-300 rounded px-3 py-1"
                   >
-                    <option hidden={true} value={itemData.category.title}>
-                      {itemData.category.title}
+                    <option hidden={true} value={itemData.category?.title}>
+                      {itemData.category?.title}
                     </option>
                     {categories.map((category, index) => (
                       <option key={index} value={category.id}>

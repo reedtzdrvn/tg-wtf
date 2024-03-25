@@ -225,7 +225,6 @@ export default class itemController {
         itemId,
       } = req.body;
       console.log(itemId);
-      // Обновляем товар по itemId
       const updatedItem = await ItemSchema.findByIdAndUpdate(
         itemId,
         {
@@ -301,23 +300,27 @@ export default class itemController {
             reviews: { $first: "$reviews" },
             sizes: {
               $push: {
-                _id: "$sizeInfo._id",
+                _id: "$sizes.id",
                 name: "$sizeInfo.name",
                 count: "$sizes.count",
               },
             },
           },
-        },
-      ]);
+        }
+      ])
 
-      for (const item of result[0].reviews) {
-        const tg = item.telegramId;
-        const userlol = await UserSchema.findOne({ telegramId: tg });
-        const userName = userlol
-          ? userlol.firstName + " " + userlol.lastName
-          : "Unknown";
+      console.log(result)
 
-        item.telegramId = userName;
+      if (result.length>0) {
+        for (const item of result[0].reviews) {
+          const tg = item.telegramId;
+          const userlol = await UserSchema.findOne({ telegramId: tg });
+          const userName = userlol
+            ? userlol.firstName + " " + userlol.lastName
+            : "Unknown";
+  
+          item.telegramId = userName;
+        }
       }
 
       res.status(200).json(result[0]);

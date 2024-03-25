@@ -32,12 +32,10 @@ const ItemSchema = new mongoose.Schema({
         {
             id: { 
                 type: mongoose.Schema.Types.ObjectId,
-                require: true,
                 ref: "Size"
             },
             count: {
                 type: Number,
-                require: true
             }
         }
     ],
@@ -48,16 +46,13 @@ const ItemSchema = new mongoose.Schema({
     reviews: [{
         id: {
             type: mongoose.Schema.Types.ObjectId,
-            require: true,
             ref: "Size"
         },
         telegramId: {
             type: String,
-            require: true
         },
         ratingsCount: {
             type: Number,
-            require: true
         },
         textReview:{
             type: String

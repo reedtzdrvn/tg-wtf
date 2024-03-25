@@ -1,6 +1,8 @@
 import UserSchema from "../models/user.js";
 import AdminSchema from "../models/admin.js";
-
+import SizeSchema from "../models/size.js"
+import ItemSchema from "../models/item.js"
+import CategorySchema from "../models/category.js"
 import jwt from "jsonwebtoken";
 import { config as dotenvConfig } from "dotenv";
 
@@ -100,4 +102,34 @@ export default class adminController {
       return res.status(500).json({ error: "Возникла ошибка" });
     }
   };
+
+  static addItem = async (req, res) => {
+    try {
+      const sizes = await SizeSchema.find({}).limit(1)
+
+      const category = await CategorySchema.find({}).limit(1)
+
+      const item = await new ItemSchema({
+        name: "000_New",
+        category: category[0]._id,
+        photos: [],
+        price: null,
+        sale: null,
+        deliveryTime: "000_New",
+        sizes: [{id: sizes[0]._id, count: 0}],
+        description: "000_New",
+      });
+
+      await item.save();
+
+      return res.status(200).json({
+        ...item,
+      });
+    } catch (err) {
+      res.status(500).json({
+        error: "Возникла ошибка",
+      });
+    }
+  };
+
 }

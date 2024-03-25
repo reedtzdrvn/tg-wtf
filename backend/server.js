@@ -147,6 +147,8 @@ app.post('/updateImageFirstSlider', upload.single('file'), firstSliderController
 
 app.post('/deleteImageFromFirstSlider', firstSliderController.deleteImageFromFirstSlider)
 
+app.post('/addItemAdmin', adminController.addItem)
+
 // DELETE
 
 app.post('/deleteCategoryAndItems', categoryController.deleteCategory)
