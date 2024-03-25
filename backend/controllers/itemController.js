@@ -68,7 +68,6 @@ export default class itemController {
 
   static addItem = async (req, res) => {
     try {
-      console.log(1)
       const item = await new ItemSchema({
         name: req.body.name,
         category: req.body.category,
@@ -258,8 +257,6 @@ export default class itemController {
     try {
       const itemId = req.query.itemId;
 
-      const resultFirst = await ItemSchema.findOne({_id: itemId})
-
       const result = await ItemSchema.aggregate([
         {
           $match: {
@@ -313,23 +310,17 @@ export default class itemController {
         },
       ]);
 
-      if (result.length > 0) {
-        for (const item of result[0].reviews) {
-          const tg = item.telegramId;
-          const userlol = await UserSchema.findOne({ telegramId: tg });
-          const userName = userlol
-            ? userlol.firstName + " " + userlol.lastName
-            : "Unknown";
+      for (const item of result[0].reviews) {
+        const tg = item.telegramId;
+        const userlol = await UserSchema.findOne({ telegramId: tg });
+        const userName = userlol
+          ? userlol.firstName + " " + userlol.lastName
+          : "Unknown";
 
-          item.telegramId = userName;
-        }
-        res.status(200).json(result[0]);
-      }
-      else{
-        res.status(200).json({});
+        item.telegramId = userName;
       }
 
-      
+      res.status(200).json(result[0]);
     } catch (error) {
       console.error("Error in getSize:", error);
       res.status(500).json({ error: "Internal Server Error" });

@@ -1,6 +1,6 @@
 import UserSchema from "../models/user.js";
 import AdminSchema from "../models/admin.js";
-import ItemSchema from "../models/item.js"
+
 import jwt from "jsonwebtoken";
 import { config as dotenvConfig } from "dotenv";
 
@@ -98,31 +98,6 @@ export default class adminController {
     } catch (err) {
       console.error(err);
       return res.status(500).json({ error: "Возникла ошибка" });
-    }
-  };
-
-  static addItem = async (req, res) => {
-    try {
-      const item = await new ItemSchema({
-        name: "Новый товар",
-        photos: [],
-        deliveryTime: "Не установлено",
-        sizes: [],
-        description: "Новый товар",
-        reviews: []
-      });
-      console.log(item)
-
-      await item.save();
-
-      return res.status(200).json({
-        ...item,
-      });
-    } catch (err) {
-      console.log(err)
-      res.status(500).json({
-        error: "Возникла ошибка",
-      });
     }
   };
 }

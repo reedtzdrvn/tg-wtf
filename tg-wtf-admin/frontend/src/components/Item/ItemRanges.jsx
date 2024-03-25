@@ -29,7 +29,7 @@ const ItemRanges = ({ sizes,  setSizes, setItemSizeCount, itemSizeCount }) => {
   const availableSizes = getAllAvailableSizes();
 
   function getAllAvailableSizes() {
-    return allSizes.filter((size) => !sizes || !sizes.some((obj) => obj._id === size._id));
+    return allSizes.filter((size) => !sizes.some((obj) => obj._id === size._id));
   }
 
   const handleSizeSelect = (selectedSize) => {
@@ -56,7 +56,7 @@ const ItemRanges = ({ sizes,  setSizes, setItemSizeCount, itemSizeCount }) => {
 
   return (
     <div className="mt-8">
-      {sizes && sizes.map((sizeObj, index) => (
+      {sizes.map((sizeObj, index) => (
         <div key={sizeObj._id} className="flex w-2/5 items-center mb-4">
           <span className="w-1/5">{sizeObj.name}</span>
           <input
